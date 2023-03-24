@@ -17,6 +17,7 @@ public:
     void Update();
     void LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions);
     void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
+    void DrawMousePos();
     void DrawTextures();
     void DrawButtons();
     void UnloadScene();

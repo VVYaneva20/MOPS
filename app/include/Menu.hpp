@@ -18,7 +18,7 @@ private:
     const int c_LogoWidth = 457;
     const int c_LogoHeight = 149;
 
-    Vector2 m_LogoPos = { GetScreenWidth() / 2.0f - this->c_LogoWidth / 2.0f, GetScreenHeight() / 2.0f - this->c_LogoHeight / 2.0f - 200 };
+    Vector2 m_LogoPos = { GetScreenWidth() / 2.0f - this->c_LogoWidth / 2.0f, GetScreenHeight() / 2.0f - this->c_LogoHeight / 2.0f - 350 };
     std::vector<std::string> m_Images = { "Menu/Menu.png", "Menu/Logo.png" };
     std::vector<std::string> m_Buttons = { "Menu/Start.png", "Menu/Settings.png", "Menu/Rules.png", "Menu/Exit.png" };
     std::vector<Vector2> m_ButtonPositions = { {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 - 65}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 55}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 174}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 295} };
