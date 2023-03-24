@@ -18,6 +18,7 @@ void GameManager::Update() {
 	this->m_MousePos = GetMousePosition();
 	DrawTextures();
 	DrawButtons();
+	DrawMousePos();
 };
 
 void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions) {
@@ -43,6 +44,10 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 		this->m_OnHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
 		this->m_ButtonPositions.push_back(positions[i]);
 	}
+}
+
+void GameManager::DrawMousePos() {
+	DrawText(TextFormat("Mouse Position: %g, %g", this->m_MousePos.x, this->m_MousePos.y), 10, 10, 20, BLACK);
 }
 
 void GameManager::DrawTextures() {
