@@ -24,12 +24,18 @@
     <ClCompile Include="src\Menu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameManager.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Menu.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
