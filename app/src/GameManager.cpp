@@ -5,9 +5,9 @@ GameManager* GameManager::instance;
 
 GameManager::GameManager() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
-	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS GAME");
+	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS CHEMISTRY LAB");
 	SetExitKey(KEY_NULL);
-	ToggleFullscreen();
+	//ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
@@ -76,6 +76,9 @@ void GameManager::UnloadScene() {
 		UnloadTexture(this->m_Buttons[i]);
 		UnloadTexture(this->m_OnHoverButtons[i]);
 	}
+	this->m_Buttons.clear();
+	this->m_OnHoverButtons.clear();
+	this->m_ButtonPositions.clear();
 }
 
 std::string GameManager::GetAssetPath()
