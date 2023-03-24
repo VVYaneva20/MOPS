@@ -7,7 +7,7 @@ GameManager::GameManager() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS GAME");
 	SetExitKey(KEY_NULL);
-	//ToggleFullscreen();
+	ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
@@ -19,7 +19,7 @@ void GameManager::Update() {
 	DrawButtons();
 };
 
-void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<std::string> hoverEffects, std::vector<Vector2> positions) {
+void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions) {
 	if (this->CurrentScene != sceneID) {
 		UnloadScene();
 		this->CurrentScene = sceneID;
