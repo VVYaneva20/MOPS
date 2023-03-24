@@ -13,8 +13,8 @@ private:
     const int c_ButtonWidth = 367;
     const int c_ButtonHeight = 82;
 
-    const int c_LogoWidth = 479;
-    const int c_LogoHeight = 143;
+    const int c_LogoWidth = 457;
+    const int c_LogoHeight = 149;
 
     Vector2 m_LogoPos = { GetScreenWidth() / 2.0f - this->c_LogoWidth / 2.0f, GetScreenHeight() / 2.0f - this->c_LogoHeight / 2.0f - 200 };
     std::vector<std::string> m_Images = { "Menu/Menu.png", "Menu/Logo.png" };

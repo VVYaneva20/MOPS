@@ -15,6 +15,7 @@ GameManager::~GameManager() {
 };
 
 void GameManager::Update() {
+	this->m_MousePos = GetMousePosition();
 	DrawTextures();
 	DrawButtons();
 };
@@ -93,4 +94,22 @@ GameManager* GameManager::GetInstance() {
 
 bool GameManager::GetShouldClose() {
 	return WindowShouldClose();
+}
+
+bool GameManager::IsButtonClicked(size_t buttonID)
+{
+	if (buttonID >= this->m_Buttons.size())
+	{
+		std::cout << "Button ID out of range\n";
+		return false;
+	}
+	Rectangle buttonRect = { this->m_ButtonPositions[buttonID].x, this->m_ButtonPositions[buttonID].y, this->m_Buttons[buttonID].width, this->m_Buttons[buttonID].height };
+	if (CheckCollisionPointRec(this->m_MousePos, buttonRect))
+	{
+		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		{
+			return true;
+		}
+	}
+	return false;
 }

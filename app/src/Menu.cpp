@@ -13,7 +13,8 @@ void Menu::DrawMenu() {
         BeginDrawing();
         ClearBackground(BLUE);
         gameManager->Update();
-        if (IsKeyPressed(KEY_ESCAPE)) {
+		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked(3)) {
+			std::cout << "Exit" << std::endl;
             delete gameManager;
             break;
         }
