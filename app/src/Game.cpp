@@ -17,3 +17,6 @@ Game::Game() {
 		}
 	}
 }
+
+Game::~Game() {
+}

@@ -6,18 +6,28 @@ Menu::Menu() {
     this->DrawMenu();
 }
 
-Menu::~Menu() {}
+Menu::~Menu() {
+}
+
 
 void Menu::DrawMenu() {
     while (gameManager->CurrentScene == gameManager->SCENE::MENU && !gameManager->GetShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
         gameManager->Update();
-		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked(3)) {
-			std::cout << "Exit" << std::endl;
+        EndDrawing();
+
+        if (gameManager->IsButtonClicked(0)) {
+            delete this;
+            Game* game = new Game();
+            break;
+        }
+
+        if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked(3)) {
+            std::cout << "Exit" << std::endl;
             delete gameManager;
             break;
         }
-        EndDrawing();
+
     }
 }
