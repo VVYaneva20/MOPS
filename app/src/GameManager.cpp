@@ -7,7 +7,7 @@ GameManager::GameManager() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS GAME");
 	SetExitKey(KEY_NULL);
-	ToggleFullscreen();
+	//ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
@@ -89,4 +89,8 @@ Vector2 GameManager::GetScreenSize() {
 GameManager* GameManager::GetInstance() {
 	if (!instance) instance = new GameManager();
 	return instance;
+}
+
+bool GameManager::GetShouldClose() {
+	return WindowShouldClose();
 }

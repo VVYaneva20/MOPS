@@ -20,6 +20,7 @@ public:
 	void DrawTextures();
 	void DrawButtons();
 	void UnloadScene();
+	bool GetShouldClose();
 	std::string GetAssetPath();
 	Vector2 GetScreenSize();
 	~GameManager();
