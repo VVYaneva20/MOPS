@@ -8,4 +8,5 @@ public:
 	~SiteHome();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
+	TableManager* tableManager = new TableManager();
 };
