@@ -1,5 +1,6 @@
 #include <Game.hpp>
 #include <Site.hpp>
+#include <SiteHome.hpp>
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, {{0, 0}});

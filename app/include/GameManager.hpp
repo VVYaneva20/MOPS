@@ -10,7 +10,8 @@ public:
         NO_SCENE,
         MENU,
         GAME,
-        REGISTER
+        REGISTER,
+        SITEHOME
     };
 
     SCENE CurrentScene = NO_SCENE;
