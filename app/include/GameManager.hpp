@@ -9,7 +9,8 @@ public:
     enum SCENE {
         NO_SCENE,
         MENU,
-        GAME
+        GAME,
+        REGISTER
     };
 
     SCENE CurrentScene = NO_SCENE;

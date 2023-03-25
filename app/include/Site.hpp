@@ -1,14 +1,11 @@
-#pragma once
 #include <GameManager.hpp>
 #include <Menu.hpp>
 
-class Game {
+class Site {
 public:
-	Game();
-	~Game();
+	Site();
+	~Site();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
-
-
-
+	void DrawSite();
 };
