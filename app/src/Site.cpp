@@ -1,5 +1,6 @@
 #pragma once
 #include <Site.hpp>
+#include <SiteHome.hpp>
 
 Site::Site() {
 	gameManager->LoadScene(gameManager->SCENE::REGISTER, { "Site/Register.png" }, {{0, 0}});
@@ -22,6 +23,12 @@ void Site::DrawSite() {
 		{
 			delete this;
 			Game* game = new Game();
+			break;
+		}
+		if (gameManager->IsButtonClicked(0))
+		{
+			delete this;
+			SiteHome* siteHome = new SiteHome();
 			break;
 		}
 	}

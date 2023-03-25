@@ -141,12 +141,14 @@
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Site.cpp" />
+    <ClCompile Include="src\SiteHome.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp" />
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\Site.hpp" />
+    <ClInclude Include="include\SiteHome.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

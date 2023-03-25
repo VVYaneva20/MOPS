@@ -2,10 +2,10 @@
 #include <GameManager.hpp>
 #include <Menu.hpp>
 
-class Game {
+class SiteHome {
 public:
-	Game();
-	~Game();
+	SiteHome();
+	~SiteHome();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 };
