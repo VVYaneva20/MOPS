@@ -2,6 +2,7 @@
 #include <Site.hpp>
 #include <iostream>
 #include <raymath.h>
+#include <SiteHome.hpp>
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
@@ -46,7 +47,7 @@ Game::Game() {
 		if (gameManager->IsButtonClicked(0))
 		{
 			delete this;
-			Site* site = new Site();
+			SiteHome* siteHome = new SiteHome();
 			break;
 		}
 	}

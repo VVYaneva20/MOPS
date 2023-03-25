@@ -28,7 +28,7 @@ void Site::DrawSite() {
 		if (gameManager->IsButtonClicked(0))
 		{
 			delete this;
-			SiteHome* siteHome = new SiteHome();
+			Game* game = new Game();
 			break;
 		}
 	}
