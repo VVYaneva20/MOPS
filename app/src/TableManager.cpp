@@ -14,14 +14,18 @@ void TableManager::Update() {
 
 void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> elements) {
 	for (size_t i = 0; i < elements.size(); i++) {
-		DrawTexture(this->hydrogen, elements[i].posX, elements[i].posY, WHITE);
+		DrawTexture(elements[i].texture, elements[i].posX, elements[i].posY, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { (float)elements[i].posX, (float)elements[i].posY, (float)elements[i].texture.width, (float)elements[i].texture.height })) {
+			// draw a border around the element
+			DrawRectangleLinesEx({ (float)elements[i].posX, (float)elements[i].posY, (float)elements[i].texture.width, (float)elements[i].texture.height }, 4, ORANGE);
+		}
 	}
 }
 
 std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement> &elements) {
 	Json::Value root;
-	std::ifstream("./assets/elements/elements.json") >> root;
-	for (int i = 0; i < 118; i++) {
+	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
+	for (int i = 0; i < root["elements"].size(); i++) {
 		PeriodicElement element;
 		element.name = root["elements"][i]["name"].asCString();
 		if (root["elements"][i]["appearance"].isNull()) element.appearance = "UNKNOWN";
@@ -40,6 +44,7 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 		element.symbol = root["elements"][i]["symbol"].asCString();
 		element.posX = root["elements"][i]["posx"].asInt();
 		element.posY = root["elements"][i]["posy"].asInt();
+		element.texture = LoadTexture((gameManager->GetAssetPath() + "Elements/Unlocked/" + element.name + ".png").c_str());
 		elements.push_back(element);
 	}
 	return elements;
