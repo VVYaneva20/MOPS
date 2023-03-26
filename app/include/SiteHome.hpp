@@ -1,6 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <Menu.hpp>
+#include <TableManager.hpp>
 
 class SiteHome {
 public:
