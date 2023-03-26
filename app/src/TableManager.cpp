@@ -14,14 +14,13 @@ void TableManager::Update() {
 
 void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> elements) {
 	for (size_t i = 0; i < elements.size(); i++) {
-		std::cout << elements[i].posX << " " << elements[i].posY << std::endl;
 		DrawTexture(this->hydrogen, elements[i].posX, elements[i].posY, WHITE);
 	}
 }
 
 std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement> &elements) {
 	Json::Value root;
-	std::ifstream("./assets/elements.json") >> root;
+	std::ifstream("./assets/elements/elements.json") >> root;
 	for (int i = 0; i < 118; i++) {
 		PeriodicElement element;
 		element.name = root["elements"][i]["name"].asCString();

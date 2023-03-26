@@ -1,5 +1,5 @@
 #include <Menu.hpp>
-#include <Site.hpp>
+
 Menu::Menu() {
     gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Images, { { 0, 0 }, this->m_LogoPos });
     gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions);
@@ -19,7 +19,7 @@ void Menu::DrawMenu() {
 
         if (gameManager->IsButtonClicked(0)) {
             delete this;
-            Site* site = new Site();
+            Game* game = new Game();
             break;
         }
 
