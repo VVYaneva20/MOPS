@@ -32,10 +32,12 @@ private:
 		int posX;
 		int posY;
 		Texture2D texture;
+		bool unlocked;
+		int price;
 	};
 	
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
-	Texture2D hydrogen = LoadTexture((gameManager->GetAssetPath() + "Table/Hydrogen.png").c_str());
+	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/padlock.png").c_str());
 	void DrawPeriodicTable(std::vector<PeriodicElement> elements);
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
 	
