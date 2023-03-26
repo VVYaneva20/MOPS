@@ -31,6 +31,7 @@ private:
 		const char* symbol;
 		int posX;
 		int posY;
+		Texture2D texture;
 	};
 	
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
