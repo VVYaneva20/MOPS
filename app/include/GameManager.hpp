@@ -14,6 +14,8 @@ public:
         SITEHOME
     };
 
+    Font Arial;
+	Font ArialBold;
     SCENE CurrentScene = NO_SCENE;
     static GameManager* GetInstance();
     void Update();

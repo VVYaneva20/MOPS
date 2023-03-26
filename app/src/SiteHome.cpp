@@ -3,7 +3,6 @@
 
 SiteHome::SiteHome() {
 	gameManager->LoadScene(gameManager->SCENE::SITEHOME, { "Site/SiteHome.png" }, { {0, 0} });
-
 	while (gameManager->CurrentScene == gameManager->SCENE::SITEHOME && !gameManager->GetShouldClose())
 	{
 		BeginDrawing();

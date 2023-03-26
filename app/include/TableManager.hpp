@@ -15,30 +15,33 @@ private:
 	GameManager* gameManager = GameManager::GetInstance();
 	
 	struct PeriodicElement {
-		const char* name;
-		const char* appearance;
+		std::string name;
+		std::string appearance;
 		float atomicMass;
 		int boil;
-		const char* category;
+		std::string category;
 		float density;
 		float melt;
 		float molarHeat;
 		int atomicNumber;
 		int period;
 		int group;
-		const char* phase;
-		const char* summary;
-		const char* symbol;
+		std::string phase;
+		std::string summary;
+		std::string symbol;
 		int posX;
 		int posY;
-		Texture2D texture;
 		bool unlocked;
 		int price;
+		Texture2D texture;
 	};
 	
+	PeriodicElement m_SelectedElement;
+
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
 	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/padlock.png").c_str());
 	void DrawPeriodicTable(std::vector<PeriodicElement> elements);
+	void DisplayInfo(PeriodicElement element);
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
 	
 	std::vector<PeriodicElement> m_Elements;
