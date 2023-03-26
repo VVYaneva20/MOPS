@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <raylib.h>
+#include <raymath.h>
 #include <GameManager.hpp>
 #include <json.h>
 #include <fstream>
@@ -34,9 +35,11 @@ private:
 		bool unlocked;
 		int price;
 		Texture2D texture;
+		Model model;
 	};
 	
 	PeriodicElement m_SelectedElement;
+	bool drawModel = true;
 
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
 	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/padlock.png").c_str());
@@ -45,4 +48,9 @@ private:
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
 	
 	std::vector<PeriodicElement> m_Elements;
+
+	Camera camera = { 0 };
+	void SetCameraSettings(Camera& camera);
+	float yaw = 0.0f;
+	void Draw3DModel();
 };

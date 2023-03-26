@@ -3,9 +3,15 @@
 TableManager::TableManager() {
 	this->m_Elements = setPeriodicElements(this->m_Elements);
 	this->m_SelectedElement = m_Elements[0];
+	this->SetCameraSettings(this->camera);
 }
 
-TableManager::~TableManager() {}
+TableManager::~TableManager() {
+	for (int i = 0; i < this->m_Elements.size(); i++) {
+		UnloadTexture(this->m_Elements[i].texture);
+		UnloadModel(this->m_Elements[i].model);
+	}
+}
 
 void TableManager::Update() {
 	DrawTextureEx(this->tableOutline, { 30, 300 }, 0, 1, WHITE);
@@ -34,8 +40,21 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 	}
 }
 
-void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
-	DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
+void TableManager::DisplayInfo(TableManager::PeriodicElement element) {	
+	if (!this->drawModel) DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
+	else {
+		this->Draw3DModel();
+		DrawRectangleLinesEx({ 1500, 150, 140, 140 }, 1, BLACK);
+
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { 1500, 150, 140, 140 })) {
+		SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
+		DrawRectangleLinesEx({ 1500, 150, 140, 140 }, 2, ORANGE);
+		if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+			this->drawModel = !this->drawModel;
+		}
+	}
+	
 	DrawTextEx(gameManager->ArialBold, (element.name).c_str(), { 1650, 200 }, 35, 0.4, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Group: " + std::to_string(element.group)).c_str(), { 1500, 320 }, 30, 0.2, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Period: " + std::to_string(element.period)).c_str(), { 1500, 360 }, 30, 0.2, WHITE);
@@ -87,9 +106,32 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 		element.posX = root["elements"][i]["posx"].asInt();
 		element.posY = root["elements"][i]["posy"].asInt();
 		element.texture = LoadTexture((gameManager->GetAssetPath() + "Elements/" + element.name + ".png").c_str());
+		element.model = LoadModel((gameManager->GetAssetPath() + "Models/" + element.name + ".glb").c_str());
 		element.unlocked = root["elements"][i]["unlocked"].asBool();
 		element.price = root["elements"][i]["price"].asInt();
 		elements.push_back(element);
 	}
 	return elements;
+}
+
+void TableManager::SetCameraSettings(Camera& camera) {
+	this->camera.position = Vector3{ 0.0f, 10.0f, 10.0f };
+	this->camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
+	this->camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
+	this->camera.fovy = 10.0f;
+	this->camera.projection = CAMERA_PERSPECTIVE;
+	SetCameraMode(this->camera, CAMERA_FREE);
+}
+
+void TableManager::Draw3DModel()
+{
+	Model model = this->m_SelectedElement.model;
+	UpdateCamera(&this->camera);
+	m_SelectedElement.model.transform = MatrixRotateXYZ(Vector3{ DEG2RAD * 1, DEG2RAD * yaw, DEG2RAD * 1 });
+	this->camera.position = Vector3{ 0.0f, 10.0f, 10.0f };
+	this->yaw += 0.2f;
+
+	BeginMode3D(this->camera);
+	DrawModel(m_SelectedElement.model, { 1.326f, 1.0f, 0.0f }, 0.48, WHITE);
+	EndMode3D();
 }

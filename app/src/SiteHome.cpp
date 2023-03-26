@@ -13,6 +13,7 @@ SiteHome::SiteHome() {
 
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
+			delete this->tableManager;
 			delete this;
 			Game* menu = new Game();
 			break;
