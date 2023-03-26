@@ -7,7 +7,7 @@ GameManager::GameManager() {
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS CHEMISTRY LAB");
 	SetExitKey(KEY_NULL);
-	ToggleFullscreen();
+	//ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
