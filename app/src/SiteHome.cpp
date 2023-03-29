@@ -10,22 +10,22 @@ SiteHome::SiteHome() {
 		BeginDrawing();
 		ClearBackground(BLUE);
 		gameManager->Update();
-		EndDrawing();
-
 		if (gameManager->IsButtonClicked(0) || this->currTab == TABS::ELEMENTS) {
 			this->currTab = TABS::ELEMENTS;
 			tableManager->Update();
 		}
+		if (gameManager->IsButtonClicked(1) || this->currTab == TABS::ORDERS) {
+			this->currTab = TABS::ORDERS;
+			orders->Update();
+		}
+		EndDrawing();
+
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
 			delete this->tableManager;
 			delete this;
 			Game* menu = new Game();
 			break;
-		}
-		if (gameManager->IsButtonClicked(1)) {
-			this->currTab = SiteHome::TABS::ORDERS;
-			orders->Update();
 		}
 	}
 }
