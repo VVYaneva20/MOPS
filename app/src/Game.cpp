@@ -1,10 +1,12 @@
 #include <Game.hpp>
 
 Game::Game() {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png" }, { {0, 0}, {0,0} });
 	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {956, 396} }, { "PC", "INVENTORY" });
 	this->Update();
 }
+
+Game::~Game() {}
 
 void Game::Update()
 {
@@ -15,6 +17,8 @@ void Game::Update()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		orders->generateOrder();
+		//draw balance
+		DrawTextEx(gameManager->ArialBold, (std::to_string(balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
 		
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
@@ -60,4 +64,7 @@ void Game::Update()
 	}
 }
 
-Game::~Game() {}
+int Game::getBalance()
+{
+	return this->balance;
+}
