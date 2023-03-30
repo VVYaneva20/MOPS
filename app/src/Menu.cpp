@@ -17,13 +17,13 @@ void Menu::DrawMenu() {
         gameManager->Update();
         EndDrawing();
 
-        if (gameManager->IsButtonClicked(0)) {
+        if (gameManager->IsButtonClicked("START")) {
             delete this;
             Game* game = new Game();
             break;
         }
 
-        if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked(3)) {
+        if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {
             std::cout << "Exit" << std::endl;
             delete gameManager;
             break;

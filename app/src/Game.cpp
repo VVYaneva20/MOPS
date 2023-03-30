@@ -24,7 +24,7 @@ void Game::Update()
 			break;
 		}
 
-		if (gameManager->IsButtonClicked(0))
+		if (gameManager->IsButtonClicked("PC"))
 		{
 			delete this;
 			SiteHome* siteHome = new SiteHome();

@@ -12,11 +12,11 @@ SiteHome::SiteHome() {
 	{
 		BeginDrawing();
 		ClearBackground(BLUE);
-		if (gameManager->IsButtonClicked(0) || this->currTab == TABS::ELEMENTS) {
+		if (gameManager->IsButtonClicked("ELEMENTS") || this->currTab == TABS::ELEMENTS) {
 			this->currTab = TABS::ELEMENTS;
 			tableManager->Update();
 		}
-		if (gameManager->IsButtonClicked(1) || this->currTab == TABS::ORDERS) {
+		if (gameManager->IsButtonClicked("ORDERS") || this->currTab == TABS::ORDERS) {
 			gameManager->UnloadButtonByID(4);
 			tableManager->loaded = false;
 			this->currTab = TABS::ORDERS;
