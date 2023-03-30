@@ -23,6 +23,12 @@ void Menu::DrawMenu() {
             break;
         }
 
+        if (gameManager->IsButtonClicked("RULES")) {
+			delete this;
+			Rules* rules = new Rules();
+			break;
+		}
+
         if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {
             std::cout << "Exit" << std::endl;
             delete gameManager;

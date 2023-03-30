@@ -12,7 +12,8 @@ public:
         MENU,
         GAME,
         REGISTER,
-        SITEHOME
+        SITEHOME,
+        RULES
     };
 
     Font Arial;
