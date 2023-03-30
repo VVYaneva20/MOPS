@@ -2,7 +2,7 @@
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
-	gameManager->LoadButtons({ "Lab/PC.png" }, { "Lab/PCHover.png" }, { { 1580, 575 } }, { "PC" });
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { { 1580, 575 }, { 956, 396 } }, { "PC", "INVENTORY" });
 	this->Update();
 }
 
@@ -32,8 +32,18 @@ void Game::Update()
 				selected = false;
 			}
 		}
-		EndDrawing();
 
+		if (gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I) || isInventoryOpen)
+		{
+			isInventoryOpen = true;
+			DrawTexture(this->HUD, 350, 150, WHITE);
+			EndDrawing();
+			if (IsKeyPressed(KEY_ESCAPE)) {
+				isInventoryOpen = false;
+			}
+			continue;
+		}
+		EndDrawing();
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
 			delete this;
@@ -41,7 +51,7 @@ void Game::Update()
 			break;
 		}
 
-		if (gameManager->IsButtonClicked("PC"))
+		if (gameManager->IsButtonClicked("PC") && !isInventoryOpen)
 		{
 			delete this;
 			SiteHome* siteHome = new SiteHome();
