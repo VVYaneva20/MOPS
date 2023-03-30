@@ -10,6 +10,7 @@ class Game {
 public:
 	Game();
 	~Game();
+	int getBalance();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	Orders* orders = new Orders();
@@ -17,4 +18,5 @@ private:
 	bool isInventoryOpen = false;
 	void Update();
 	bool selected = false;
+	int balance = 500;
 };
