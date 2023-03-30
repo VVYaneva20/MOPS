@@ -17,7 +17,7 @@ SiteHome::SiteHome() {
 			tableManager->Update();
 		}
 		if (gameManager->IsButtonClicked("ORDERS") || this->currTab == TABS::ORDERS) {
-			gameManager->UnloadButtonByID(4);
+			gameManager->UnloadButton("UNLOCK");
 			tableManager->loaded = false;
 			this->currTab = TABS::ORDERS;
 			orders->Update();
@@ -25,7 +25,7 @@ SiteHome::SiteHome() {
 		gameManager->Update();
 		EndDrawing();
 
-		if (IsKeyPressed(KEY_ESCAPE))
+		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))
 		{
 			delete this->tableManager;
 			delete this;

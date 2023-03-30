@@ -74,11 +74,25 @@ void GameManager::DrawButtons() {
 	}
 }
 
-void GameManager::UnloadButtonByID(size_t ID)
+void GameManager::UnloadButton(size_t ID)
 {
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
 		if (i == ID)
+		{
+			UnloadTexture(this->m_Buttons[i].texture);
+			UnloadTexture(this->m_Buttons[i].onHoverTexture);
+			this->m_Buttons.erase(this->m_Buttons.begin() + i);
+			break;
+		}
+	}
+}
+
+void GameManager::UnloadButton(std::string name)
+{
+	for (size_t i = 0; i < this->m_Buttons.size(); i++)
+	{
+		if (this->m_Buttons[i].name == name)
 		{
 			UnloadTexture(this->m_Buttons[i].texture);
 			UnloadTexture(this->m_Buttons[i].onHoverTexture);
