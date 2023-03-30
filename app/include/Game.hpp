@@ -13,4 +13,5 @@ public:
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	Orders* orders = new Orders();
+	void Update();
 };

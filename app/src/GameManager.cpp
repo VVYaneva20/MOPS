@@ -37,15 +37,16 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, st
 	}
 }
 
-void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions)
+void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions, std::vector<std::string> names)
 {
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
 		textureFiles[i] = this->GetAssetPath() + textureFiles[i];
 		onHoverTextures[i] = this->GetAssetPath() + onHoverTextures[i];
-		this->m_Buttons.push_back(LoadTexture(textureFiles[i].c_str()));
-		this->m_OnHoverButtons.push_back(LoadTexture(onHoverTextures[i].c_str()));
-		this->m_ButtonPositions.push_back(positions[i]);
+		std::transform(names[i].begin(), names[i].end(), names[i].begin(), ::toupper);
+		BUTTON button = { names[i], LoadTexture(textureFiles[i].c_str()), LoadTexture(onHoverTextures[i].c_str()), positions[i]};
+		this->m_Buttons.push_back(button);
+		
 	}
 }
 
@@ -63,12 +64,12 @@ void GameManager::DrawButtons() {
 	SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
-		DrawTexture(this->m_Buttons[i], this->m_ButtonPositions[i].x, this->m_ButtonPositions[i].y, WHITE);
-		Rectangle buttonRect = { this->m_ButtonPositions[i].x, this->m_ButtonPositions[i].y, this->m_Buttons[i].width, this->m_Buttons[i].height };
+		DrawTexture(this->m_Buttons[i].texture, this->m_Buttons[i].pos.x, this->m_Buttons[i].pos.y, WHITE);
+		Rectangle buttonRect = { this->m_Buttons[i].pos.x, this->m_Buttons[i].pos.y, this->m_Buttons[i].texture.width, this->m_Buttons[i].texture.height };
 		if (CheckCollisionPointRec(this->m_MousePos, buttonRect))
 		{
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
-			DrawTexture(this->m_OnHoverButtons[i], this->m_ButtonPositions[i].x, this->m_ButtonPositions[i].y, WHITE);
+			DrawTexture(this->m_Buttons[i].onHoverTexture, this->m_Buttons[i].pos.x, this->m_Buttons[i].pos.y, WHITE);
 		}
 	}
 }
@@ -79,11 +80,9 @@ void GameManager::UnloadButtonByID(size_t ID)
 	{
 		if (i == ID)
 		{
-			UnloadTexture(this->m_Buttons[i]);
-			UnloadTexture(this->m_OnHoverButtons[i]);
+			UnloadTexture(this->m_Buttons[i].texture);
+			UnloadTexture(this->m_Buttons[i].onHoverTexture);
 			this->m_Buttons.erase(this->m_Buttons.begin() + i);
-			this->m_OnHoverButtons.erase(this->m_OnHoverButtons.begin() + i);
-			this->m_ButtonPositions.erase(this->m_ButtonPositions.begin() + i);
 			break;
 		}
 	}
@@ -97,12 +96,10 @@ void GameManager::UnloadScene() {
 	this->m_TexturePositions.clear();
 
 	for (int i = 0; i < this->m_Buttons.size(); i++) {
-		UnloadTexture(this->m_Buttons[i]);
-		UnloadTexture(this->m_OnHoverButtons[i]);
+		UnloadTexture(this->m_Buttons[i].texture);
+		UnloadTexture(this->m_Buttons[i].onHoverTexture);
 	}
 	this->m_Buttons.clear();
-	this->m_OnHoverButtons.clear();
-	this->m_ButtonPositions.clear();
 }
 
 std::string GameManager::GetAssetPath()
@@ -130,7 +127,7 @@ bool GameManager::IsButtonClicked(size_t buttonID)
 		std::cout << "Button ID out of range\n";
 		return false;
 	}
-	Rectangle buttonRect = { this->m_ButtonPositions[buttonID].x, this->m_ButtonPositions[buttonID].y, this->m_Buttons[buttonID].width, this->m_Buttons[buttonID].height };
+	Rectangle buttonRect = { this->m_Buttons[buttonID].pos.x, this->m_Buttons[buttonID].pos.y, this->m_Buttons[buttonID].texture.width, this->m_Buttons[buttonID].texture.height };
 	if (CheckCollisionPointRec(this->m_MousePos, buttonRect))
 	{
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))

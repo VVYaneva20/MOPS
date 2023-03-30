@@ -12,8 +12,10 @@ public:
 	TableManager();
 	~TableManager();
 	void Update();
+	bool loaded = false;
 private:
 	GameManager* gameManager = GameManager::GetInstance();
+	
 	
 	struct PeriodicElement {
 		std::string name;
@@ -40,9 +42,9 @@ private:
 	
 	PeriodicElement m_SelectedElement;
 	bool drawModel = true;
-
+	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Table/TableBackground.png").c_str());
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
-	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/padlock.png").c_str());
+	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/Padlock.png").c_str());
 	void DrawPeriodicTable(std::vector<PeriodicElement> elements);
 	void DisplayInfo(PeriodicElement element);
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
@@ -53,4 +55,5 @@ private:
 	void SetCameraSettings(Camera& camera);
 	float yaw = 0.0f;
 	void Draw3DModel();
+
 };

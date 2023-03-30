@@ -2,6 +2,7 @@
 #include <iostream>
 #include <raylib.h>
 #include <vector>
+#include <algorithm>
 
 class GameManager
 {
@@ -20,7 +21,7 @@ public:
     static GameManager* GetInstance();
     void Update();
     void LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions);
-    void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions);
+    void LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions, std::vector<std::string> names);
     void DrawMousePos();
     void DrawTextures();
     void DrawButtons();
@@ -36,10 +37,14 @@ private:
     const std::string m_AssetPath = "./assets/";
     const Vector2 m_ScreenSize = { 1920, 1080 };
     Vector2 m_MousePos = { 0, 0 };
+	struct BUTTON {
+		std::string name;
+		Texture2D texture;
+		Texture2D onHoverTexture;
+		Vector2 pos;
+	};
+	std::vector<BUTTON> m_Buttons;
     std::vector<Texture2D> m_Textures;
     std::vector<Vector2> m_TexturePositions;
-    std::vector<Texture2D> m_Buttons;
-    std::vector<Texture2D> m_OnHoverButtons;
-    std::vector<Vector2> m_ButtonPositions;
     GameManager();
 };

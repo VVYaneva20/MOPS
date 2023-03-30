@@ -23,4 +23,5 @@ private:
     std::vector<std::string> m_Buttons = { "Menu/Start.png", "Menu/Settings.png", "Menu/Rules.png", "Menu/Exit.png" };
     std::vector<Vector2> m_ButtonPositions = { {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 - 65}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 55}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 174}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 295} };
     std::vector<std::string> m_ButtonsHover = { "Menu/StartHover.png", "Menu/SettingsHover.png", "Menu/RulesHover.png", "Menu/ExitHover.png" };
+	std::vector<std::string> m_ButtonNames = { "Start", "Settings", "Rules", "Exit" };
 };

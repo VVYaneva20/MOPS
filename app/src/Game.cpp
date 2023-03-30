@@ -2,7 +2,12 @@
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
-	gameManager->LoadButtons({ "Lab/PC.png" }, { "Lab/PCHover.png" }, { { 1580, 575 } });
+	gameManager->LoadButtons({ "Lab/PC.png" }, { "Lab/PCHover.png" }, { { 1580, 575 } }, { "PC" });
+	this->Update();
+}
+
+void Game::Update()
+{
 	while (gameManager->CurrentScene == gameManager->SCENE::GAME && !gameManager->GetShouldClose())
 	{
 

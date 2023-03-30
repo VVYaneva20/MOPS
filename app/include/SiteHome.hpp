@@ -15,10 +15,11 @@ public:
 	};
 private:
 	GameManager* gameManager = GameManager::GetInstance();
-	TableManager* tableManager = new TableManager();
-	Orders* orders = new Orders();
+	TableManager* tableManager;
+	Orders* orders;
 	SiteHome::TABS currTab;
-	std::vector<std::string> m_Buttons = { "Site/Elements.png", "Site/Orders.png", "Site/Buy.png" };
-	std::vector<std::string> m_ButtonsHover = { "Site/ElementsHover.png", "Site/OrdersHover.png", "Site/BuyHover.png" };
-	std::vector<Vector2> m_ButtonPositions = { {400, 35}, {680, 35}, {944, 35} };
+	std::vector<std::string> m_Buttons = { "Site/Elements.png", "Site/Orders.png", "Site/Buy.png", "Site/Close.png"};
+	std::vector<std::string> m_ButtonsHover = { "Site/ElementsHover.png", "Site/OrdersHover.png", "Site/BuyHover.png", "Site/CloseHover.png"};
+	std::vector<Vector2> m_ButtonPositions = { {400, 35}, {680, 35}, {944, 35}, {1801, 0} };
+	std::vector<std::string> m_ButtonNames = { "Elements", "Orders", "Buy", "Close" };
 };

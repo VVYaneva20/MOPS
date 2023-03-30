@@ -14,6 +14,12 @@ TableManager::~TableManager() {
 }
 
 void TableManager::Update() {
+	if (!this->loaded)
+	{
+		gameManager->LoadButtons({ "Site/Unlock.png" }, { "Site/UnlockHover.png" }, { {1525, 900} }, { "Unlock" });
+		this->loaded = true;
+	}
+	DrawTexture(this->background, 0, 0, WHITE);
 	DrawTextureEx(this->tableOutline, { 30, 300 }, 0, 1, WHITE);
 	DrawPeriodicTable(this->m_Elements);
 	DisplayInfo(this->m_SelectedElement);
