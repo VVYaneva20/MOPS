@@ -1,10 +1,12 @@
 #include <Game.hpp>
 
 Game::Game() {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png" }, { {0, 0}, {0,0} });
 	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {956, 396} }, { "PC", "INVENTORY" });
 	this->Update();
 }
+
+Game::~Game() {}
 
 void Game::Update()
 {
@@ -13,9 +15,10 @@ void Game::Update()
 
 		BeginDrawing();
 		ClearBackground(BLUE);
-		gameManager->Update();
 		orders->generateOrder();
-		
+		gameManager->Update();
+		this->DrawInventory();
+		DrawTextEx(gameManager->ArialBold, (std::to_string(balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
 			selected = true;
@@ -32,15 +35,10 @@ void Game::Update()
 				selected = false;
 			}
 		}
-
-		if (gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I) || isInventoryOpen)
+		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
-			DrawTexture(this->HUD, 350, 150, WHITE);
-			EndDrawing();
-			if (IsKeyPressed(KEY_ESCAPE)) {
-				isInventoryOpen = false;
-			}
+			gameManager->LoadButtons({ "Lab/Close.png" }, { "Lab/CloseHover.png" }, { { 1516, 140 } }, { "CLOSE" });
 			continue;
 		}
 		EndDrawing();
@@ -60,4 +58,19 @@ void Game::Update()
 	}
 }
 
-Game::~Game() {}
+void Game::DrawInventory()
+{
+	if (isInventoryOpen) {
+		DrawTexture(this->HUD, 335, 140, WHITE);
+		if (gameManager->IsButtonClicked("CLOSE"))
+		{
+			isInventoryOpen = false;
+			gameManager->UnloadButton("CLOSE");
+		}
+	}
+}
+
+int Game::getBalance()
+{
+	return this->balance;
+}

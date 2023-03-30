@@ -8,7 +8,7 @@ GameManager::GameManager() {
 	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS CHEMISTRY LAB");
 	SetExitKey(KEY_NULL);
 	this->Arial = LoadFontEx((this->GetAssetPath() + "Arial.ttf").c_str(), 1000, 0, 0);
-	this->ArialBold = LoadFontEx((this->GetAssetPath() + "arialbd.ttf").c_str(), 30, 0, 0);
+	this->ArialBold = LoadFontEx((this->GetAssetPath() + "arialbd.ttf").c_str(), 70, 0, 0);
 	SetTextureFilter(this->ArialBold.texture, TEXTURE_FILTER_POINT);
 	//ToggleFullscreen();
 };
