@@ -13,7 +13,8 @@ public:
         GAME,
         REGISTER,
         SITEHOME,
-        RULES
+        RULES,
+        SECONDRULES
     };
 
     Font Arial;
