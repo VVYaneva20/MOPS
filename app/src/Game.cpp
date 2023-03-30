@@ -9,6 +9,7 @@ Game::Game() {
 		BeginDrawing();
 		ClearBackground(BLUE);
 		gameManager->Update();
+		orders->generateOrder();
 		EndDrawing();
 
 		if (IsKeyPressed(KEY_ESCAPE))
