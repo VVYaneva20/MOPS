@@ -2,7 +2,7 @@
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png" }, { {0, 0} });
-	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { { 1580, 575 }, { 956, 396 } }, { "PC", "INVENTORY" });
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {956, 396} }, { "PC", "INVENTORY" });
 	this->Update();
 }
 

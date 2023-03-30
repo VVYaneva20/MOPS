@@ -142,6 +142,7 @@
     <ClCompile Include="src\GameManager.cpp" />
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Orders.cpp" />
+    <ClCompile Include="src\Rules.cpp" />
     <ClCompile Include="src\SiteHome.cpp" />
     <ClCompile Include="src\TableManager.cpp" />
   </ItemGroup>
@@ -150,6 +151,7 @@
     <ClInclude Include="include\GameManager.hpp" />
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\Orders.hpp" />
+    <ClInclude Include="include\Rules.hpp" />
     <ClInclude Include="include\SiteHome.hpp" />
     <ClInclude Include="include\TableManager.hpp" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <Game.hpp>
+#include <Rules.hpp>
 
 class Menu {
 public:
