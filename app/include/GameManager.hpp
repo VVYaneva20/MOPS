@@ -25,7 +25,8 @@ public:
     void DrawMousePos();
     void DrawTextures();
     void DrawButtons();
-    void UnloadButtonByID(size_t ID);
+    void UnloadButton(size_t ID);
+    void UnloadButton(std::string name);
     void UnloadScene();
     bool GetShouldClose();
     bool IsButtonClicked(size_t buttonID);
