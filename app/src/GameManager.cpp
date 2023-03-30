@@ -73,6 +73,22 @@ void GameManager::DrawButtons() {
 	}
 }
 
+void GameManager::UnloadButtonByID(size_t ID)
+{
+	for (size_t i = 0; i < this->m_Buttons.size(); i++)
+	{
+		if (i == ID)
+		{
+			UnloadTexture(this->m_Buttons[i]);
+			UnloadTexture(this->m_OnHoverButtons[i]);
+			this->m_Buttons.erase(this->m_Buttons.begin() + i);
+			this->m_OnHoverButtons.erase(this->m_OnHoverButtons.begin() + i);
+			this->m_ButtonPositions.erase(this->m_ButtonPositions.begin() + i);
+			break;
+		}
+	}
+}
+
 void GameManager::UnloadScene() {
 	for (int i = 0; i < this->m_Textures.size(); i++) {
 		UnloadTexture(this->m_Textures[i]);

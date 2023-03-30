@@ -24,6 +24,7 @@ public:
     void DrawMousePos();
     void DrawTextures();
     void DrawButtons();
+    void UnloadButtonByID(size_t ID);
     void UnloadScene();
     bool GetShouldClose();
     bool IsButtonClicked(size_t buttonID);
