@@ -15,6 +15,23 @@ void Game::Update()
 		ClearBackground(BLUE);
 		gameManager->Update();
 		orders->generateOrder();
+		
+		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			selected = true;
+		}
+		if(!selected) {
+			DrawRectangle(1500, 300, 60, 60, RED);
+		}
+
+		if (selected)
+		{
+			DrawRectangle(GetMousePosition().x -30, GetMousePosition().y -30, 60, 60, RED);
+			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+			{
+				selected = false;
+			}
+		}
 		EndDrawing();
 
 		if (IsKeyPressed(KEY_ESCAPE))
