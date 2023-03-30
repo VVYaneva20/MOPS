@@ -29,6 +29,7 @@ public:
     void UnloadScene();
     bool GetShouldClose();
     bool IsButtonClicked(size_t buttonID);
+    bool IsButtonClicked(std::string buttonName);
     std::string GetAssetPath();
     Vector2 GetScreenSize();
     ~GameManager();

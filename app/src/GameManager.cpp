@@ -137,3 +137,23 @@ bool GameManager::IsButtonClicked(size_t buttonID)
 	}
 	return false;
 }
+
+bool GameManager::IsButtonClicked(std::string buttonName)
+{
+	std::transform(buttonName.begin(), buttonName.end(), buttonName.begin(), ::toupper);
+	for (size_t i = 0; i < this->m_Buttons.size(); i++)
+	{
+		if (this->m_Buttons[i].name == buttonName)
+		{
+			Rectangle buttonRect = { this->m_Buttons[i].pos.x, this->m_Buttons[i].pos.y, this->m_Buttons[i].texture.width, this->m_Buttons[i].texture.height };
+			if (CheckCollisionPointRec(this->m_MousePos, buttonRect))
+			{
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
