@@ -15,11 +15,10 @@ void Game::Update()
 
 		BeginDrawing();
 		ClearBackground(BLUE);
-		gameManager->Update();
 		orders->generateOrder();
-		//draw balance
+		gameManager->Update();
+		this->DrawInventory();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
-		
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
 			selected = true;
@@ -36,15 +35,10 @@ void Game::Update()
 				selected = false;
 			}
 		}
-
-		if (gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I) || isInventoryOpen)
+		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
-			DrawTexture(this->HUD, 350, 150, WHITE);
-			EndDrawing();
-			if (IsKeyPressed(KEY_ESCAPE)) {
-				isInventoryOpen = false;
-			}
+			gameManager->LoadButtons({ "Lab/Close.png" }, { "Lab/CloseHover.png" }, { { 1516, 140 } }, { "CLOSE" });
 			continue;
 		}
 		EndDrawing();
@@ -60,6 +54,18 @@ void Game::Update()
 			delete this;
 			SiteHome* siteHome = new SiteHome();
 			break;
+		}
+	}
+}
+
+void Game::DrawInventory()
+{
+	if (isInventoryOpen) {
+		DrawTexture(this->HUD, 335, 140, WHITE);
+		if (gameManager->IsButtonClicked("CLOSE"))
+		{
+			isInventoryOpen = false;
+			gameManager->UnloadButton("CLOSE");
 		}
 	}
 }
