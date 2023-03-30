@@ -15,8 +15,9 @@ private:
 	GameManager* gameManager = GameManager::GetInstance();
 	Orders* orders = new Orders();
 	Texture2D HUD = LoadTexture((gameManager->GetAssetPath() + "Lab/HUD.png").c_str());
-	bool isInventoryOpen = false;
 	void Update();
+	void DrawInventory();
 	bool selected = false;
+	bool isInventoryOpen = false;
 	int balance = 500;
 };
