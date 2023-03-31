@@ -12,7 +12,6 @@ public:
 	TableManager();
 	~TableManager();
 	void Update();
-	void unlockElement();
 	bool loaded = false;
 private:
 	GameManager* gameManager = GameManager::GetInstance();
@@ -55,5 +54,5 @@ private:
 	void SetCameraSettings(Camera& camera);
 	float yaw = 0.0f;
 	void Draw3DModel();
-
+	void UnlockElement();
 };

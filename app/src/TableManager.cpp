@@ -23,6 +23,9 @@ void TableManager::Update() {
 	DrawTextureEx(this->tableOutline, { 30, 300 }, 0, 1, WHITE);
 	DrawPeriodicTable(this->m_Elements);
 	DisplayInfo(this->m_SelectedElement);
+	if (gameManager->IsButtonClicked("UNLOCK")) {
+		this->UnlockElement();
+	}
 }
 
 void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> elements) {
@@ -143,7 +146,7 @@ void TableManager::Draw3DModel()
 	EndMode3D();
 }
 
-void TableManager::unlockElement() {
+void TableManager::UnlockElement() {
 	Json::Value root;
 	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
 	for (int i = 0; i < root["elements"].size(); i++) {
