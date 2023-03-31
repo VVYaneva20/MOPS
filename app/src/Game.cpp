@@ -18,7 +18,8 @@ void Game::Update()
 		orders->generateOrder();
 		gameManager->Update();
 		this->DrawInventory();
-		DrawTextEx(gameManager->ArialBold, (std::to_string(balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
+		this->m_Balance = gameManager->GetBalance();
+		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
 			selected = true;
@@ -68,9 +69,4 @@ void Game::DrawInventory()
 			gameManager->UnloadButton("CLOSE");
 		}
 	}
-}
-
-int Game::getBalance()
-{
-	return this->balance;
 }
