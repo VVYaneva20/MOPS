@@ -3,6 +3,8 @@
 #include <raylib.h>
 #include <vector>
 #include <algorithm>
+#include <json.h>
+#include <fstream>
 
 class GameManager
 {
@@ -36,6 +38,8 @@ public:
     std::string GetAssetPath();
     Vector2 GetScreenSize();
     ~GameManager();
+    int GetBalance();
+	void SetBalance(int balance);
 private:
     static GameManager* instance;
     const std::string m_AssetPath = "./assets/";
@@ -50,5 +54,6 @@ private:
 	std::vector<BUTTON> m_Buttons;
     std::vector<Texture2D> m_Textures;
     std::vector<Vector2> m_TexturePositions;
+    int m_Balance;
     GameManager();
 };

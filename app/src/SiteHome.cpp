@@ -2,7 +2,7 @@
 #include <SiteHome.hpp>
 
 SiteHome::SiteHome() {
-	gameManager->LoadScene(gameManager->SCENE::SITEHOME, {}, {});
+	gameManager->LoadScene(gameManager->SCENE::SITEHOME, { "Site/Balance.png" }, { { 0, 27 } });
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
 	
 	this->tableManager = new TableManager();
@@ -21,6 +21,7 @@ SiteHome::SiteHome() {
 			orders->Update();
 		}
 		gameManager->Update();
+		DrawTextEx(gameManager->ArialBold, (std::to_string(gameManager->GetBalance()) + "$").c_str(), { 70, 30 }, 60, 1, WHITE);
 		EndDrawing();
 
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))

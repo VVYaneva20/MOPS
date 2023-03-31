@@ -10,6 +10,10 @@ GameManager::GameManager() {
 	this->Arial = LoadFontEx((this->GetAssetPath() + "Arial.ttf").c_str(), 1000, 0, 0);
 	this->ArialBold = LoadFontEx((this->GetAssetPath() + "arialbd.ttf").c_str(), 70, 0, 0);
 	SetTextureFilter(this->ArialBold.texture, TEXTURE_FILTER_POINT);
+	std::ifstream file(this->GetAssetPath() + "savedata.json");
+	Json::Value root;
+	file >> root;
+	this->m_Balance = root["balance"].asInt();
 	//ToggleFullscreen();
 };
 
@@ -170,4 +174,14 @@ bool GameManager::IsButtonClicked(std::string buttonName)
 		}
 	}
 	return false;
+}
+
+int GameManager::GetBalance()
+{
+	return this->m_Balance;
+}
+
+void GameManager::SetBalance(int balance)
+{
+	this->m_Balance = balance;
 }
