@@ -12,7 +12,6 @@ public:
 	TableManager();
 	~TableManager();
 	void Update();
-	bool loaded = false;
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	
@@ -45,6 +44,12 @@ private:
 	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Table/TableBackground.png").c_str());
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
 	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/Padlock.png").c_str());
+	Texture2D UnlockButton = LoadTexture((gameManager->GetAssetPath() + "Table/Unlock.png").c_str());
+	Texture2D UnlockButtonHover = LoadTexture((gameManager->GetAssetPath() + "Table/UnlockHover.png").c_str());
+	Texture2D UnlockButtonLocked = LoadTexture((gameManager->GetAssetPath() + "Table/UnlockLocked.png").c_str());
+	Texture2D OrderButton = LoadTexture((gameManager->GetAssetPath() + "Table/Order.png").c_str());
+	Texture2D OrderButtonHover = LoadTexture((gameManager->GetAssetPath() + "Table/OrderHover.png").c_str());
+	Texture2D OrderButtonLocked = LoadTexture((gameManager->GetAssetPath() + "Table/OrderLocked.png").c_str());
 	void DrawPeriodicTable(std::vector<PeriodicElement> elements);
 	void DisplayInfo(PeriodicElement element);
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
@@ -55,5 +60,6 @@ private:
 	void SetCameraSettings(Camera& camera);
 	float yaw = 0.0f;
 	void Draw3DModel();
+	void DrawButtons();
 	void UnlockElement();
 };
