@@ -17,8 +17,6 @@ SiteHome::SiteHome() {
 			tableManager->Update();
 		}
 		if (gameManager->IsButtonClicked("ORDERS") || this->currTab == TABS::ORDERS) {
-			gameManager->UnloadButton("UNLOCK");
-			tableManager->loaded = false;
 			this->currTab = TABS::ORDERS;
 			orders->Update();
 		}

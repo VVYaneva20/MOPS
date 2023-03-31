@@ -14,18 +14,10 @@ TableManager::~TableManager() {
 }
 
 void TableManager::Update() {
-	if (!this->loaded)
-	{
-		gameManager->LoadButtons({ "Site/Unlock.png" }, { "Site/UnlockHover.png" }, { {1525, 900} }, { "Unlock" });
-		this->loaded = true;
-	}
 	DrawTexture(this->background, 0, 0, WHITE);
 	DrawTextureEx(this->tableOutline, { 30, 300 }, 0, 1, WHITE);
 	DrawPeriodicTable(this->m_Elements);
 	DisplayInfo(this->m_SelectedElement);
-	if (gameManager->IsButtonClicked("UNLOCK")) {
-		this->UnlockElement();
-	}
 }
 
 void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> elements) {
@@ -91,6 +83,7 @@ void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 		}
 	}
 	DrawTextEx(gameManager->ArialBold, summary.substr(0, 304).c_str(), { 1500, 580 }, 22, 0.2, WHITE);
+	this->DrawButtons();
 }
 
 std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement> &elements) {
@@ -145,6 +138,35 @@ void TableManager::Draw3DModel()
 	BeginMode3D(this->camera);
 	DrawModel(m_SelectedElement.model, { 1.326f, 1.0f, 0.0f }, 0.48, WHITE);
 	EndMode3D();
+}
+
+void TableManager::DrawButtons()
+{
+	std::cout << m_SelectedElement.name << std::endl;
+	if(!this->m_SelectedElement.unlocked)
+	{
+		DrawTexture(this->UnlockButton, 1507, 927, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->UnlockButton.width, (float)this->UnlockButton.height }))
+		{
+			DrawTexture(this->UnlockButtonHover, 1507, 927, WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				this->UnlockElement();
+			}
+		}
+	}
+	else
+	{
+		DrawTexture(this->OrderButton, 1507, 927, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->OrderButton.width, (float)this->OrderButton.height }))
+		{
+			DrawTexture(this->OrderButtonHover, 1507, 927, WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+			}
+		}
+	}
+	
 }
 
 void TableManager::UnlockElement() {
