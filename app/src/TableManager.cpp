@@ -41,7 +41,7 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 	}
 }
 
-void TableManager::DisplayInfo(TableManager::PeriodicElement element) {	
+void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 	this->m_SelectedElement = element;
 	if (!this->drawModel) DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
 	else {
@@ -56,7 +56,7 @@ void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 			this->drawModel = !this->drawModel;
 		}
 	}
-	
+
 	DrawTextEx(gameManager->ArialBold, (element.name).c_str(), { 1650, 200 }, 35, 0.4, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Group: " + std::to_string(element.group)).c_str(), { 1500, 320 }, 30, 0.2, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Period: " + std::to_string(element.period)).c_str(), { 1500, 360 }, 30, 0.2, WHITE);
@@ -86,7 +86,7 @@ void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 	this->DrawButtons();
 }
 
-std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement> &elements) {
+std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement>& elements) {
 	Json::Value root;
 	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
 	for (int i = 0; i < root["elements"].size(); i++) {
@@ -143,30 +143,47 @@ void TableManager::Draw3DModel()
 void TableManager::DrawButtons()
 {
 	std::cout << m_SelectedElement.name << std::endl;
-	if(!this->m_SelectedElement.unlocked)
+	if (!this->m_SelectedElement.unlocked)
 	{
-		DrawTexture(this->UnlockButton, 1507, 927, WHITE);
-		if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->UnlockButton.width, (float)this->UnlockButton.height }))
-		{
-			DrawTexture(this->UnlockButtonHover, 1507, 927, WHITE);
-			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		if (gameManager->GetBalance() >= this->m_SelectedElement.unlockPrice) {
+			DrawTexture(this->UnlockButton, 1507, 927, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->UnlockButton.width, (float)this->UnlockButton.height }))
 			{
-				this->UnlockElement();
+				DrawTexture(this->UnlockButtonHover, 1507, 927, WHITE);
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+				{
+					int balance = gameManager->GetBalance();
+					balance = balance - this->m_SelectedElement.unlockPrice;
+					gameManager->SetBalance(balance);
+					this->UnlockElement();
+				}
 			}
+		}
+		else {
+			DrawTexture(this->UnlockButtonLocked, 1507, 927, WHITE);
 		}
 	}
 	else
 	{
-		DrawTexture(this->OrderButton, 1507, 927, WHITE);
-		if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->OrderButton.width, (float)this->OrderButton.height }))
-		{
-			DrawTexture(this->OrderButtonHover, 1507, 927, WHITE);
-			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		if (gameManager->GetBalance() >= this->m_SelectedElement.unitPrice) {
+
+			DrawTexture(this->OrderButton, 1507, 927, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->OrderButton.width, (float)this->OrderButton.height }))
 			{
+				DrawTexture(this->OrderButtonHover, 1507, 927, WHITE);
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+				{
+					int balance = gameManager->GetBalance();
+					balance = balance - this->m_SelectedElement.unitPrice;
+					gameManager->SetBalance(balance);
+				}
 			}
 		}
+		else {
+			DrawTexture(this->OrderButtonLocked, 1507, 927, WHITE);
+		}
 	}
-	
+
 }
 
 void TableManager::UnlockElement() {
