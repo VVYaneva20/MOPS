@@ -47,6 +47,7 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 }
 
 void TableManager::DisplayInfo(TableManager::PeriodicElement element) {	
+	this->m_SelectedElement = element;
 	if (!this->drawModel) DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
 	else {
 		this->Draw3DModel();
@@ -140,4 +141,18 @@ void TableManager::Draw3DModel()
 	BeginMode3D(this->camera);
 	DrawModel(m_SelectedElement.model, { 1.326f, 1.0f, 0.0f }, 0.48, WHITE);
 	EndMode3D();
+}
+
+void TableManager::unlockElement() {
+	Json::Value root;
+	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
+	for (int i = 0; i < root["elements"].size(); i++) {
+		if (root["elements"][i]["name"].asCString() == this->m_SelectedElement.name) {
+			root["elements"][i]["unlocked"] = true;
+			std::ofstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) << root;
+			m_SelectedElement.unlocked = true;
+			m_Elements[i].unlocked = true;
+			break;
+		}
+	}
 }

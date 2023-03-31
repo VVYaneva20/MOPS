@@ -12,6 +12,7 @@ public:
 	TableManager();
 	~TableManager();
 	void Update();
+	void unlockElement();
 	bool loaded = false;
 private:
 	GameManager* gameManager = GameManager::GetInstance();
@@ -40,7 +41,6 @@ private:
 		Model model;
 	};
 	
-	PeriodicElement m_SelectedElement;
 	bool drawModel = true;
 	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Table/TableBackground.png").c_str());
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
@@ -50,7 +50,7 @@ private:
 	std::vector<PeriodicElement> setPeriodicElements(std::vector<PeriodicElement> &elements);
 	
 	std::vector<PeriodicElement> m_Elements;
-
+	PeriodicElement m_SelectedElement;
 	Camera camera = { 0 };
 	void SetCameraSettings(Camera& camera);
 	float yaw = 0.0f;

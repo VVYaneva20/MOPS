@@ -22,6 +22,9 @@ SiteHome::SiteHome() {
 			this->currTab = TABS::ORDERS;
 			orders->Update();
 		}
+		if (gameManager->IsButtonClicked("UNLOCK")) {
+			tableManager->unlockElement();
+		}
 		gameManager->Update();
 		EndDrawing();
 
