@@ -35,7 +35,8 @@ private:
 		int posX;
 		int posY;
 		bool unlocked;
-		int price;
+		int unlockPrice;
+		int unitPrice;
 		Texture2D texture;
 		Model model;
 	};

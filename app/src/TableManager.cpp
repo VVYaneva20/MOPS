@@ -118,7 +118,8 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 		element.texture = LoadTexture((gameManager->GetAssetPath() + "Elements/" + element.name + ".png").c_str());
 		element.model = LoadModel((gameManager->GetAssetPath() + "Models/" + element.name + ".glb").c_str());
 		element.unlocked = root["elements"][i]["unlocked"].asBool();
-		element.price = root["elements"][i]["price"].asInt();
+		element.unlockPrice = root["elements"][i]["unlock_price"].asInt();
+		element.unitPrice = root["elements"][i]["unit_price"].asInt();
 		elements.push_back(element);
 	}
 	return elements;
