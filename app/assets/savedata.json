@@ -1,3 +1,18 @@
 {
-	"balance": 500
+	"balance" : 500,
+	"inventory" : 
+	[
+		{
+			"name" : "H",
+			"quantity" : 0
+		},
+		{
+			"name" : "C",
+			"quantity" : 0
+		},
+		{
+			"name" : "O",
+			"quantity" : 0
+		}
+	]
 }

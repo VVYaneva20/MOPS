@@ -121,10 +121,28 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 		element.posX = root["elements"][i]["posx"].asInt();
 		element.posY = root["elements"][i]["posy"].asInt();
 		element.texture = LoadTexture((gameManager->GetAssetPath() + "Elements/" + element.name + ".png").c_str());
-		//element.model = LoadModel((gameManager->GetAssetPath() + "Models/" + element.name + ".glb").c_str());
 		element.unlocked = root["elements"][i]["unlocked"].asBool();
 		element.unlockPrice = root["elements"][i]["unlock_price"].asInt();
 		element.unitPrice = root["elements"][i]["unit_price"].asInt();
+		if (element.unlocked)
+		{
+			bool found = false;
+			Json::Value inventory;
+			std::ifstream((gameManager->GetAssetPath() + "savedata.json").c_str()) >> inventory;
+			for (int j = 0; j < inventory["inventory"].size(); j++) {
+				if (inventory["inventory"][j]["name"].asCString() == element.symbol) {
+					found = true;
+					break;
+				}
+			}
+			if (!found) {
+				Json::Value newElement;
+				newElement["name"] = (element.symbol).c_str();
+				newElement["quantity"] = 0;
+				inventory["inventory"].append(newElement);
+				std::ofstream((gameManager->GetAssetPath() + "savedata.json").c_str()) << inventory;
+			}
+		}
 		elements.push_back(element);
 	}
 	return elements;
@@ -184,6 +202,18 @@ void TableManager::DrawButtons()
 				DrawTexture(this->OrderButtonHover, 1507, 927, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 				{
+					// read savedata json
+					Json::Value root;
+					std::ifstream((gameManager->GetAssetPath() + "savedata.json").c_str()) >> root;
+					for (int i = 0; i < root["inventory"].size(); i++)
+					{
+						if (root["inventory"][i]["name"].asCString() == this->m_SelectedElement.symbol)
+						{
+							root["inventory"][i]["quantity"] = root["inventory"][i]["quantity"].asInt() + 1;
+							break;
+						}
+					}
+					std::ofstream((gameManager->GetAssetPath() + "savedata.json").c_str()) << root;
 					int balance = gameManager->GetBalance();
 					balance = balance - this->m_SelectedElement.unitPrice;
 					gameManager->SetBalance(balance);
@@ -199,13 +229,23 @@ void TableManager::DrawButtons()
 
 void TableManager::UnlockElement() {
 	Json::Value root;
-	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
+	std::ifstream file((gameManager->GetAssetPath() + "elements/elements.json").c_str());
+	file >> root;
+	file.close();
+	Json::Value inventory;
+	std::ifstream file2((gameManager->GetAssetPath() + "savedata.json").c_str());
+	file2 >> inventory;
 	for (int i = 0; i < root["elements"].size(); i++) {
 		if (root["elements"][i]["name"].asCString() == this->m_SelectedElement.name) {
 			root["elements"][i]["unlocked"] = true;
 			std::ofstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) << root;
 			m_SelectedElement.unlocked = true;
 			m_Elements[i].unlocked = true;
+			Json::Value element;
+			element["name"] = (this->m_SelectedElement.symbol).c_str();
+			element["quantity"] = 0;
+			inventory["inventory"].append(element);
+			std::ofstream((gameManager->GetAssetPath() + "savedata.json").c_str()) << inventory;
 			break;
 		}
 	}
