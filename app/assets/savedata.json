@@ -3,16 +3,19 @@
 	"inventory" : 
 	[
 		{
-			"name" : "H",
-			"quantity" : 0
+			"name" : "Hydrogen",
+			"quantity" : 0,
+			"symbol" : "H"
 		},
 		{
-			"name" : "C",
-			"quantity" : 0
+			"name" : "Carbon",
+			"quantity" : 0,
+			"symbol" : "C"
 		},
 		{
-			"name" : "O",
-			"quantity" : 0
+			"name" : "Oxygen",
+			"quantity" : 0,
+			"symbol" : "O"
 		}
 	]
 }
