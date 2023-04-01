@@ -5,7 +5,7 @@
                 {"name": "Fe", "quantity": 2},
                 {"name": "O", "quantity": 3}
             ],
-			"prouct": "Fe2O3",
+			"product": "Fe2O3",
             "product_name": "Iron(III) oxide"
         },
         {

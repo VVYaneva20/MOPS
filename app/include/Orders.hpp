@@ -7,8 +7,8 @@
 #include <fstream>
 class Orders {
 public:
-	Orders();
 	~Orders();
+	static Orders* GetInstance();
 	void Update();
 
 	struct Reactants {
@@ -25,8 +25,12 @@ public:
 	};
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	void generateOrder();
+	void DrawOrders();
 private:
+	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();
 	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Orders/Orders.png").c_str());
+	Texture2D OrderRect = LoadTexture((gameManager->GetAssetPath() + "Orders/OrderRect.png").c_str());
 	std::vector<Order> orders;
+	Orders();
 };

@@ -60,7 +60,7 @@ void Game::Update()
 
 		if (gameManager->IsButtonClicked("PC") && !isInventoryOpen)
 		{
-			SiteHome* siteHome = new SiteHome(this->orders);
+			SiteHome* siteHome = new SiteHome();
 			delete this;
 			break;
 		}

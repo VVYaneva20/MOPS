@@ -1,13 +1,22 @@
 #include <Orders.hpp>
 
+Orders* Orders::instance;
+
+Orders* Orders::GetInstance() {
+	if (!instance) instance = new Orders();
+	return instance;
+}
+
 Orders::Orders() {}
 
 Orders::~Orders() {
 	UnloadTexture(this->background);
+	UnloadTexture(this->OrderRect);
 }
 
 void Orders::Update() {
 	DrawTexture(this->background, 0, 0, WHITE);
+	DrawOrders();
 }
 
 void Orders::generateOrder() {
@@ -40,5 +49,13 @@ void Orders::generateOrder() {
 		endTime = this->startTime + duration;
 		std::cout << "Order generated" << std::endl;
 		this->orders.push_back(order);
+	}
+}
+
+void Orders::DrawOrders()
+{
+	for (int i = 0; i < this->orders.size(); i++)
+	{
+		DrawTexture(this->OrderRect, 0, 349 * (i + 1), WHITE);
 	}
 }
