@@ -19,7 +19,7 @@ private:
 		int quantity;
 	};
 	GameManager* gameManager = GameManager::GetInstance();
-	Orders* orders = new Orders();
+	Orders* orders = Orders::GetInstance();
 	Texture2D HUD = LoadTexture((gameManager->GetAssetPath() + "Lab/HUD.png").c_str());
 	Texture2D Slot = LoadTexture((gameManager->GetAssetPath() + "Lab/InventorySlot.png").c_str());
 	Texture2D Prev = LoadTexture((gameManager->GetAssetPath() + "Lab/Prev.png").c_str());
