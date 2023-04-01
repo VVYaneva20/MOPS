@@ -9,6 +9,11 @@ Game::Game() {
 
 Game::~Game() {
 	UnloadTexture(this->HUD);
+	UnloadTexture(this->Slot);
+	UnloadTexture(this->Prev);
+	UnloadTexture(this->PrevHover);
+	UnloadTexture(this->Next);
+	UnloadTexture(this->NextHover);
 }
 
 void Game::Update()
@@ -23,7 +28,7 @@ void Game::Update()
 		this->DrawInventory();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
-		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 		{
 			selected = true;
 		}
@@ -82,19 +87,56 @@ void Game::DrawInventory()
 {
 	if (isInventoryOpen) {
 		DrawTexture(this->HUD, 335, 140, WHITE);
-		for (size_t i = 0, c = 0; i < 4; i++) {
+		int pages = int(25 / 24) + 1;
+		if (page > 1 && page < int(this->inventory.size() / 25) + 1)
+		{
+			DrawTexture(this->Prev, 340, 545, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 340, 545, (float)this->Prev.width, (float)this->Prev.height }))
+			{
+				DrawTexture(this->PrevHover, 340, 545, WHITE);
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page--;
+			}
+			DrawTexture(this->Next, 1525, 545, WHITE);
+			if(CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
+			{
+				DrawTexture(this->NextHover, 1525, 545, WHITE);
+				if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
+			}
+		}
+		if (page == 1 && (int(this->inventory.size() / 25) + 1) > 1)
+		{
+			DrawTexture(this->Next, 1525, 545, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
+			{
+				DrawTexture(this->NextHover, 1525, 545, WHITE);
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
+			}
+		}
+		if (page > 1 && page == int(this->inventory.size() / 25) + 1)
+		{
+			DrawTexture(this->Prev, 340, 545, WHITE);
+			if (CheckCollisionPointRec(GetMousePosition(), { 340, 545, (float)this->Prev.width, (float)this->Prev.height }))
+			{
+				DrawTexture(this->PrevHover, 340, 545, WHITE);
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page--;
+			}
+		}
+		//if(page > 1 && )
+		for (size_t i = 0, count = (this->page - 1) * 24; i < 4; i++) {
 			for (size_t j = 0; j < 6; j++)
 			{
 				DrawTexture(this->Slot, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
-				c++;
-				if (c >= inventory.size()) break;
+				count++;
+				if (count >= inventory.size()) break;
 			}
-			if (c >= inventory.size()) break;
+			if (count >= inventory.size()) break;
 		}
 		if (gameManager->IsButtonClicked("CLOSE"))
 		{
 			isInventoryOpen = false;
 			gameManager->UnloadButton("CLOSE");
 		}
+		return;
 	}
+	this->page = 1;
 }
