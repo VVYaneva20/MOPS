@@ -22,7 +22,11 @@ void Menu::DrawMenu() {
             Game* game = new Game();
             break;
         }
-
+        if (gameManager->IsButtonClicked("SETTINGS")) {
+			delete this;
+			Settings* settings = new Settings();
+			break;
+		}
         if (gameManager->IsButtonClicked("RULES")) {
 			delete this;
 			Rules* rules = new Rules();

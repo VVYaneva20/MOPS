@@ -2,6 +2,7 @@
 #include <GameManager.hpp>
 #include <Game.hpp>
 #include <Rules.hpp>
+#include <Settings.hpp>
 
 class Menu {
 public:
