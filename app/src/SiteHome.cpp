@@ -1,12 +1,12 @@
 #pragma once
 #include <SiteHome.hpp>
 
-SiteHome::SiteHome() {
+SiteHome::SiteHome(Orders* orders) {
 	gameManager->LoadScene(gameManager->SCENE::SITEHOME, { "Site/Balance.png" }, { { 0, 27 } });
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
 	
 	this->tableManager = new TableManager();
-	this->orders = new Orders();
+	this->orders = orders;
 	
 	while (gameManager->CurrentScene == gameManager->SCENE::SITEHOME && !gameManager->GetShouldClose())
 	{
@@ -27,7 +27,6 @@ SiteHome::SiteHome() {
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))
 		{
 			delete this->tableManager;
-			delete this->orders;
 			delete this;
 			Game* menu = new Game();
 			break;
