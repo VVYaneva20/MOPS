@@ -16,7 +16,8 @@ public:
         REGISTER,
         SITEHOME,
         RULES,
-        SECONDRULES
+        SECONDRULES,
+        SETTINGS
     };
 
     Font Arial;
