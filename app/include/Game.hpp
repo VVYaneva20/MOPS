@@ -26,6 +26,7 @@ private:
 	Texture2D PrevHover = LoadTexture((gameManager->GetAssetPath() + "Lab/PrevHover.png").c_str());
 	Texture2D Next = LoadTexture((gameManager->GetAssetPath() + "Lab/Next.png").c_str());
 	Texture2D NextHover = LoadTexture((gameManager->GetAssetPath() + "Lab/NextHover.png").c_str());
+	Texture2D Flask = LoadTexture((gameManager->GetAssetPath() + "Lab/Flask.png").c_str());
 	std::vector<InventorySlot> inventory;
 	void Update();
 	void setInventory();
