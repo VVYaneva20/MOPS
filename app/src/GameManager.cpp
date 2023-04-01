@@ -18,6 +18,12 @@ GameManager::GameManager() {
 };
 
 GameManager::~GameManager() {
+	std::ifstream file(this->GetAssetPath() + "savedata.json");
+	Json::Value root;
+	file >> root;
+	root["balance"] = this->m_Balance;
+	std::ofstream file2(this->GetAssetPath() + "savedata.json");
+	file2 << root;
 	CloseWindow();
 };
 
