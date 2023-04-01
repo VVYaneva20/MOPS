@@ -27,6 +27,7 @@ SiteHome::SiteHome() {
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))
 		{
 			delete this->tableManager;
+			delete this->orders;
 			delete this;
 			Game* menu = new Game();
 			break;

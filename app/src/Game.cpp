@@ -6,7 +6,9 @@ Game::Game() {
 	this->Update();
 }
 
-Game::~Game() {}
+Game::~Game() {
+	UnloadTexture(this->HUD);
+}
 
 void Game::Update()
 {

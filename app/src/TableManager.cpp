@@ -2,6 +2,7 @@
 
 TableManager::TableManager() {
 	this->m_Elements = setPeriodicElements(this->m_Elements);
+	this->m_Elements[0].model = LoadModel((gameManager->GetAssetPath() + "Models/Hydrogen.glb").c_str());
 	this->m_SelectedElement = m_Elements[0];
 	this->SetCameraSettings(this->camera);
 }
@@ -9,8 +10,18 @@ TableManager::TableManager() {
 TableManager::~TableManager() {
 	for (int i = 0; i < this->m_Elements.size(); i++) {
 		UnloadTexture(this->m_Elements[i].texture);
-		UnloadModel(this->m_Elements[i].model);
 	}
+	UnloadModel(this->m_SelectedElement.model);
+	UnloadTexture(this->m_SelectedElement.texture);
+	UnloadTexture(this->background);
+	UnloadTexture(this->tableOutline);
+	UnloadTexture(this->padlock);
+	UnloadTexture(this->UnlockButton);
+	UnloadTexture(this->UnlockButtonHover);
+	UnloadTexture(this->UnlockButtonLocked);
+	UnloadTexture(this->OrderButton);
+	UnloadTexture(this->OrderButtonHover);
+	UnloadTexture(this->OrderButtonLocked);
 }
 
 void TableManager::Update() {
@@ -34,6 +45,8 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 			DrawRectangleLinesEx({ (float)elements[i].posX, (float)elements[i].posY, 65, 65 }, 4, ORANGE);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				std::cout << elements[i].name;
+				UnloadModel(this->m_SelectedElement.model);
+				elements[i].model = LoadModel((gameManager->GetAssetPath() + "Models/" + elements[i].name + ".glb").c_str());
 				this->m_SelectedElement = elements[i];
 			}
 		}
@@ -42,7 +55,6 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 }
 
 void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
-	this->m_SelectedElement = element;
 	if (!this->drawModel) DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
 	else {
 		this->Draw3DModel();
@@ -109,7 +121,7 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 		element.posX = root["elements"][i]["posx"].asInt();
 		element.posY = root["elements"][i]["posy"].asInt();
 		element.texture = LoadTexture((gameManager->GetAssetPath() + "Elements/" + element.name + ".png").c_str());
-		element.model = LoadModel((gameManager->GetAssetPath() + "Models/" + element.name + ".glb").c_str());
+		//element.model = LoadModel((gameManager->GetAssetPath() + "Models/" + element.name + ".glb").c_str());
 		element.unlocked = root["elements"][i]["unlocked"].asBool();
 		element.unlockPrice = root["elements"][i]["unlock_price"].asInt();
 		element.unitPrice = root["elements"][i]["unit_price"].asInt();
@@ -142,7 +154,6 @@ void TableManager::Draw3DModel()
 
 void TableManager::DrawButtons()
 {
-	std::cout << m_SelectedElement.name << std::endl;
 	if (!this->m_SelectedElement.unlocked)
 	{
 		if (gameManager->GetBalance() >= this->m_SelectedElement.unlockPrice) {
