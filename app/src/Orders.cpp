@@ -56,6 +56,11 @@ void Orders::DrawOrders()
 {
 	for (int i = 0; i < this->orders.size(); i++)
 	{
-		DrawTexture(this->OrderRect, 0, 349 * (i + 1), WHITE);
+		DrawTexture(this->OrderRect, 0, 350 + (i * OrderRect.height), WHITE);
+		DrawTextEx(this->gameManager->ArialBold, this->orders[i].product.c_str(), { 153 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(this->gameManager->ArialBold, this->orders[i].formula.c_str(), { 445 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(this->gameManager->ArialBold, this->orders[i].buyer.c_str(), { 694 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].buyer.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		//DrawTextEx(this->gameManager->ArialBold, this->orders[i].total.c_str(), { 943 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), 30, 1).x / 2), (float)390 * (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(this->gameManager->ArialBold, this->orders[i].status.c_str(), { 1146 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
 	}
 }
