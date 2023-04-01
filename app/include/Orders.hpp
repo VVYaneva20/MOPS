@@ -1,15 +1,23 @@
 #pragma once
 #include <GameManager.hpp>
 #include <chrono>
+#include <json.h>
+#include <string>
+#include <vector>
+#include <fstream>
 class Orders {
 public:
 	Orders();
 	~Orders();
 	void Update();
 
+	struct Reactants {
+		std::string name;
+		int quantity;
+	};
 	struct Order {
-		std::string formula;
 		std::string product;
+		std::vector<Reactants> formula;
 		std::string status;
 		std::string buyer;
 		std::string date;
