@@ -6,7 +6,7 @@
 
 class SiteHome {
 public:
-	SiteHome();
+	SiteHome(Orders *orders);
 	~SiteHome();
 
 	enum TABS {
