@@ -130,14 +130,15 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 			Json::Value inventory;
 			std::ifstream((gameManager->GetAssetPath() + "savedata.json").c_str()) >> inventory;
 			for (int j = 0; j < inventory["inventory"].size(); j++) {
-				if (inventory["inventory"][j]["name"].asCString() == element.symbol) {
+				if (inventory["inventory"][j]["name"].asCString() == element.name) {
 					found = true;
 					break;
 				}
 			}
 			if (!found) {
 				Json::Value newElement;
-				newElement["name"] = (element.symbol).c_str();
+				newElement["name"] = (element.name).c_str();
+				newElement["symbol"] = (element.symbol).c_str();
 				newElement["quantity"] = 0;
 				inventory["inventory"].append(newElement);
 				std::ofstream((gameManager->GetAssetPath() + "savedata.json").c_str()) << inventory;
@@ -207,7 +208,7 @@ void TableManager::DrawButtons()
 					std::ifstream((gameManager->GetAssetPath() + "savedata.json").c_str()) >> root;
 					for (int i = 0; i < root["inventory"].size(); i++)
 					{
-						if (root["inventory"][i]["name"].asCString() == this->m_SelectedElement.symbol)
+						if (root["inventory"][i]["name"].asCString() == this->m_SelectedElement.name)
 						{
 							root["inventory"][i]["quantity"] = root["inventory"][i]["quantity"].asInt() + 1;
 							break;
@@ -242,7 +243,8 @@ void TableManager::UnlockElement() {
 			m_SelectedElement.unlocked = true;
 			m_Elements[i].unlocked = true;
 			Json::Value element;
-			element["name"] = (this->m_SelectedElement.symbol).c_str();
+			element["name"] = (this->m_SelectedElement.name).c_str();
+			element["symbol"] = (this->m_SelectedElement.symbol).c_str();
 			element["quantity"] = 0;
 			inventory["inventory"].append(element);
 			std::ofstream((gameManager->GetAssetPath() + "savedata.json").c_str()) << inventory;

@@ -3,6 +3,7 @@
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png" }, { {0, 0}, {0,0} });
 	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {956, 396} }, { "PC", "INVENTORY" });
+	this->setInventory();
 	this->Update();
 }
 
@@ -21,18 +22,18 @@ void Game::Update()
 		gameManager->Update();
 		this->DrawInventory();
 		this->m_Balance = gameManager->GetBalance();
-		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), {70, 5}, 60, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonDown(MOUSE_LEFT_BUTTON))
 		{
 			selected = true;
 		}
-		if(!selected) {
+		if (!selected) {
 			DrawRectangle(1500, 300, 60, 60, RED);
 		}
 
 		if (selected)
 		{
-			DrawRectangle(GetMousePosition().x -30, GetMousePosition().y -30, 60, 60, RED);
+			DrawRectangle(GetMousePosition().x - 30, GetMousePosition().y - 30, 60, 60, RED);
 			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 			{
 				selected = false;
@@ -61,10 +62,35 @@ void Game::Update()
 	}
 }
 
+void Game::setInventory() {
+	Json::Value root;
+	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
+	file >> root;
+
+	for (int i = 0; i < root["inventory"].size(); i++) {
+		InventorySlot slot;
+		slot.name = root["inventory"][i]["name"].asCString();
+		slot.symbol = root["inventory"][i]["symbol"].asCString();
+		slot.quantity = root["inventory"][i]["quantity"].asInt();
+		this->inventory.push_back(slot);
+	}
+
+	file.close();
+}
+
 void Game::DrawInventory()
 {
 	if (isInventoryOpen) {
 		DrawTexture(this->HUD, 335, 140, WHITE);
+		for (size_t i = 0, c = 0; i < 4; i++) {
+			for (size_t j = 0; j < 6; j++)
+			{
+				DrawTexture(this->Slot, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
+				c++;
+				if (c >= inventory.size()) break;
+			}
+			if (c >= inventory.size()) break;
+		}
 		if (gameManager->IsButtonClicked("CLOSE"))
 		{
 			isInventoryOpen = false;
