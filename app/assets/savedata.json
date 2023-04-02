@@ -1,5 +1,5 @@
 {
-	"balance" : 500,
+	"balance" : 5,
 	"inventory" : 
 	[
 		{
@@ -16,6 +16,16 @@
 			"name" : "Oxygen",
 			"quantity" : 0,
 			"symbol" : "O"
+		},
+		{
+			"name" : "Sulfur",
+			"quantity" : 2,
+			"symbol" : "S"
+		},
+		{
+			"name" : "Arsenic",
+			"quantity" : 0,
+			"symbol" : "As"
 		}
 	]
 }
