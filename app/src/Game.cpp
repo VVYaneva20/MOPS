@@ -2,7 +2,7 @@
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } });
-	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png" }, { {1580, 575}, {954, 420}, {660,632} }, { "PC", "INVENTORY", "BOWL" });
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png", "Lab/Box.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png", "Lab/BoxHover.png" }, { {1580, 575}, {954, 420}, {660,632}, {1594, 921} }, { "PC", "INVENTORY", "BOWL", "BOX"});
 	this->SetInventory();
 	this->Update();
 }
@@ -18,6 +18,7 @@ Game::~Game() {
 	UnloadTexture(this->Flask);
 	UnloadTexture(this->BigFlask);
 	UnloadTexture(this->BigFlaskHover);
+	UnloadTexture(this->Bowl);
 	for (size_t i = 0; i < this->tableElements.size(); i++) {
 		this->inventory.push_back(this->tableElements[i]);
 	}
@@ -62,6 +63,7 @@ void Game::Update()
 		this->DrawTable();
 		this->DrawOrder();
 		this->DrawInventory();
+		this->ProcessOrder();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
 		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
@@ -250,6 +252,31 @@ void Game::MixReactions(InventorySlot &el) {
 			order.reactants[i].quantity--;
 			el.quantity--;
 		}
+	}
+}
+
+void Game::ProcessOrder()
+{
+	if (!IsReactionReady() || this->order.product.empty() || this->holding) return;
+	if (gameManager->IsButtonClicked("BOWL"))
+	{
+		this->holdingBowl = true;
+		gameManager->UnloadButton("BOWL");
+	}
+	if (this->holdingBowl)
+	{
+		if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		{
+			if (CheckCollisionPointRec(GetMousePosition(), { 1594, 921, 1920, 1080 }))
+			{
+				gameManager->SetBalance(gameManager->GetBalance() + this->order.price);
+				this->BowlElements.clear();
+				this->order = {};
+			}
+			gameManager->LoadButtons({ "Lab/Bowl.png" }, { "Lab/BowlHover.png" }, { { 660, 632 } }, { "BOWL" });
+			this->holdingBowl = false;
+		}
+		DrawTexture(this->Bowl, GetMousePosition().x - 132, GetMousePosition().y - 117, WHITE);
 	}
 }
 

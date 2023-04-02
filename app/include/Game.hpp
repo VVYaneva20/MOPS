@@ -40,10 +40,13 @@ private:
 	void DrawOrder();
 	void DrawTable();
 	void MixReactions(InventorySlot &el);
+	void ProcessOrder();
 	bool IsReactionReady();
 	Orders::Order order;
-	bool holding = false;
 	bool isInventoryOpen = false;
+	bool holding = false;
+	bool holdingBowl = false;
+	Texture2D Bowl = LoadTexture((gameManager->GetAssetPath() + "Lab/Bowl.png").c_str());
 	int m_Balance = gameManager->GetBalance();
 	int page = 1;
 };
