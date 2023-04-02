@@ -14,7 +14,7 @@ GameManager::GameManager() {
 	Json::Value root;
 	file >> root;
 	this->m_Balance = root["balance"].asInt();
-	ToggleFullscreen();
+	//ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
