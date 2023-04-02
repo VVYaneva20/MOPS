@@ -16,10 +16,12 @@ Orders::~Orders() {
 	UnloadTexture(this->ViewButtonHover);
 	UnloadTexture(this->AcceptButton);
 	UnloadTexture(this->AcceptButtonHover);
+	UnloadTexture(this->AcceptButtonLocked);
 	UnloadTexture(this->DeclineButton);
 	UnloadTexture(this->DeclineButtonHover);
 	UnloadTexture(this->Buyer);
-	
+	UnloadTexture(this->DiscardButton);
+	UnloadTexture(this->DiscardButtonHover);
 }
 
 void Orders::Update() {
@@ -49,6 +51,7 @@ void Orders::generateOrder() {
 		order.formula = Reaction["product"].asCString();
 		order.product = Reaction["product_name"].asCString();
 		order.status = "Pending";
+		order.price = std::floor(GetRandomValue(900, 1600));
 		for (int i = 0; i < Reaction["reactants"].size(); i++) {
 			Reactants reactant;
 			reactant.name = Reaction["reactants"][i]["name"].asCString();
@@ -68,8 +71,8 @@ void Orders::DrawOrders()
 		DrawTexture(this->OrderRect, 0, 350 + (i * OrderRect.height), WHITE);
 		DrawTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), { 153 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
 		DrawTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), { 445 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
-		DrawTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), {694 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10}, 30, 1, WHITE);
-		//DrawTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), { 943 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), 30, 1).x / 2), (float)400 * (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), { 694 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, (std::to_string(this->orders[i].price) + "$").c_str(), { 920 - (MeasureTextEx(gameManager->ArialBold, (std::to_string(this->orders[i].price) + "$").c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
 		DrawTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), { 1146 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
 		DrawTexture(this->ViewButton, 1297, 394 + (i * OrderRect.height), WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1297, (float)394 + (i * OrderRect.height), (float)ViewButton.width, (float)ViewButton.height }))
@@ -85,27 +88,43 @@ void Orders::DrawOrders()
 
 void Orders::DisplayInfo()
 {
-	if (!selectedOrder.product.empty())
+	if (!selectedOrder.product.empty() && selectedOrder.status != "Declined")
 	{
 		DrawTexture(this->Buyer, 1467, 144, WHITE);
 		DrawTextEx(gameManager->ArialBold, this->selectedOrder.buyer.c_str(), { 1600, (float)144 + (Buyer.height / 2) - 15 }, 30, 1, WHITE);
-		DrawTexture(this->DeclineButton, 1462, 974, WHITE);
+		DrawTexture(this->selectedOrder.status == "Accepted" ? this->DiscardButton : this->DeclineButton, 1462, 974, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1462, 974, (float)AcceptButton.width, (float)AcceptButton.height }))
 		{
-			DrawTexture(this->DeclineButtonHover, 1462, 974, WHITE);
+			DrawTexture(this->selectedOrder.status == "Accepted" ? this->DiscardButtonHover : this->DeclineButtonHover, 1462, 974, WHITE);
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
+				selectedOrder.status = "Declined";
+				for (size_t i = 0; i < this->orders.size(); i++)
+				{
+					if (this->orders[i].buyer == selectedOrder.buyer)
+					{
+						this->orders.erase(this->orders.begin() + i);
+						break;
+					}
+				}
 			}
 		}
-	
-		DrawTexture(this->AcceptButton, 1701, 974, WHITE);
-		if (CheckCollisionPointRec(GetMousePosition(), { 1701, 974, (float)DeclineButton.width, (float)DeclineButton.height }))
+
+		DrawTexture(this->m_Accepted ? this->AcceptButtonLocked : this->AcceptButton , 1701, 974, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1701, 974, (float)DeclineButton.width, (float)DeclineButton.height }) && !this->m_Accepted)
 		{
 			DrawTexture(this->AcceptButtonHover, 1701, 974, WHITE);
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
+
+				for (size_t i = 0; i < this->orders.size(); i++) {
+					if (this->orders[i].buyer == selectedOrder.buyer && this->orders[i].product == selectedOrder.product)
+						this->m_Accepted = true;
+						this->orders[i].status = "Accepted";
+				}
+				selectedOrder.status = "Accepted";
 			}
 		}
-		
+
 	}
 }

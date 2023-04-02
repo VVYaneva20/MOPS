@@ -21,7 +21,7 @@ public:
 		std::vector<Reactants> reactants;
 		std::string status;
 		std::string buyer;
-		float price;
+		int price;
 	};
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	void generateOrder();
@@ -34,11 +34,15 @@ private:
 	Texture2D ViewButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/ViewHover.png").c_str());
 	Texture2D AcceptButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Accept.png").c_str());
 	Texture2D AcceptButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/AcceptHover.png").c_str());
+	Texture2D AcceptButtonLocked = LoadTexture((gameManager->GetAssetPath() + "Orders/AcceptLocked.png").c_str());
 	Texture2D DeclineButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Decline.png").c_str());
 	Texture2D DeclineButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/DeclineHover.png").c_str());
+	Texture2D DiscardButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Discard.png").c_str());
+	Texture2D DiscardButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/DiscardHover.png").c_str());
 
 	Texture2D Buyer = LoadTexture((gameManager->GetAssetPath() + "Orders/Buyer.png").c_str());
 	std::vector<Order> orders;
+	bool m_Accepted = false;
 	Order selectedOrder;
 	void DrawOrders();
 	void DisplayInfo();
