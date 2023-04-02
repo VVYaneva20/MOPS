@@ -12,24 +12,33 @@ Orders::Orders() {}
 Orders::~Orders() {
 	UnloadTexture(this->background);
 	UnloadTexture(this->OrderRect);
+	UnloadTexture(this->ViewButton);
+	UnloadTexture(this->ViewButtonHover);
+	UnloadTexture(this->AcceptButton);
+	UnloadTexture(this->AcceptButtonHover);
+	UnloadTexture(this->DeclineButton);
+	UnloadTexture(this->DeclineButtonHover);
+	UnloadTexture(this->Buyer);
+	
 }
 
 void Orders::Update() {
 	DrawTexture(this->background, 0, 0, WHITE);
 	DrawOrders();
+	DisplayInfo();
 }
 
 void Orders::generateOrder() {
 	if (this->orders.size() >= 5) return;
 	Json::Value root;
-	std::ifstream file(this->gameManager->GetAssetPath() + "buyers.json");
+	std::ifstream file(gameManager->GetAssetPath() + "buyers.json");
 	Order order;
 	file >> root;
 
 	Json::Value Reactions;
-	std::ifstream fileReactions(this->gameManager->GetAssetPath() + "reactions.json");
+	std::ifstream fileReactions(gameManager->GetAssetPath() + "reactions.json");
 	fileReactions >> Reactions;
-	std::chrono::seconds duration(10);
+	std::chrono::seconds duration(1);
 	std::chrono::steady_clock::time_point endTime = this->startTime + duration;
 
 	if (std::chrono::steady_clock::now() >= endTime) {
@@ -57,10 +66,46 @@ void Orders::DrawOrders()
 	for (int i = 0; i < this->orders.size(); i++)
 	{
 		DrawTexture(this->OrderRect, 0, 350 + (i * OrderRect.height), WHITE);
-		DrawTextEx(this->gameManager->ArialBold, this->orders[i].product.c_str(), { 153 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
-		DrawTextEx(this->gameManager->ArialBold, this->orders[i].formula.c_str(), { 445 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
-		DrawTextEx(this->gameManager->ArialBold, this->orders[i].buyer.c_str(), { 694 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].buyer.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
-		//DrawTextEx(this->gameManager->ArialBold, this->orders[i].total.c_str(), { 943 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), 30, 1).x / 2), (float)390 * (i * OrderRect.height) + 10 }, 30, 1, WHITE);
-		DrawTextEx(this->gameManager->ArialBold, this->orders[i].status.c_str(), { 1146 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), 30, 1).x / 2), (float)390 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), { 153 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].product.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), { 445 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].formula.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), {694 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].buyer.substr(0, orders[i].buyer.find(" ")).c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10}, 30, 1, WHITE);
+		//DrawTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), { 943 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].total.c_str(), 30, 1).x / 2), (float)400 * (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), { 1146 - (MeasureTextEx(gameManager->ArialBold, this->orders[i].status.c_str(), 30, 1).x / 2), (float)400 + (i * OrderRect.height) + 10 }, 30, 1, WHITE);
+		DrawTexture(this->ViewButton, 1297, 394 + (i * OrderRect.height), WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1297, (float)394 + (i * OrderRect.height), (float)ViewButton.width, (float)ViewButton.height }))
+		{
+			DrawTexture(this->ViewButtonHover, 1297, 394 + (i * OrderRect.height), WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				this->selectedOrder = orders[i];
+			}
+		}
+	}
+}
+
+void Orders::DisplayInfo()
+{
+	if (!selectedOrder.product.empty())
+	{
+		DrawTexture(this->Buyer, 1467, 144, WHITE);
+		DrawTextEx(gameManager->ArialBold, this->selectedOrder.buyer.c_str(), { 1600, (float)144 + (Buyer.height / 2) - 15 }, 30, 1, WHITE);
+		DrawTexture(this->DeclineButton, 1462, 974, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1462, 974, (float)AcceptButton.width, (float)AcceptButton.height }))
+		{
+			DrawTexture(this->DeclineButtonHover, 1462, 974, WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+			}
+		}
+	
+		DrawTexture(this->AcceptButton, 1701, 974, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { 1701, 974, (float)DeclineButton.width, (float)DeclineButton.height }))
+		{
+			DrawTexture(this->AcceptButtonHover, 1701, 974, WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+			}
+		}
+		
 	}
 }
