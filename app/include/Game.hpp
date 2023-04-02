@@ -35,11 +35,12 @@ private:
 	std::vector<InventorySlot> tableElements;
 	std::vector<InventorySlot> BowlElements;
 	void Update();
-	void setInventory();
+	void SetInventory();
 	void DrawInventory();
 	void DrawOrder();
 	void DrawTable();
 	void MixReactions(InventorySlot &el);
+	bool IsReactionReady();
 	Orders::Order order;
 	bool holding = false;
 	bool isInventoryOpen = false;
