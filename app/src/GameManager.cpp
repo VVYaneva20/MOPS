@@ -13,6 +13,7 @@ GameManager::GameManager() {
 	std::ifstream file(this->GetAssetPath() + "savedata.json");
 	Json::Value root;
 	file >> root;
+	file.close();
 	this->m_Balance = root["balance"].asInt();
 	//ToggleFullscreen();
 };
@@ -24,6 +25,8 @@ GameManager::~GameManager() {
 	root["balance"] = this->m_Balance;
 	std::ofstream file2(this->GetAssetPath() + "savedata.json");
 	file2 << root;
+	file.close();
+	file2.close();
 	CloseWindow();
 };
 

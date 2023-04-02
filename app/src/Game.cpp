@@ -18,13 +18,43 @@ Game::~Game() {
 	UnloadTexture(this->Flask);
 	UnloadTexture(this->BigFlask);
 	UnloadTexture(this->BigFlaskHover);
+	for (size_t i = 0; i < this->tableElements.size(); i++) {
+		this->inventory.push_back(this->tableElements[i]);
+	}
+	for (size_t i = 0; i < this->BowlElements.size(); i++) {
+		bool found = false;
+		for (size_t j = 0; j < this->inventory.size(); j++)
+		{
+			if (this->inventory[j].symbol == this->BowlElements[i].symbol) {
+				this->inventory[j].quantity += this->BowlElements[i].quantity;
+				found = true;
+				break;
+			}
+		}
+		if(!found) this->inventory.push_back(this->BowlElements[i]);
+	}
+	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
+	Json::Value root;
+	file >> root;
+	file.close();
+	for (int i = 0; i < root["inventory"].size(); i++) {
+		for (size_t j = 0; j < this->inventory.size(); j++) 
+		{
+			if (root["inventory"][i]["name"].asCString() == this->inventory[j].name) {
+				root["inventory"][i]["quantity"] = this->inventory[j].quantity;
+				break;
+			}
+		}
+	}
+	std::ofstream file2(gameManager->GetAssetPath() + "savedata.json");
+	file2 << root;
+	file2.close();
 }
 
 void Game::Update()
 {
 	while (gameManager->CurrentScene == gameManager->SCENE::GAME && !gameManager->GetShouldClose())
 	{
-
 		BeginDrawing();
 		ClearBackground(BLUE);
 		orders->generateOrder();
@@ -34,22 +64,6 @@ void Game::Update()
 		this->DrawInventory();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
-		//if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		//{
-		//	selected = true;
-		//}
-		//if (!selected) {
-		//	DrawRectangle(1500, 300, 60, 60, RED);
-		//}
-
-		//if (selected)
-		//{
-		//	DrawRectangle(GetMousePosition().x - 30, GetMousePosition().y - 30, 60, 60, RED);
-		//	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
-		//	{
-		//		selected = false;
-		//	}
-		//}
 		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
@@ -66,8 +80,8 @@ void Game::Update()
 
 		if (gameManager->IsButtonClicked("PC") && !isInventoryOpen)
 		{
-			SiteHome* siteHome = new SiteHome();
 			delete this;
+			SiteHome* siteHome = new SiteHome();
 			break;
 		}
 	}
@@ -171,7 +185,7 @@ void Game::DrawOrder() {
 			InventorySlot el;
 			el.name = "";
 			el.symbol = order.reactants[i].name;
-			el.quantity = order.reactants[i].quantity;
+			el.quantity = 0;
 			BowlElements.push_back(el);
 		}
 	}
@@ -216,7 +230,6 @@ void Game::DrawTable()
 					break;
 				}
 				if (CheckCollisionPointRec(GetMousePosition(), { 660, 632, 915, 845 })) {
-					std::cout << tableElements[i].name << std::endl;
 					this->MixReactions(tableElements[i]);
 					break;
 				}
