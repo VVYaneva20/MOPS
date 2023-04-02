@@ -1,14 +1,13 @@
 #include <Settings.hpp>
 
-Settings::Settings(THEME currentTheme) {
-	m_CurrentTheme = currentTheme;
-	if (m_CurrentTheme == THEME_LIGHT) {
+Settings::Settings() {
+	if (gameManager->currentTheme == gameManager->THEME::THEME_LIGHT) {
 		gameManager->LoadScene(gameManager->SCENE::SETTINGS_LIGHT, { "Settings/Settings.png" }, { { 0, 0 } });
-		gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+		gameManager->LoadButtons(this->m_ButtonsLight, this->m_ButtonsHoverLight, this->m_ButtonPositions, this->m_ButtonNames);
 	}
-	if (m_CurrentTheme == THEME_DARK) {
+	if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
 		gameManager->LoadScene(gameManager->SCENE::SETTINGS_DARK, { "Settings/DarkTheme.png" }, { { 0, 0 } });
-		gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+		gameManager->LoadButtons(this->m_ButtonsDark, this->m_ButtonsHoverDark, this->m_ButtonPositions, this->m_ButtonNames);
 	}
 	this->DrawSettings();
 }
@@ -27,19 +26,15 @@ void Settings::DrawSettings() {
 		}
 
 		if (gameManager->IsButtonClicked("THEME")) {
-			if (m_CurrentTheme == THEME_LIGHT) {
-				m_CurrentTheme = THEME_DARK;
-				Settings* settings = new Settings(m_CurrentTheme); 
-				delete this;
-				break;
+			if (gameManager->currentTheme == gameManager->THEME_LIGHT) {
+				gameManager->currentTheme = gameManager->THEME_DARK;
 			}
-			else if (m_CurrentTheme == THEME_DARK) {
-				m_CurrentTheme = THEME_LIGHT;
-				Settings* settings = new Settings(m_CurrentTheme);
-				delete this;
-				break;
+			else if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
+				gameManager->currentTheme = gameManager->THEME_LIGHT;
 			}
-			gameManager->Update();
+			Settings* settings = new Settings();
+			delete this;
+			break;
 		}
 
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {

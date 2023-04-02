@@ -9,11 +9,11 @@
 class GameManager
 {
 public:
+
     enum SCENE {
         NO_SCENE,
         MENU,
         GAME,
-        REGISTER,
         SITEHOME,
         RULES,
         SECONDRULES,
@@ -25,6 +25,7 @@ public:
         THEME_LIGHT,
         THEME_DARK
     };
+    THEME currentTheme = THEME_LIGHT;
 
     Font Arial;
 	Font ArialBold;
