@@ -1,8 +1,8 @@
 #include <Game.hpp>
 
 Game::Game() {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png" }, { {0, 0}, {0,0} });
-	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {956, 396} }, { "PC", "INVENTORY" });
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } });
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {954, 420} }, { "PC", "INVENTORY" });
 	this->setInventory();
 	this->Update();
 }
@@ -10,10 +10,14 @@ Game::Game() {
 Game::~Game() {
 	UnloadTexture(this->HUD);
 	UnloadTexture(this->Slot);
+	UnloadTexture(this->SlotHover);
 	UnloadTexture(this->Prev);
 	UnloadTexture(this->PrevHover);
 	UnloadTexture(this->Next);
 	UnloadTexture(this->NextHover);
+	UnloadTexture(this->Flask);
+	UnloadTexture(this->BigFlask);
+	UnloadTexture(this->BigFlaskHover);
 }
 
 void Game::Update()
@@ -25,26 +29,27 @@ void Game::Update()
 		ClearBackground(BLUE);
 		orders->generateOrder();
 		gameManager->Update();
+		this->DrawTable();
 		this->DrawInventory();
 		this->DrawOrder();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
-		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
-		{
-			selected = true;
-		}
-		if (!selected) {
-			DrawRectangle(1500, 300, 60, 60, RED);
-		}
+		//if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+		//{
+		//	selected = true;
+		//}
+		//if (!selected) {
+		//	DrawRectangle(1500, 300, 60, 60, RED);
+		//}
 
-		if (selected)
-		{
-			DrawRectangle(GetMousePosition().x - 30, GetMousePosition().y - 30, 60, 60, RED);
-			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
-			{
-				selected = false;
-			}
-		}
+		//if (selected)
+		//{
+		//	DrawRectangle(GetMousePosition().x - 30, GetMousePosition().y - 30, 60, 60, RED);
+		//	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+		//	{
+		//		selected = false;
+		//	}
+		//}
 		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
@@ -125,13 +130,26 @@ void Game::DrawInventory()
 		for (size_t i = 0, count = (this->page - 1) * 24; i < 4; i++) {
 			for (size_t j = 0; j < 6; j++)
 			{
+				if (count >= inventory.size()) break;
 				DrawTexture(this->Slot, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
+				if (CheckCollisionPointRec(GetMousePosition(), { (float)448 + (j * (25 + this->Slot.width)), (float)245 + (i * (25 + this->Slot.height)), (float)this->Slot.width, (float)this->Slot.height }))
+				{
+					DrawTexture(this->SlotHover, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
+					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+					{
+						if (this->tableElements.size() < 4)
+						{
+							tableElements.push_back(inventory[count]);
+							inventory.erase(inventory.begin() + count);
+							if (count >= inventory.size()) break;
+						}
+					}
+				}
 				DrawTextEx(gameManager->ArialBold, (this->inventory[count].name).c_str(), { float(501 + (j * (122 + this->Flask.width)) + (this->Flask.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].name).c_str(), 20, 1).x / 2)), float(319 + (i * (81 + this->Flask.height)) + (this->Flask.height / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].name).c_str(), 20, 1).y / 2)) }, 20, 1, BLACK);
 				DrawTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), { float(443 + (j * (125 + this->Flask.width)) + (this->Flask.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), 20, 1).x / 2)), float(215 + (i * (80 + this->Flask.height)) + (this->Flask.height / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), 20, 1).y / 2)) }, 20, 1, BLACK);
 				DrawTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), { float(543 + (j * (124 + this->Flask.width)) + (this->Flask.width / 2) - (MeasureTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), 20, 1).x / 2)), float(215 + (i * (80 + this->Flask.height)) + (this->Flask.height / 2) - (MeasureTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), 20, 1).y / 2)) }, 20, 1, BLACK);
 				DrawTexture(this->Flask, 497 + (j * (123 + this->Flask.width)), 260 + (i * (80 + this->Flask.height)), WHITE);
 				count++;
-				if (count >= inventory.size()) break;
 			}
 			if (count >= inventory.size()) break;
 		}
@@ -147,11 +165,41 @@ void Game::DrawInventory()
 
 void Game::DrawOrder() {
 	Orders::Order order = orders->getCurrentOrder();
-	//check if the name is empty
 	if (order.product == "") return;
 	DrawTextEx(gameManager->ArialBold, (order.product + "(" + order.formula + "):").c_str(), {200, 300}, 35, 1, SKYBLUE);
 	for (size_t i = 0; i < order.reactants.size(); i++) {
 		DrawTextEx(gameManager->ArialBold, (std::to_string(order.reactants[i].quantity) + "x " + order.reactants[i].name).c_str(), {220, float(360 + i * 42)}, 35, 1, WHITE);
 	}
 	DrawTextEx(gameManager->ArialBold, ("Reward: " + std::to_string(order.price) + "$").c_str(), {510, 545}, 35, 1, GREEN);
+}
+
+void Game::DrawTable()
+{
+	for (size_t i = 0; i < this->tableElements.size(); i++)
+	{
+		if(!tableElements[i].holding) DrawTexture(this->BigFlask, 180 + (i * (20 + this->BigFlask.width)), 665, WHITE);
+		if (CheckCollisionPointRec(GetMousePosition(), { float(180 + (i * (20 + this->BigFlask.width))), float(665), (float)this->BigFlask.width, (float)this->BigFlask.height }) && !this->holding)
+		{
+			DrawTexture(this->BigFlaskHover, 180 + (i * (20 + this->BigFlask.width)), 665, WHITE);
+			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+			{
+				tableElements[i].holding = true;
+				this->holding = true;
+			}
+		}
+		if (tableElements[i].holding)
+		{
+			DrawTexture(this->BigFlaskHover, GetMousePosition().x - (this->BigFlaskHover.width / 2), GetMousePosition().y - (this->BigFlaskHover.height / 2), WHITE);
+			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+			{
+				tableElements[i].holding = false;
+				this->holding = false;
+				if (CheckCollisionPointRec(GetMousePosition(), { 954, 420, 1408, 863 }))
+				{
+					this->inventory.push_back(tableElements[i]);
+					this->tableElements.erase(this->tableElements.begin() + i);
+				}
+			}
+		}
+	}
 }
