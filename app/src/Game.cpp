@@ -132,7 +132,7 @@ void Game::DrawInventory()
 			{
 				if (count >= inventory.size()) break;
 				DrawTexture(this->Slot, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
-				if (CheckCollisionPointRec(GetMousePosition(), { (float)448 + (j * (25 + this->Slot.width)), (float)245 + (i * (25 + this->Slot.height)), (float)this->Slot.width, (float)this->Slot.height }))
+				if (CheckCollisionPointRec(GetMousePosition(), { (float)448 + (j * (25 + this->Slot.width)), (float)245 + (i * (25 + this->Slot.height)), (float)this->Slot.width, (float)this->Slot.height }) && inventory[count].quantity > 0)
 				{
 					DrawTexture(this->SlotHover, 448 + (j * (25 + this->Slot.width)), 245 + (i * (25 + this->Slot.height)), WHITE);
 					if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -149,6 +149,7 @@ void Game::DrawInventory()
 				DrawTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), { float(443 + (j * (125 + this->Flask.width)) + (this->Flask.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), 20, 1).x / 2)), float(215 + (i * (80 + this->Flask.height)) + (this->Flask.height / 2) - (MeasureTextEx(gameManager->ArialBold, (this->inventory[count].symbol).c_str(), 20, 1).y / 2)) }, 20, 1, BLACK);
 				DrawTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), { float(543 + (j * (124 + this->Flask.width)) + (this->Flask.width / 2) - (MeasureTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), 20, 1).x / 2)), float(215 + (i * (80 + this->Flask.height)) + (this->Flask.height / 2) - (MeasureTextEx(gameManager->ArialBold, std::to_string(this->inventory[count].quantity).c_str(), 20, 1).y / 2)) }, 20, 1, BLACK);
 				DrawTexture(this->Flask, 497 + (j * (123 + this->Flask.width)), 260 + (i * (80 + this->Flask.height)), WHITE);
+				if (inventory[count].quantity <= 0)	DrawRectangle((float)452 + (j * (25 + this->Slot.width)), (float)245 + (i * (25 + this->Slot.height)), (float)this->Slot.width - 8, (float)this->Slot.height - 8, Fade(BLACK, 0.5f));
 				count++;
 			}
 			if (count >= inventory.size()) break;
@@ -198,8 +199,14 @@ void Game::DrawTable()
 				{
 					this->inventory.push_back(tableElements[i]);
 					this->tableElements.erase(this->tableElements.begin() + i);
+					break;
 				}
 			}
+		}
+		if (this->tableElements[i].quantity <= 0)
+		{
+			this->inventory.push_back(tableElements[i]);
+			this->tableElements.erase(this->tableElements.begin() + i);
 		}
 	}
 }
