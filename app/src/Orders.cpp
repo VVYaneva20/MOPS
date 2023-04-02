@@ -30,7 +30,7 @@ void Orders::Update() {
 	DisplayInfo();
 }
 
-void Orders::generateOrder() {
+void Orders::GenerateOrder() {
 	if (this->orders.size() >= 5) return;
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "buyers.json");
@@ -136,7 +136,7 @@ void Orders::DisplayInfo()
 	}
 }
 
-Orders::Order Orders::getCurrentOrder() {
+Orders::Order Orders::GetCurrentOrder() {
 	if (!this->m_Accepted) return {};
 	return this->m_currentOrder;
 }

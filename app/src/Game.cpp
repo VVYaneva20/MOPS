@@ -3,7 +3,7 @@
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } });
 	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png" }, { {1580, 575}, {954, 420}, {660,632} }, { "PC", "INVENTORY", "BOWL" });
-	this->setInventory();
+	this->SetInventory();
 	this->Update();
 }
 
@@ -57,7 +57,7 @@ void Game::Update()
 	{
 		BeginDrawing();
 		ClearBackground(BLUE);
-		orders->generateOrder();
+		orders->GenerateOrder();
 		gameManager->Update();
 		this->DrawTable();
 		this->DrawOrder();
@@ -87,7 +87,7 @@ void Game::Update()
 	}
 }
 
-void Game::setInventory() {
+void Game::SetInventory() {
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
 	file >> root;
@@ -179,8 +179,8 @@ void Game::DrawInventory()
 }
 
 void Game::DrawOrder() {
-	if (orders->getCurrentOrder().buyer != this->order.buyer && orders->getCurrentOrder().product != this->order.product) {
-		this->order = orders->getCurrentOrder();
+	if (orders->GetCurrentOrder().buyer != this->order.buyer && orders->GetCurrentOrder().product != this->order.product) {
+		this->order = orders->GetCurrentOrder();
 		for (size_t i = 0; i < this->order.reactants.size(); i++) {
 			InventorySlot el;
 			el.name = "";
@@ -251,4 +251,13 @@ void Game::MixReactions(InventorySlot &el) {
 			el.quantity--;
 		}
 	}
+}
+
+bool Game::IsReactionReady()
+{
+	for (size_t i = 0; i < this->order.reactants.size(); i++)
+	{
+		if (order.reactants[i].quantity != 0) return false;
+	}
+	return true;
 }

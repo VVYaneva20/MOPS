@@ -24,8 +24,8 @@ public:
 		int price;
 	};
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
-	void generateOrder();
-	Order getCurrentOrder();
+	void GenerateOrder();
+	Order GetCurrentOrder();
 private:
 	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();
