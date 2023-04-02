@@ -33,11 +33,14 @@ private:
 	Texture2D BigFlaskHover = LoadTexture((gameManager->GetAssetPath() + "Lab/BigFlaskHover.png").c_str());
 	std::vector<InventorySlot> inventory;
 	std::vector<InventorySlot> tableElements;
+	std::vector<InventorySlot> BowlElements;
 	void Update();
 	void setInventory();
 	void DrawInventory();
 	void DrawOrder();
 	void DrawTable();
+	void MixReactions(InventorySlot &el);
+	Orders::Order order;
 	bool holding = false;
 	bool isInventoryOpen = false;
 	int m_Balance = gameManager->GetBalance();
