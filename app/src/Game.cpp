@@ -178,10 +178,14 @@ void Game::DrawTable()
 {
 	for (size_t i = 0; i < this->tableElements.size(); i++)
 	{
-		if(!tableElements[i].holding) DrawTexture(this->BigFlask, 180 + (i * (20 + this->BigFlask.width)), 665, WHITE);
+		if (!tableElements[i].holding) {
+			DrawTexture(this->BigFlask, 180 + (i * (20 + this->BigFlask.width)), 665, WHITE);
+			DrawTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), { float(180 + (i * (20 + this->BigFlask.width)) + (this->BigFlask.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), 20, 1).x / 2)), 810 }, 20, 1, BLACK);
+		}
 		if (CheckCollisionPointRec(GetMousePosition(), { float(180 + (i * (20 + this->BigFlask.width))), float(665), (float)this->BigFlask.width, (float)this->BigFlask.height }) && !this->holding)
 		{
 			DrawTexture(this->BigFlaskHover, 180 + (i * (20 + this->BigFlask.width)), 665, WHITE);
+			DrawTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), { float(180 + (i * (20 + this->BigFlask.width)) + (this->BigFlask.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), 20, 1).x / 2)), 810 }, 20, 1, Fade(BLACK, 0.5f));
 			if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
 			{
 				tableElements[i].holding = true;
@@ -191,6 +195,7 @@ void Game::DrawTable()
 		if (tableElements[i].holding)
 		{
 			DrawTexture(this->BigFlaskHover, GetMousePosition().x - (this->BigFlaskHover.width / 2), GetMousePosition().y - (this->BigFlaskHover.height / 2), WHITE);
+			DrawTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), { float(GetMousePosition().x - (this->BigFlaskHover.width / 2) + (this->BigFlaskHover.width / 2) - (MeasureTextEx(gameManager->ArialBold, (this->tableElements[i].symbol).c_str(), 20, 1).x / 2)), float(GetMousePosition().y + 46) }, 20, 1, Fade(BLACK, 0.5f));
 			if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
 			{
 				tableElements[i].holding = false;
