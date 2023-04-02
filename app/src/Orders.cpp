@@ -110,7 +110,7 @@ void Orders::DisplayInfo()
 			}
 		}
 
-		DrawTexture(this->m_Accepted ? this->AcceptButtonLocked : this->AcceptButton , 1701, 974, WHITE);
+		DrawTexture(this->m_Accepted ? this->AcceptButtonLocked : this->AcceptButton, 1701, 974, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1701, 974, (float)DeclineButton.width, (float)DeclineButton.height }) && !this->m_Accepted)
 		{
 			DrawTexture(this->AcceptButtonHover, 1701, 974, WHITE);
@@ -119,12 +119,21 @@ void Orders::DisplayInfo()
 
 				for (size_t i = 0; i < this->orders.size(); i++) {
 					if (this->orders[i].buyer == selectedOrder.buyer && this->orders[i].product == selectedOrder.product)
+					{
 						this->m_Accepted = true;
 						this->orders[i].status = "Accepted";
+
+					}
 				}
 				selectedOrder.status = "Accepted";
+				this->m_currentOrder = selectedOrder;
 			}
 		}
 
 	}
+}
+
+Orders::Order Orders::getCurrentOrder() {
+	if (!this->m_Accepted) return {};
+	return this->m_currentOrder;
 }

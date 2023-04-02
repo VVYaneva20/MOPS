@@ -31,6 +31,7 @@ private:
 	void Update();
 	void setInventory();
 	void DrawInventory();
+	void DrawOrder();
 	bool selected = false;
 	bool isInventoryOpen = false;
 	int m_Balance = gameManager->GetBalance();

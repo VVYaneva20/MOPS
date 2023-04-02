@@ -26,6 +26,7 @@ void Game::Update()
 		orders->generateOrder();
 		gameManager->Update();
 		this->DrawInventory();
+		this->DrawOrder();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -142,4 +143,15 @@ void Game::DrawInventory()
 		return;
 	}
 	this->page = 1;
+}
+
+void Game::DrawOrder() {
+	Orders::Order order = orders->getCurrentOrder();
+	//check if the name is empty
+	if (order.product == "") return;
+	DrawTextEx(gameManager->ArialBold, (order.product + "(" + order.formula + "):").c_str(), {200, 300}, 35, 1, SKYBLUE);
+	for (size_t i = 0; i < order.reactants.size(); i++) {
+		DrawTextEx(gameManager->ArialBold, (std::to_string(order.reactants[i].quantity) + "x " + order.reactants[i].name).c_str(), {220, float(360 + i * 42)}, 35, 1, WHITE);
+	}
+	DrawTextEx(gameManager->ArialBold, ("Reward: " + std::to_string(order.price) + "$").c_str(), {510, 545}, 35, 1, GREEN);
 }

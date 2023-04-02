@@ -25,6 +25,7 @@ public:
 	};
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	void generateOrder();
+	Order getCurrentOrder();
 private:
 	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();
@@ -42,6 +43,7 @@ private:
 
 	Texture2D Buyer = LoadTexture((gameManager->GetAssetPath() + "Orders/Buyer.png").c_str());
 	std::vector<Order> orders;
+	Order m_currentOrder;
 	bool m_Accepted = false;
 	Order selectedOrder;
 	void DrawOrders();
