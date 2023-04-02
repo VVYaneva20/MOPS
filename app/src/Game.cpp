@@ -2,7 +2,7 @@
 
 Game::Game() {
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } });
-	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png" }, { {1580, 575}, {954, 420} }, { "PC", "INVENTORY" });
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png" }, { {1580, 575}, {954, 420}, {660,632} }, { "PC", "INVENTORY", "BOWL" });
 	this->setInventory();
 	this->Update();
 }
@@ -30,8 +30,8 @@ void Game::Update()
 		orders->generateOrder();
 		gameManager->Update();
 		this->DrawTable();
-		this->DrawInventory();
 		this->DrawOrder();
+		this->DrawInventory();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
 		//if (CheckCollisionPointRec(GetMousePosition(), { 1500, 300, 60, 60 }) && IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
@@ -103,10 +103,10 @@ void Game::DrawInventory()
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page--;
 			}
 			DrawTexture(this->Next, 1525, 545, WHITE);
-			if(CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
+			if (CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
 			{
 				DrawTexture(this->NextHover, 1525, 545, WHITE);
-				if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
+				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
 			}
 		}
 		if (page == 1 && (int(this->inventory.size() / 25) + 1) > 1)
@@ -165,13 +165,22 @@ void Game::DrawInventory()
 }
 
 void Game::DrawOrder() {
-	Orders::Order order = orders->getCurrentOrder();
-	if (order.product == "") return;
-	DrawTextEx(gameManager->ArialBold, (order.product + "(" + order.formula + "):").c_str(), {200, 300}, 35, 1, SKYBLUE);
-	for (size_t i = 0; i < order.reactants.size(); i++) {
-		DrawTextEx(gameManager->ArialBold, (std::to_string(order.reactants[i].quantity) + "x " + order.reactants[i].name).c_str(), {220, float(360 + i * 42)}, 35, 1, WHITE);
+	if (orders->getCurrentOrder().buyer != this->order.buyer && orders->getCurrentOrder().product != this->order.product) {
+		this->order = orders->getCurrentOrder();
+		for (size_t i = 0; i < this->order.reactants.size(); i++) {
+			InventorySlot el;
+			el.name = "";
+			el.symbol = order.reactants[i].name;
+			el.quantity = order.reactants[i].quantity;
+			BowlElements.push_back(el);
+		}
 	}
-	DrawTextEx(gameManager->ArialBold, ("Reward: " + std::to_string(order.price) + "$").c_str(), {510, 545}, 35, 1, GREEN);
+	if (order.product == "") return;
+	DrawTextEx(gameManager->ArialBold, (order.product + "(" + order.formula + "):").c_str(), { 200, 300 }, 35, 1, SKYBLUE);
+	for (size_t i = 0; i < order.reactants.size(); i++) {
+		DrawTextEx(gameManager->ArialBold, (std::to_string(order.reactants[i].quantity) + "x " + order.reactants[i].name).c_str(), { 220, float(360 + i * 42) }, 35, 1, WHITE);
+	}
+	DrawTextEx(gameManager->ArialBold, ("Reward: " + std::to_string(order.price) + "$").c_str(), { 510, 545 }, 35, 1, GREEN);
 }
 
 void Game::DrawTable()
@@ -206,12 +215,27 @@ void Game::DrawTable()
 					this->tableElements.erase(this->tableElements.begin() + i);
 					break;
 				}
+				if (CheckCollisionPointRec(GetMousePosition(), { 660, 632, 915, 845 })) {
+					std::cout << tableElements[i].name << std::endl;
+					this->MixReactions(tableElements[i]);
+					break;
+				}
 			}
 		}
 		if (this->tableElements[i].quantity <= 0)
 		{
 			this->inventory.push_back(tableElements[i]);
 			this->tableElements.erase(this->tableElements.begin() + i);
+		}
+	}
+}
+
+void Game::MixReactions(InventorySlot &el) {
+	for (size_t i = 0; i < this->BowlElements.size(); i++) {
+		if (this->BowlElements[i].symbol == el.symbol && order.reactants[i].quantity > 0) {
+			BowlElements[i].quantity++;
+			order.reactants[i].quantity--;
+			el.quantity--;
 		}
 	}
 }

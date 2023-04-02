@@ -61,7 +61,7 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 }
 
 void GameManager::DrawMousePos() {
-	DrawText(TextFormat("Mouse Position: %g, %g", this->m_MousePos.x, this->m_MousePos.y), 10, 10, 20, BLACK);
+	DrawText(TextFormat("Mouse Position: %g, %g", this->m_MousePos.x, this->m_MousePos.y), 10, 100, 20, BLACK);
 }
 
 void GameManager::DrawTextures() {
