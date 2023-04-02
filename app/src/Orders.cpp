@@ -62,6 +62,8 @@ void Orders::generateOrder() {
 		std::cout << "Order generated" << std::endl;
 		this->orders.push_back(order);
 	}
+	fileReactions.close();
+	file.close();
 }
 
 void Orders::DrawOrders()

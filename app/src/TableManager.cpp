@@ -253,4 +253,5 @@ void TableManager::UnlockElement() {
 			break;
 		}
 	}
+	file2.close();
 }
