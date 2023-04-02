@@ -270,6 +270,7 @@ void Game::ProcessOrder()
 			if (CheckCollisionPointRec(GetMousePosition(), { 1594, 921, 1920, 1080 }))
 			{
 				gameManager->SetBalance(gameManager->GetBalance() + this->order.price);
+				orders->FinishOrder();
 				this->BowlElements.clear();
 				this->order = {};
 			}

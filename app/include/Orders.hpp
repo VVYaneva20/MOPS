@@ -26,6 +26,7 @@ public:
 	std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
 	void GenerateOrder();
 	Order GetCurrentOrder();
+	void FinishOrder();
 private:
 	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();

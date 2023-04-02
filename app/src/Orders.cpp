@@ -140,3 +140,17 @@ Orders::Order Orders::GetCurrentOrder() {
 	if (!this->m_Accepted) return {};
 	return this->m_currentOrder;
 }
+
+void Orders::FinishOrder()
+{
+	for (size_t i = 0; i < this->orders.size(); i++)
+	{
+		if (this->orders[i].buyer == selectedOrder.buyer && this->orders[i].product == selectedOrder.product)
+		{
+			this->orders.erase(this->orders.begin() + i);
+			break;
+		}
+	}
+	this->m_Accepted = false;
+	this->m_currentOrder = {};
+}
