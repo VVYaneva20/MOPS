@@ -105,6 +105,7 @@ void Orders::DisplayInfo()
 				{
 					if (this->orders[i].buyer == selectedOrder.buyer)
 					{
+						if (orders[i].status == "Accepted") this->m_Accepted = false;
 						this->orders.erase(this->orders.begin() + i);
 						break;
 					}
