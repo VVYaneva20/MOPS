@@ -17,7 +17,13 @@ public:
         SITEHOME,
         RULES,
         SECONDRULES,
-        SETTINGS
+        SETTINGS_LIGHT,
+        SETTINGS_DARK,
+    };
+
+    enum THEME {
+        THEME_LIGHT,
+        THEME_DARK
     };
 
     Font Arial;

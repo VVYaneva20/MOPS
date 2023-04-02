@@ -24,7 +24,7 @@ void Menu::DrawMenu() {
         }
         if (gameManager->IsButtonClicked("SETTINGS")) {
 			delete this;
-			Settings* settings = new Settings();
+			Settings* settings = new Settings(Settings::THEME_LIGHT);
 			break;
 		}
         if (gameManager->IsButtonClicked("RULES")) {
