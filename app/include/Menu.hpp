@@ -27,6 +27,6 @@ private:
     std::vector<std::string> m_ButtonsHoverLight = { "Menu/StartHover.png", "Menu/SettingsHover.png", "Menu/RulesHover.png", "Menu/ExitHover.png" };
     std::vector<Vector2> m_ButtonPositions = { {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 - 65}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 55}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 174}, {gameManager->GetScreenSize().x / 2 - this->c_ButtonWidth / 2, gameManager->GetScreenSize().y / 2 - this->c_ButtonHeight / 2 + 295} };
     std::vector<std::string> m_ButtonsDark = { "Menu/StartDark.png", "Menu/SettingsDark.png", "Menu/RulesDark.png", "Menu/ExitDark.png"};
-    std::vector<std::string> m_ButtonsHoverDark = { "Menu/StartDarkHover.png", "Menu/SettingsDarkHover.png", "Menu/RulesDarkHover", "Menu/ExitDarkHover.png" };
+    std::vector<std::string> m_ButtonsHoverDark = { "Menu/StartDarkHover.png", "Menu/SettingsDarkHover.png", "Menu/RulesDarkHover.png", "Menu/ExitDarkHover.png" };
 	std::vector<std::string> m_ButtonNames = { "Start", "Settings", "Rules", "Exit" };
 };

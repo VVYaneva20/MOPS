@@ -2,8 +2,16 @@
 
 
 Rules::Rules() {
-    gameManager->LoadScene(gameManager->SCENE::RULES, { "Rules/Rules.png" }, { { 0, 0 } });
-    gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+
+    if (gameManager->currentTheme == gameManager->THEME::THEME_LIGHT) {
+        gameManager->LoadScene(gameManager->SCENE::RULES, { "Rules/Rules.png" }, { {0, 0} });
+        gameManager->LoadButtons(this->m_ButtonsLight, this->m_ButtonsHoverLight, this->m_ButtonPositions, this->m_ButtonNames);
+    }
+    if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
+        gameManager->LoadScene(gameManager->SCENE::RULES, { "Rules/RulesDark.png" }, { { 0, 0 } });
+        gameManager->LoadButtons(this->m_ButtonsDark, this->m_ButtonsHoverDark, this->m_ButtonPositions, this->m_ButtonNames);
+    }
+
     while (gameManager->CurrentScene == gameManager->SCENE::RULES && !gameManager->GetShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
@@ -33,8 +41,15 @@ Rules::Rules() {
 Rules::~Rules() {}
 
 SecondPage::SecondPage() {
-    gameManager->LoadScene(gameManager->SCENE::SECONDRULES, { "Rules/RulesSecond.png" }, { { 0, 0 } });
-    gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+    if (gameManager->currentTheme == gameManager->THEME::THEME_LIGHT) {
+        gameManager->LoadScene(gameManager->SCENE::SECONDRULES, { "Rules/RulesSecond.png" }, { {0, 0} });
+        gameManager->LoadButtons(this->m_ButtonsLight, this->m_ButtonsHoverLight, this->m_ButtonPositions, this->m_ButtonNames);
+    }
+    if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
+        gameManager->LoadScene(gameManager->SCENE::SECONDRULES, { "Rules/RulesDarkSecond.png" }, { { 0, 0 } });
+        gameManager->LoadButtons(this->m_ButtonsDark, this->m_ButtonsHoverDark, this->m_ButtonPositions, this->m_ButtonNames);
+    }
+
     while (gameManager->CurrentScene == gameManager->SCENE::SECONDRULES && !gameManager->GetShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
