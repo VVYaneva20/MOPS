@@ -36,7 +36,6 @@ Orders::Orders() {
 }
 
 Orders::~Orders() {
-	std::cout << 111111111;
 	UnloadTextures();
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
