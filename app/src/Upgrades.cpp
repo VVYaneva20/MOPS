@@ -36,7 +36,7 @@ void Upgrades::Update()
 	{
 		if (this->m_Upgrades[i].unlocked) {
 			DrawTexture(this->Unlocked, 104 + (i * (this->Unlocked.width + 106)), 889, WHITE);
-			break;
+			continue;
 		}
 		DrawTexture(this->m_Upgrades[i].button, 104 + (i * (this->m_Upgrades[i].button.width + 106)), 889, WHITE);
 		if (CheckCollisionPointRec(GetMousePosition(), { (float)104 + (i * (this->m_Upgrades[i].button.width + 106)), 889, (float)this->m_Upgrades[i].button.width, (float)this->m_Upgrades[i].button.height })) {
@@ -51,9 +51,11 @@ void Upgrades::Update()
 				{
 				case 0:
 					root["income"] = true;
+					gameManager->IncomeUpgrade = true;
 					break;
 				case 1:
 					root["frequency"] = true;
+					gameManager->OrderFrequencyUpgrade = true;
 					break;
 				case 2:
 					root["cursor"] = true;

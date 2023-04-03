@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <json.h>
 #include <fstream>
+#include <chrono>
 
 class GameManager
 {
@@ -40,6 +41,7 @@ public:
     void UnloadButton(size_t ID);
     void UnloadButton(std::string name);
     void UnloadScene();
+    void PassiveIncome();
     bool GetShouldClose();
     bool IsButtonClicked(size_t buttonID);
     bool IsButtonClicked(std::string buttonName);
@@ -48,10 +50,13 @@ public:
     ~GameManager();
     int GetBalance();
 	void SetBalance(int balance);
+    bool IncomeUpgrade = false;
+	bool OrderFrequencyUpgrade = false;
 private:
     static GameManager* instance;
     const std::string m_AssetPath = "./assets/";
     const Vector2 m_ScreenSize = { 1920, 1080 };
+    std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
     Vector2 m_MousePos = { 0, 0 };
 	struct BUTTON {
 		std::string name;
