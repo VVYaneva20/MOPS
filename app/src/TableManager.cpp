@@ -1,6 +1,7 @@
 #include <TableManager.hpp>
 
 TableManager::TableManager() {
+	//Sets all periodic elements
 	this->m_Elements = setPeriodicElements(this->m_Elements);
 	this->m_Elements[0].model = LoadModel((gameManager->GetAssetPath() + "Models/Hydrogen.glb").c_str());
 	this->m_SelectedElement = m_Elements[0];
@@ -8,6 +9,7 @@ TableManager::TableManager() {
 }
 
 TableManager::~TableManager() {
+	//Unloads all models and textures
 	for (int i = 0; i < this->m_Elements.size(); i++) {
 		UnloadTexture(this->m_Elements[i].texture);
 	}
@@ -25,6 +27,7 @@ TableManager::~TableManager() {
 }
 
 void TableManager::Update() {
+	//Updates the scene
 	DrawTexture(this->background, 0, 0, WHITE);
 	DrawTextureEx(this->tableOutline, { 30, 300 }, 0, 1, WHITE);
 	DrawPeriodicTable(this->m_Elements);
@@ -32,6 +35,7 @@ void TableManager::Update() {
 }
 
 void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> elements) {
+	// Draws the periodic table
 	for (size_t i = 0; i < elements.size(); i++) {
 		DrawTextureEx(elements[i].texture, { float(elements[i].posX), float(elements[i].posY) }, 0, 0.1625, WHITE);
 		if (!elements[i].unlocked)
@@ -40,7 +44,7 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 			DrawRectangle(elements[i].posX, elements[i].posY, 63, 65, Fade(BLACK, 0.7f));
 		}
 		if (CheckCollisionPointRec(GetMousePosition(), { (float)elements[i].posX, (float)elements[i].posY, 65, 65 })) {
-			// draw a border around the element
+			// Draws a border around the element
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 			DrawRectangleLinesEx({ (float)elements[i].posX, (float)elements[i].posY, 65, 65 }, 4, ORANGE);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
@@ -54,6 +58,7 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 }
 
 void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
+	// Displays the information of the selected element
 	if (!this->drawModel) DrawTextureEx(element.texture, { 1500, 150 }, 0, 0.35, WHITE);
 	else {
 		this->Draw3DModel();
@@ -100,6 +105,7 @@ void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 }
 
 std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std::vector<PeriodicElement>& elements) {
+	// Sets the periodic elements using the data from the JSON file
 	Json::Value root;
 	std::ifstream((gameManager->GetAssetPath() + "elements/elements.json").c_str()) >> root;
 	for (int i = 0; i < root["elements"].size(); i++) {
@@ -151,6 +157,7 @@ std::vector<TableManager::PeriodicElement> TableManager::setPeriodicElements(std
 }
 
 void TableManager::SetCameraSettings(Camera& camera) {
+	// Sets the camera settings
 	this->camera.position = Vector3{ 0.0f, 10.0f, 10.0f };
 	this->camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
 	this->camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
@@ -161,6 +168,7 @@ void TableManager::SetCameraSettings(Camera& camera) {
 
 void TableManager::Draw3DModel()
 {
+	// Draws the 3D model of the periodic table
 	Model model = this->m_SelectedElement.model;
 	UpdateCamera(&this->camera);
 	m_SelectedElement.model.transform = MatrixRotateXYZ(Vector3{ DEG2RAD * 1, DEG2RAD * yaw, DEG2RAD * 1 });
@@ -174,8 +182,10 @@ void TableManager::Draw3DModel()
 
 void TableManager::DrawButtons()
 {
+	// Draws the buttons
 	if (!this->m_SelectedElement.unlocked)
 	{
+		// If the player has enough money draws the unlock button
 		if (gameManager->GetBalance() >= this->m_SelectedElement.unlockPrice) {
 			DrawTexture(this->UnlockButton, 1507, 927, WHITE);
 			if (CheckCollisionPointRec(GetMousePosition(), { 1507, 927, (float)this->UnlockButton.width, (float)this->UnlockButton.height }))
@@ -196,6 +206,7 @@ void TableManager::DrawButtons()
 	}
 	else
 	{
+		//If the element is ordered draws the order button
 		if (gameManager->GetBalance() >= this->m_SelectedElement.unitPrice) {
 
 			DrawTexture(this->OrderButton, 1507, 927, WHITE);
@@ -230,6 +241,7 @@ void TableManager::DrawButtons()
 }
 
 void TableManager::UnlockElement() {
+	// Unlocks the element and adds it to the inventory and to the JSON
 	Json::Value root;
 	std::ifstream file((gameManager->GetAssetPath() + "elements/elements.json").c_str());
 	file >> root;

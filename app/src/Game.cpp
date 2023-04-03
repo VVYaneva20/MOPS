@@ -1,13 +1,16 @@
 #include <Game.hpp>
 
 Game::Game() {
+	//Loads the current scene
 	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } }, {false, false, false});
+	//Loads all buttons from this scene
 	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png", "Lab/Box.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png", "Lab/BoxHover.png" }, { {1580, 575}, {954, 420}, {660,632}, {1594, 921} }, { "PC", "INVENTORY", "BOWL", "BOX"}, {false, false, false, false});
 	this->SetInventory();
 	this->Update();
 }
 
 Game::~Game() {
+	//Unloads all textures
 	UnloadTexture(this->HUD);
 	UnloadTexture(this->Slot);
 	UnloadTexture(this->SlotHover);
@@ -19,9 +22,13 @@ Game::~Game() {
 	UnloadTexture(this->BigFlask);
 	UnloadTexture(this->BigFlaskHover);
 	UnloadTexture(this->Bowl);
+	
+	//Puts all elements from the table to the inventory
 	for (size_t i = 0; i < this->tableElements.size(); i++) {
 		this->inventory.push_back(this->tableElements[i]);
 	}
+	
+	// Puts all elements from the bowl to the inventory
 	for (size_t i = 0; i < this->BowlElements.size(); i++) {
 		bool found = false;
 		for (size_t j = 0; j < this->inventory.size(); j++)
@@ -34,10 +41,14 @@ Game::~Game() {
 		}
 		if(!found) this->inventory.push_back(this->BowlElements[i]);
 	}
+	
+	//Opens the JSON file
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
 	Json::Value root;
 	file >> root;
 	file.close();
+	
+	//Sets the given properties in the JSON
 	for (int i = 0; i < root["inventory"].size(); i++) {
 		for (size_t j = 0; j < this->inventory.size(); j++) 
 		{
@@ -47,6 +58,8 @@ Game::~Game() {
 			}
 		}
 	}
+
+	// Writes in the JSON
 	std::ofstream file2(gameManager->GetAssetPath() + "savedata.json");
 	file2 << root;
 	file2.close();
@@ -54,6 +67,7 @@ Game::~Game() {
 
 void Game::Update()
 {
+	//Updates the current scene
 	while (gameManager->CurrentScene == gameManager->SCENE::GAME && !gameManager->GetShouldClose())
 	{
 		BeginDrawing();
@@ -66,6 +80,7 @@ void Game::Update()
 		this->ProcessOrder();
 		this->m_Balance = gameManager->GetBalance();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(m_Balance) + "$").c_str(), { 70, 5 }, 60, 1, WHITE);
+		//Opens the inventory
 		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
@@ -74,6 +89,8 @@ void Game::Update()
 		}
 		gameManager->DrawCursor();
 		EndDrawing();
+
+		//When Escape is pressed the game is closed
 		if (IsKeyPressed(KEY_ESCAPE))
 		{
 			delete this;
@@ -81,6 +98,7 @@ void Game::Update()
 			break;
 		}
 
+		//Opens the PC
 		if (gameManager->IsButtonClicked("PC") && !isInventoryOpen)
 		{
 			delete this;
@@ -91,10 +109,12 @@ void Game::Update()
 }
 
 void Game::SetInventory() {
+	//Opens the JSON file
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
 	file >> root;
 
+	//Reads the inventory items from the JSON and puts them in the vector
 	for (int i = 0; i < root["inventory"].size(); i++) {
 		InventorySlot slot;
 		slot.name = root["inventory"][i]["name"].asCString();
@@ -111,39 +131,48 @@ void Game::DrawInventory()
 	if (isInventoryOpen) {
 		DrawTexture(this->HUD, 335, 140, WHITE);
 		int pages = int(25 / 24) + 1;
+		//Checks if the curr page is not first or last
 		if (page > 1 && page < int(this->inventory.size() / 25) + 1)
 		{
 			DrawTexture(this->Prev, 340, 545, WHITE);
+			
+			//Checks if the arrow is hovered
 			if (CheckCollisionPointRec(GetMousePosition(), { 340, 545, (float)this->Prev.width, (float)this->Prev.height }))
 			{
 				DrawTexture(this->PrevHover, 340, 545, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page--;
 			}
 			DrawTexture(this->Next, 1525, 545, WHITE);
+			//Checks if next is hovered
 			if (CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
 			{
 				DrawTexture(this->NextHover, 1525, 545, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
 			}
 		}
+		//Checks if you are on the first page and checks if there is more than one page
 		if (page == 1 && (int(this->inventory.size() / 25) + 1) > 1)
 		{
 			DrawTexture(this->Next, 1525, 545, WHITE);
+			//Checks if next is hovered
 			if (CheckCollisionPointRec(GetMousePosition(), { 1521, 545, (float)this->Next.width, (float)this->Next.height }))
 			{
 				DrawTexture(this->NextHover, 1525, 545, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page++;
 			}
 		}
+		//Checks if you are on the last page
 		if (page > 1 && page == int(this->inventory.size() / 25) + 1)
 		{
 			DrawTexture(this->Prev, 340, 545, WHITE);
+			//Checks if previous button is hovered
 			if (CheckCollisionPointRec(GetMousePosition(), { 340, 545, (float)this->Prev.width, (float)this->Prev.height }))
 			{
 				DrawTexture(this->PrevHover, 340, 545, WHITE);
 				if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) page--;
 			}
 		}
+		//Draws the current page of the inventory
 		for (size_t i = 0, count = (this->page - 1) * 24; i < 4; i++) {
 			for (size_t j = 0; j < 6; j++)
 			{
@@ -182,6 +211,7 @@ void Game::DrawInventory()
 }
 
 void Game::DrawOrder() {
+	//Checks if there is an order and draws it
 	if (orders->GetCurrentOrder().buyer != this->order.buyer && orders->GetCurrentOrder().product != this->order.product) {
 		this->order = orders->GetCurrentOrder();
 		for (size_t i = 0; i < this->order.reactants.size(); i++) {
@@ -202,6 +232,7 @@ void Game::DrawOrder() {
 
 void Game::DrawTable()
 {
+	//Draws the elements on the table
 	for (size_t i = 0; i < this->tableElements.size(); i++)
 	{
 		if (!tableElements[i].holding) {
@@ -218,6 +249,7 @@ void Game::DrawTable()
 				this->holding = true;
 			}
 		}
+		//Checks if the element is being holded and draws it next to the mouse
 		if (tableElements[i].holding)
 		{
 			DrawTexture(this->BigFlaskHover, GetMousePosition().x - (this->BigFlaskHover.width / 2), GetMousePosition().y - (this->BigFlaskHover.height / 2), WHITE);
@@ -247,6 +279,7 @@ void Game::DrawTable()
 }
 
 void Game::MixReactions(InventorySlot &el) {
+	//Places elements in the bowl
 	for (size_t i = 0; i < this->BowlElements.size(); i++) {
 		if (this->BowlElements[i].symbol == el.symbol && order.reactants[i].quantity > 0) {
 			BowlElements[i].quantity++;
@@ -258,7 +291,9 @@ void Game::MixReactions(InventorySlot &el) {
 
 void Game::ProcessOrder()
 {
+	//Checks if the order is ready
 	if (!IsReactionReady() || this->order.product.empty() || this->holding) return;
+	
 	if (IsReactionReady()) {
 		DrawTextEx(gameManager->ArialBold, "Place the bowl in the box", { 340, 500 }, 35, 1, SKYBLUE);
 	}
@@ -287,6 +322,7 @@ void Game::ProcessOrder()
 
 bool Game::IsReactionReady()
 {
+	//Checks if the quantity of the reactants is right
 	for (size_t i = 0; i < this->order.reactants.size(); i++)
 	{
 		if (order.reactants[i].quantity != 0) return false;

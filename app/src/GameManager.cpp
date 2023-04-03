@@ -4,12 +4,15 @@
 GameManager* GameManager::instance;
 
 GameManager::GameManager() {
+	//Sets VSYNC
 	SetConfigFlags(FLAG_VSYNC_HINT);
 	InitWindow(this->m_ScreenSize.x, this->m_ScreenSize.y, "MOPS CHEMISTRY LAB");
 	SetExitKey(KEY_NULL);
+	//Loads fonts
 	this->Arial = LoadFontEx((this->GetAssetPath() + "Arial.ttf").c_str(), 1000, 0, 0);
 	this->ArialBold = LoadFontEx((this->GetAssetPath() + "arialbd.ttf").c_str(), 70, 0, 0);
 	SetTextureFilter(this->ArialBold.texture, TEXTURE_FILTER_POINT);
+	//Reads the needed properties from the JSON file and sets them
 	std::ifstream file(this->GetAssetPath() + "savedata.json");
 	Json::Value root;
 	file >> root;
@@ -21,10 +24,11 @@ GameManager::GameManager() {
 	this->currentCursor = CURSOR(root["currentCursor"].asInt());
 	this->SetCursor(this->currentCursor);
 	this->currentTheme = THEME(root["theme"].asInt());
-	//ToggleFullscreen();
+	ToggleFullscreen();
 };
 
 GameManager::~GameManager() {
+	//Wrties the properties in the JSON file
 	std::ifstream file(this->GetAssetPath() + "savedata.json");
 	Json::Value root;
 	file >> root;
@@ -39,14 +43,16 @@ GameManager::~GameManager() {
 };
 
 void GameManager::Update() {
+	//Updates the whole application
 	this->m_MousePos = GetMousePosition();
 	this->DrawTextures();
 	this->DrawButtons();
-	this->DrawMousePos();
+	//this->DrawMousePos();
 	this->PassiveIncome();
 };
 
 void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions, std::vector<bool> hasTheme) {
+	//Loads the given scene
 	if (this->CurrentScene != sceneID) {
 		UnloadScene();
 		this->CurrentScene = sceneID;
@@ -61,6 +67,7 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, st
 
 void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions, std::vector<std::string> names, std::vector<bool> hasTheme)
 {
+	//Loads the given buttons
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
 		textureFiles[i] = this->GetAssetPath(hasTheme[i]) + textureFiles[i];
@@ -77,12 +84,14 @@ void GameManager::DrawMousePos() {
 }
 
 void GameManager::DrawTextures() {
+	//Draws the given textures
 	for (int i = 0; i < m_Textures.size(); i++) {
 		DrawTextureEx(this->m_Textures[i], this->m_TexturePositions[i], 0, GetScreenSize().x / this->m_ScreenSize.x, WHITE);
 	}
 }
 
 void GameManager::DrawButtons() {
+	// Draws the given buttons
 	SetMouseCursor(MOUSE_CURSOR_DEFAULT);
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
@@ -98,6 +107,7 @@ void GameManager::DrawButtons() {
 
 void GameManager::UnloadButton(size_t ID)
 {
+	//Unloads the given button
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
 		if (i == ID)
@@ -112,6 +122,7 @@ void GameManager::UnloadButton(size_t ID)
 
 void GameManager::UnloadButton(std::string name)
 {
+	//Unloads the given button
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
 		if (this->m_Buttons[i].name == name)
@@ -125,6 +136,7 @@ void GameManager::UnloadButton(std::string name)
 }
 
 void GameManager::UnloadScene() {
+	//Unloads the current scene
 	for (int i = 0; i < this->m_Textures.size(); i++) {
 		UnloadTexture(this->m_Textures[i]);
 	}
@@ -140,6 +152,7 @@ void GameManager::UnloadScene() {
 
 std::string GameManager::GetAssetPath(bool hasTheme)
 {
+	//Returns the asset path
 	if (hasTheme)
 	{
 		switch (this->currentTheme)
@@ -160,20 +173,25 @@ std::string GameManager::GetAssetPath(bool hasTheme)
 }
 
 Vector2 GameManager::GetScreenSize() {
+	//Returns the screen size
 	return Vector2{ float(GetScreenWidth()), float(GetScreenHeight()) };
 }
 
 GameManager* GameManager::GetInstance() {
+	//Singleton
+	// Returns the instance of the game manager
 	if (!instance) instance = new GameManager();
 	return instance;
 }
 
 bool GameManager::GetShouldClose() {
+	//Returns if the game should close
 	return WindowShouldClose();
 }
 
 bool GameManager::IsButtonClicked(size_t buttonID)
 {
+	//Returns if the given button is clicked
 	if (buttonID >= this->m_Buttons.size())
 	{
 		std::cout << "Button ID out of range\n";
@@ -192,6 +210,7 @@ bool GameManager::IsButtonClicked(size_t buttonID)
 
 bool GameManager::IsButtonClicked(std::string buttonName)
 {
+	//Returns if the given button is clicked
 	std::transform(buttonName.begin(), buttonName.end(), buttonName.begin(), ::toupper);
 	for (size_t i = 0; i < this->m_Buttons.size(); i++)
 	{
@@ -212,15 +231,18 @@ bool GameManager::IsButtonClicked(std::string buttonName)
 
 int GameManager::GetBalance()
 {
+	//Returns the balance
 	return this->m_Balance;
 }
 
 void GameManager::SetBalance(int balance)
 {
+	//Sets the balance
 	this->m_Balance = balance;
 }
 
 void GameManager::PassiveIncome() {
+	//Passive income
 	std::chrono::seconds duration(1);
 	std::chrono::steady_clock::time_point endTime = this->startTime + duration;
 
@@ -232,6 +254,7 @@ void GameManager::PassiveIncome() {
 }
 
 void GameManager::SetCursor(CURSOR cursor) {
+	//Sets the cursor
 	UnloadTexture(this->CursorTexture);
 	switch (cursor) {
 	case this->CURSOR::DEFAULT:
@@ -253,6 +276,7 @@ void GameManager::SetCursor(CURSOR cursor) {
 
 void GameManager::DrawCursor()
 {
+	//Draws the cursor
 	if (this->currentCursor == this->CURSOR::DEFAULT) return;
 	HideCursor();
 	DrawTexture(this->CursorTexture, this->m_MousePos.x, this->m_MousePos.y, WHITE);

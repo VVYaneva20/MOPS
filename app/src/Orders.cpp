@@ -3,15 +3,18 @@
 Orders* Orders::instance;
 
 Orders* Orders::GetInstance() {
+	//Singleton
 	if (!instance) instance = new Orders();
 	return instance;
 }
 
 Orders::Orders() {
+	//Reads from the JSON file
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
 	file >> root;
 	file.close();
+	//Sets the order properties from the JSON file
 	for (int i = 0; i < root["orders"].size(); i++) {
 		Order order;
 		order.product = root["orders"][i]["product"].asCString();
@@ -26,6 +29,7 @@ Orders::Orders() {
 			order.reactants.push_back(reactant);
 		}
 		this->orders.push_back(order);
+		//Checks if the order is accepted
 		if (this->orders[i].status == "Accepted")
 		{
 			this->m_currentOrder = this->orders[i];
@@ -36,6 +40,7 @@ Orders::Orders() {
 }
 
 Orders::~Orders() {
+	// Unloads all textures and saves the data to the JSON file
 	UnloadTextures();
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
@@ -45,7 +50,7 @@ Orders::~Orders() {
 	for (int i = 0; i < this->orders.size(); i++) {
 		if (this->orders[i].status == "Accepted" || this->orders[i].status == "Pending")
 		{
-			Json::Value order(Json::objectValue);
+			Json::Value order;
 			order["product"] = this->orders[i].product.c_str();
 			order["formula"] = this->orders[i].formula.c_str();
 			order["status"] = this->orders[i].status.c_str();
@@ -69,6 +74,7 @@ Orders::~Orders() {
 }
 
 void Orders::Update() {
+	//Updates the scene
 	DrawTexture(this->background, 0, 0, WHITE);
 	DrawOrders();
 	DisplayInfo();
@@ -76,6 +82,7 @@ void Orders::Update() {
 
 void Orders::Reinitialize()
 {
+	//Reinitializes the scene
 	UnloadTextures();
 	this->background = LoadTexture((gameManager->GetAssetPath(true) + "Orders/Orders.png").c_str());
 	this->OrderRect = LoadTexture((gameManager->GetAssetPath(true) + "Orders/OrderRect.png").c_str());
@@ -92,6 +99,7 @@ void Orders::Reinitialize()
 }
 
 void Orders::GenerateOrder() {
+	//Generates order with a random buyer from the JSON file
 	if (this->orders.size() >= 5) return;
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "buyers.json");
@@ -129,6 +137,7 @@ void Orders::GenerateOrder() {
 
 void Orders::DrawOrders()
 {
+	// Draws the orders
 	for (int i = 0; i < this->orders.size(); i++)
 	{
 		DrawTexture(this->OrderRect, 0, 350 + (i * OrderRect.height), WHITE);
@@ -151,6 +160,7 @@ void Orders::DrawOrders()
 
 void Orders::DisplayInfo()
 {
+	// Displayes information about the order
 	if (!selectedOrder.product.empty() && selectedOrder.status != "Declined")
 	{
 		DrawTexture(this->Buyer, 1467, 144, WHITE);
@@ -203,12 +213,14 @@ void Orders::DisplayInfo()
 }
 
 Orders::Order Orders::GetCurrentOrder() {
+	// Returns the current order
 	if (!this->m_Accepted) return {};
 	return this->m_currentOrder;
 }
 
 void Orders::FinishOrder()
 {
+	//Order finalization
 	for (size_t i = 0; i < this->orders.size(); i++)
 	{
 		if (this->orders[i].buyer == selectedOrder.buyer && this->orders[i].product == selectedOrder.product)
@@ -223,6 +235,7 @@ void Orders::FinishOrder()
 
 void Orders::UnloadTextures()
 {
+	// Unloads all textures
 	UnloadTexture(this->background);
 	UnloadTexture(this->OrderRect);
 	UnloadTexture(this->ViewButton);

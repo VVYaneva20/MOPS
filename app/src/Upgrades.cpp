@@ -1,6 +1,7 @@
 #include <Upgrades.hpp>
 
 Upgrades::Upgrades() {
+	// Gets the upgrades from the JSON file
 	Json::Value root;
 	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
 	file >> root;
@@ -20,6 +21,7 @@ Upgrades::Upgrades() {
 }
 
 Upgrades::~Upgrades() {
+	// Unloads all textures
 	UnloadTexture(this->background);
 	UnloadTexture(this->Unlocked);
 	for (size_t i = 0; i < 3; i++)
@@ -31,6 +33,7 @@ Upgrades::~Upgrades() {
 
 void Upgrades::Update()
 {
+	// Updates the scene
 	DrawTexture(this->background, 0, 0, WHITE);
 	for (int i = 0; i < 3; i++)
 	{
