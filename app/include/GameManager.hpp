@@ -12,7 +12,8 @@ public:
 
     enum SCENE {
         NO_SCENE,
-        MENU,
+        MENU_LIGHT,
+        MENU_DARK,
         GAME,
         SITEHOME,
         RULES,
