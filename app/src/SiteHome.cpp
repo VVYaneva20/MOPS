@@ -6,7 +6,13 @@ SiteHome::SiteHome() {
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames, this->m_hasTheme);
 	
 	this->tableManager = new TableManager();
+	this->upgrades = new Upgrades();
 	
+	this->Update();
+}
+
+void SiteHome::Update()
+{
 	while (gameManager->CurrentScene == gameManager->SCENE::SITEHOME && !gameManager->GetShouldClose())
 	{
 		BeginDrawing();
@@ -18,6 +24,10 @@ SiteHome::SiteHome() {
 		if (gameManager->IsButtonClicked("ORDERS") || this->currTab == TABS::ORDERS) {
 			this->currTab = TABS::ORDERS;
 			orders->Update();
+		}
+		if (gameManager->IsButtonClicked("UPGRADES") || this->currTab == TABS::UPGRADES) {
+			this->currTab = TABS::UPGRADES;
+			upgrades->Update();
 		}
 		gameManager->Update();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(gameManager->GetBalance()) + "$").c_str(), { 70, 30 }, 60, 1, WHITE);
