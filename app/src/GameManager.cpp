@@ -37,12 +37,12 @@ void GameManager::Update() {
 	DrawMousePos();
 };
 
-void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions) {
+void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions, std::vector<bool> hasTheme) {
 	if (this->CurrentScene != sceneID) {
 		UnloadScene();
 		this->CurrentScene = sceneID;
 		for (int i = 0; i < textures.size(); i++) {
-			textures[i] = this->GetAssetPath() + textures[i];
+			textures[i] = this->GetAssetPath(hasTheme[i]) + textures[i];
 			this->m_Textures.push_back(LoadTexture(textures[i].c_str()));
 			this->m_TexturePositions.push_back(positions[i]);
 			std::cout << "Loaded Texture: " << textures[i] << std::endl;
@@ -50,12 +50,12 @@ void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, st
 	}
 }
 
-void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions, std::vector<std::string> names)
+void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector<std::string> onHoverTextures, std::vector<Vector2> positions, std::vector<std::string> names, std::vector<bool> hasTheme)
 {
 	for (size_t i = 0; i < textureFiles.size(); i++)
 	{
-		textureFiles[i] = this->GetAssetPath() + textureFiles[i];
-		onHoverTextures[i] = this->GetAssetPath() + onHoverTextures[i];
+		textureFiles[i] = this->GetAssetPath(hasTheme[i]) + textureFiles[i];
+		onHoverTextures[i] = this->GetAssetPath(hasTheme[i]) + onHoverTextures[i];
 		std::transform(names[i].begin(), names[i].end(), names[i].begin(), ::toupper);
 		BUTTON button = { names[i], LoadTexture(textureFiles[i].c_str()), LoadTexture(onHoverTextures[i].c_str()), positions[i]};
 		this->m_Buttons.push_back(button);
@@ -129,8 +129,24 @@ void GameManager::UnloadScene() {
 	this->m_Buttons.clear();
 }
 
-std::string GameManager::GetAssetPath()
+std::string GameManager::GetAssetPath(bool hasTheme)
 {
+	if (hasTheme)
+	{
+		switch (this->currentTheme)
+		{
+		case THEME::THEME_LIGHT:
+			return this->m_AssetPath + "LightTheme/";
+			break;
+		case THEME::THEME_DARK:
+			return this->m_AssetPath + "DarkTheme/";
+			break;
+		}
+	}
+	else
+	{
+		return this->m_AssetPath;
+	}
 	return this->m_AssetPath;
 }
 

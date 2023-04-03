@@ -22,4 +22,5 @@ private:
 	std::vector<std::string> m_ButtonsHover = { "Site/ElementsHover.png", "Site/OrdersHover.png", "Site/BuyHover.png", "Site/CloseHover.png"};
 	std::vector<Vector2> m_ButtonPositions = { {400, 35}, {680, 35}, {944, 35}, {1801, 0} };
 	std::vector<std::string> m_ButtonNames = { "Elements", "Orders", "Buy", "Close" };
+	std::vector<bool> m_hasTheme = { false, false, false, false };
 };
