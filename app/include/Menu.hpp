@@ -3,6 +3,7 @@
 #include <Game.hpp>
 #include <Rules.hpp>
 #include <Settings.hpp>
+#include <Orders.hpp>
 
 class Menu {
 public:
@@ -10,6 +11,7 @@ public:
     ~Menu();
 private:
     GameManager* gameManager = GameManager::GetInstance();
+	Orders* orders = Orders::GetInstance();
     Rectangle m_Rect = { GetScreenWidth() / 2.0f, -100, 150, 150 };
     Vector2 m_MousePos = GetMousePosition();
     void DrawMenu();

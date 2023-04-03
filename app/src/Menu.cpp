@@ -34,6 +34,7 @@ void Menu::DrawMenu() {
 		}
 
         if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {
+            delete orders;
             delete gameManager;
             break;
         }

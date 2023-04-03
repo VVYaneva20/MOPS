@@ -7,10 +7,66 @@ Orders* Orders::GetInstance() {
 	return instance;
 }
 
-Orders::Orders() {}
+Orders::Orders() {
+	Json::Value root;
+	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
+	file >> root;
+	file.close();
+	for (int i = 0; i < root["orders"].size(); i++) {
+		Order order;
+		order.product = root["orders"][i]["product"].asCString();
+		order.formula = root["orders"][i]["formula"].asCString();
+		order.status = root["orders"][i]["status"].asCString();
+		order.buyer = root["orders"][i]["buyer"].asCString();
+		order.price = root["orders"][i]["price"].asInt();
+		for (int j = 0; j < root["orders"][i]["reactants"].size(); j++) {
+			Reactants reactant;
+			reactant.name = root["orders"][i]["reactants"][j]["name"].asCString();
+			reactant.quantity = root["orders"][i]["reactants"][j]["quantity"].asInt();
+			order.reactants.push_back(reactant);
+		}
+		this->orders.push_back(order);
+		if (this->orders[i].status == "Accepted")
+		{
+			this->m_currentOrder = this->orders[i];
+			this->m_Accepted = true;
+		}
+		
+	}
+}
 
 Orders::~Orders() {
+	std::cout << 111111111;
 	UnloadTextures();
+	Json::Value root;
+	std::ifstream file(gameManager->GetAssetPath() + "savedata.json");
+	file >> root;
+	file.close();
+	Json::Value orderArray(Json::arrayValue);
+	for (int i = 0; i < this->orders.size(); i++) {
+		if (this->orders[i].status == "Accepted" || this->orders[i].status == "Pending")
+		{
+			Json::Value order(Json::objectValue);
+			order["product"] = this->orders[i].product.c_str();
+			order["formula"] = this->orders[i].formula.c_str();
+			order["status"] = this->orders[i].status.c_str();
+			order["buyer"] = this->orders[i].buyer.c_str();
+			order["price"] = this->orders[i].price;
+			Json::Value reactantArray(Json::arrayValue);
+			for (int j = 0; j < this->orders[i].reactants.size(); j++) {
+				Json::Value reactant;
+				reactant["name"] = this->orders[i].reactants[j].name.c_str();
+				reactant["quantity"] = this->orders[i].reactants[j].quantity;
+				reactantArray.append(reactant);
+			}
+			order["reactants"] = reactantArray;
+			orderArray.append(order);
+		}
+	}
+	root["orders"] = orderArray;
+	std::ofstream file2(gameManager->GetAssetPath() + "savedata.json");
+	file2 << root;
+	file2.close();
 }
 
 void Orders::Update() {
