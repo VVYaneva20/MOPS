@@ -28,6 +28,7 @@ void Settings::DrawSettings() {
 				gameManager->currentTheme = gameManager->THEME_LIGHT;
 			}
 			Settings* settings = new Settings();
+			delete Orders::GetInstance();
 			delete this;
 			break;
 		}

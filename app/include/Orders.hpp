@@ -30,8 +30,8 @@ public:
 private:
 	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();
-	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Orders/Orders.png").c_str());
-	Texture2D OrderRect = LoadTexture((gameManager->GetAssetPath() + "Orders/OrderRect.png").c_str());
+	Texture2D background = LoadTexture((gameManager->GetAssetPath(true) + "Orders/Orders.png").c_str());
+	Texture2D OrderRect = LoadTexture((gameManager->GetAssetPath(true) + "Orders/OrderRect.png").c_str());
 	Texture2D ViewButton = LoadTexture((gameManager->GetAssetPath() + "Orders/View.png").c_str());
 	Texture2D ViewButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/ViewHover.png").c_str());
 	Texture2D AcceptButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Accept.png").c_str());
@@ -42,7 +42,7 @@ private:
 	Texture2D DiscardButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Discard.png").c_str());
 	Texture2D DiscardButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/DiscardHover.png").c_str());
 
-	Texture2D Buyer = LoadTexture((gameManager->GetAssetPath() + "Orders/Buyer.png").c_str());
+	Texture2D Buyer = LoadTexture((gameManager->GetAssetPath(true) + "Orders/Buyer.png").c_str());
 	std::vector<Order> orders;
 	Order m_currentOrder;
 	bool m_Accepted = false;
