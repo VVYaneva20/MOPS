@@ -1,22 +1,10 @@
 #include <Menu.hpp>
 
 Menu::Menu() {
-    //if (gameManager->currentTheme == gameManager->THEME::THEME_LIGHT) {
-    //    gameManager->LoadScene(gameManager->SCENE::MENU_LIGHT, this->m_ImagesLight, { { 0, 0 }, this->m_LogoPos });
-    //    gameManager->LoadButtons(this->m_ButtonsLight, this->m_ButtonsHoverLight, this->m_ButtonPositions, this->m_ButtonNames);
-    //}
-    //if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
-    //    gameManager->LoadScene(gameManager->SCENE::MENU_DARK, this->m_ImagesDark, { { 0, 0 }, this->m_LogoPos});
-    //    gameManager->LoadButtons(this->m_ButtonsDark, this->m_ButtonsHoverDark, this->m_ButtonPositions, this->m_ButtonNames);
-    //}
-	gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Textures, { {0,0}, this->m_LogoPos }, { 1, 0 });
+	gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Textures, { {0,0}, this->m_LogoPos }, { true, false });
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames, this->m_hasTheme);
     this->DrawMenu();
 }
-
-//gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Images, { { 0, 0 }, this->m_LogoPos });
-//gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
-
 Menu::~Menu() {
 }
 
