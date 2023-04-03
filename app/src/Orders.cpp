@@ -101,7 +101,7 @@ void Orders::GenerateOrder() {
 	Json::Value Reactions;
 	std::ifstream fileReactions(gameManager->GetAssetPath() + "reactions.json");
 	fileReactions >> Reactions;
-	std::chrono::seconds duration(gameManager->OrderFrequencyUpgrade ? 30 : 1);
+	std::chrono::seconds duration(gameManager->OrderFrequencyUpgrade ? 30 : 60);
 	std::chrono::steady_clock::time_point endTime = this->startTime + duration;
 
 	if (std::chrono::steady_clock::now() >= endTime) {
