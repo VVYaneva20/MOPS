@@ -2,8 +2,8 @@
 #include <SiteHome.hpp>
 
 SiteHome::SiteHome() {
-	gameManager->LoadScene(gameManager->SCENE::SITEHOME, { "Site/Balance.png" }, { { 0, 27 } });
-	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+	gameManager->LoadScene(gameManager->SCENE::SITEHOME, { "Site/Balance.png" }, { { 0, 27 } }, { 0 });
+	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames, this->m_hasTheme);
 	
 	this->tableManager = new TableManager();
 	

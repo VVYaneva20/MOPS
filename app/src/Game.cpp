@@ -1,8 +1,8 @@
 #include <Game.hpp>
 
 Game::Game() {
-	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } });
-	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png", "Lab/Box.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png", "Lab/BoxHover.png" }, { {1580, 575}, {954, 420}, {660,632}, {1594, 921} }, { "PC", "INVENTORY", "BOWL", "BOX"});
+	gameManager->LoadScene(gameManager->SCENE::GAME, { "Lab/Lab.png", "Lab/Balance.png", "Lab/Table.png" }, { { 0, 0 }, { 0, 0 }, { 130, 863 } }, {false, false, false});
+	gameManager->LoadButtons({ "Lab/PC.png", "Lab/Inventory.png", "Lab/Bowl.png", "Lab/Box.png" }, { "Lab/PCHover.png", "Lab/InventoryHover.png", "Lab/BowlHover.png", "Lab/BoxHover.png" }, { {1580, 575}, {954, 420}, {660,632}, {1594, 921} }, { "PC", "INVENTORY", "BOWL", "BOX"}, {false, false, false, false});
 	this->SetInventory();
 	this->Update();
 }
@@ -69,7 +69,7 @@ void Game::Update()
 		if ((gameManager->IsButtonClicked("INVENTORY") || IsKeyPressed(KEY_I)) && !isInventoryOpen)
 		{
 			isInventoryOpen = true;
-			gameManager->LoadButtons({ "Lab/Close.png" }, { "Lab/CloseHover.png" }, { { 1516, 140 } }, { "CLOSE" });
+			gameManager->LoadButtons({ "Lab/Close.png" }, { "Lab/CloseHover.png" }, { { 1516, 140 } }, { "CLOSE" }, {false});
 			continue;
 		}
 		EndDrawing();
@@ -277,7 +277,7 @@ void Game::ProcessOrder()
 				this->BowlElements.clear();
 				this->order = {};
 			}
-			gameManager->LoadButtons({ "Lab/Bowl.png" }, { "Lab/BowlHover.png" }, { { 660, 632 } }, { "BOWL" });
+			gameManager->LoadButtons({ "Lab/Bowl.png" }, { "Lab/BowlHover.png" }, { { 660, 632 } }, { "BOWL" }, {false});
 			this->holdingBowl = false;
 		}
 		DrawTexture(this->Bowl, GetMousePosition().x - 132, GetMousePosition().y - 117, WHITE);
