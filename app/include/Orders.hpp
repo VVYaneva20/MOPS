@@ -27,6 +27,7 @@ public:
 	void GenerateOrder();
 	Order GetCurrentOrder();
 	void FinishOrder();
+	void Reinitialize();
 private:
 	static Orders* instance;
 	GameManager* gameManager = GameManager::GetInstance();
@@ -49,5 +50,6 @@ private:
 	Order selectedOrder;
 	void DrawOrders();
 	void DisplayInfo();
+	void UnloadTextures();
 	Orders();
 };

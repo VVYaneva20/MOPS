@@ -34,7 +34,6 @@ void Menu::DrawMenu() {
 		}
 
         if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {
-            std::cout << "Exit" << std::endl;
             delete gameManager;
             break;
         }

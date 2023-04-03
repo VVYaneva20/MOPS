@@ -21,8 +21,6 @@ GameManager::GameManager() {
 	this->currentCursor = CURSOR(root["currentCursor"].asInt());
 	this->SetCursor(this->currentCursor);
 	this->currentTheme = THEME(root["theme"].asInt());
-	std::cout << "Current Cursor: " << this->currentCursor << std::endl;
-	std::cout << "Current Theme: " << this->currentTheme << std::endl;
 	//ToggleFullscreen();
 };
 
