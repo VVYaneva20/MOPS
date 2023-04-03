@@ -72,6 +72,7 @@ void Game::Update()
 			gameManager->LoadButtons({ "Lab/Close.png" }, { "Lab/CloseHover.png" }, { { 1516, 140 } }, { "CLOSE" }, {false});
 			continue;
 		}
+		gameManager->DrawCursor();
 		EndDrawing();
 		if (IsKeyPressed(KEY_ESCAPE))
 		{

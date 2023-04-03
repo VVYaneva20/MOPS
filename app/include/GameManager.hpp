@@ -21,16 +21,23 @@ public:
         SETTINGS_LIGHT,
         SETTINGS_DARK,
     };
+    SCENE CurrentScene = NO_SCENE;
 
     enum THEME {
         THEME_LIGHT,
         THEME_DARK
     };
-    THEME currentTheme = THEME_LIGHT;
+    THEME currentTheme;
 
+    enum CURSOR {
+        DEFAULT,
+        FLASK,
+        MOPS
+    };
+    CURSOR currentCursor;
+    
     Font Arial;
 	Font ArialBold;
-    SCENE CurrentScene = NO_SCENE;
     static GameManager* GetInstance();
     void Update();
     void LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions, std::vector<bool> hasTheme);
@@ -52,10 +59,14 @@ public:
 	void SetBalance(int balance);
     bool IncomeUpgrade = false;
 	bool OrderFrequencyUpgrade = false;
+    bool CursorUpgrade = false;
+    void SetCursor(CURSOR cursor);
+    void DrawCursor();
 private:
     static GameManager* instance;
     const std::string m_AssetPath = "./assets/";
     const Vector2 m_ScreenSize = { 1920, 1080 };
+    Texture2D CursorTexture;
     std::chrono::steady_clock::time_point startTime = std::chrono::steady_clock::now();
     Vector2 m_MousePos = { 0, 0 };
 	struct BUTTON {

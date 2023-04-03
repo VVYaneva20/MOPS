@@ -59,6 +59,7 @@ void Upgrades::Update()
 					break;
 				case 2:
 					root["cursor"] = true;
+					gameManager->CursorUpgrade = true;
 					break;
 				default:
 					break;

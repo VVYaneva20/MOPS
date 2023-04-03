@@ -17,6 +17,12 @@ GameManager::GameManager() {
 	this->m_Balance = root["balance"].asInt();
 	this->IncomeUpgrade = root["income"].asBool();
 	this->OrderFrequencyUpgrade = root["frequency"].asBool();
+	this->CursorUpgrade = root["cursor"].asBool();
+	this->currentCursor = CURSOR(root["currentCursor"].asInt());
+	this->SetCursor(this->currentCursor);
+	this->currentTheme = THEME(root["theme"].asInt());
+	std::cout << "Current Cursor: " << this->currentCursor << std::endl;
+	std::cout << "Current Theme: " << this->currentTheme << std::endl;
 	//ToggleFullscreen();
 };
 
@@ -25,6 +31,8 @@ GameManager::~GameManager() {
 	Json::Value root;
 	file >> root;
 	root["balance"] = this->m_Balance;
+	root["theme"] = (int)this->currentTheme;
+	root["currentCursor"] = (int)this->currentCursor;
 	std::ofstream file2(this->GetAssetPath() + "savedata.json");
 	file2 << root;
 	file.close();
@@ -224,3 +232,31 @@ void GameManager::PassiveIncome() {
 		else this->SetBalance(this->GetBalance() + 1);
 	}
 }
+
+void GameManager::SetCursor(CURSOR cursor) {
+	UnloadTexture(this->CursorTexture);
+	switch (cursor) {
+	case this->CURSOR::DEFAULT:
+		this->currentCursor = this->CURSOR::DEFAULT;
+		ShowCursor();
+		break;
+	case this->CURSOR::FLASK:
+		this->currentCursor = this->CURSOR::FLASK;
+		this->CursorTexture = LoadTexture((this->GetAssetPath() + "Cursors/Flask.png").c_str());
+		HideCursor();
+		break;
+	case this->CURSOR::MOPS:
+		this->currentCursor = this->CURSOR::MOPS;
+		this->CursorTexture = LoadTexture((this->GetAssetPath() + "Cursors/Mops.png").c_str());
+		HideCursor();
+		break;
+	}
+}
+
+void GameManager::DrawCursor()
+{
+	if (this->currentCursor == this->CURSOR::DEFAULT) return;
+	HideCursor();
+	DrawTexture(this->CursorTexture, this->m_MousePos.x, this->m_MousePos.y, WHITE);
+}
+
