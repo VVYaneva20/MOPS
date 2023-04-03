@@ -1,10 +1,10 @@
 {
-	"balance" : 500,
+	"balance" : 3013,
 	"inventory" : 
 	[
 		{
 			"name" : "Hydrogen",
-			"quantity" : 0,
+			"quantity" : 2,
 			"symbol" : "H"
 		},
 		{
@@ -14,8 +14,28 @@
 		},
 		{
 			"name" : "Oxygen",
-			"quantity" : 0,
+			"quantity" : 1,
 			"symbol" : "O"
+		},
+		{
+			"name" : "Potassium",
+			"quantity" : 0,
+			"symbol" : "K"
+		},
+		{
+			"name" : "Chlorine",
+			"quantity" : 0,
+			"symbol" : "Cl"
+		},
+		{
+			"name" : "Sodium",
+			"quantity" : 0,
+			"symbol" : "Na"
+		},
+		{
+			"name" : "Nitrogen",
+			"quantity" : 0,
+			"symbol" : "N"
 		}
 	]
 }

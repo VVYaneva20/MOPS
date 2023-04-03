@@ -258,6 +258,9 @@ void Game::MixReactions(InventorySlot &el) {
 void Game::ProcessOrder()
 {
 	if (!IsReactionReady() || this->order.product.empty() || this->holding) return;
+	if (IsReactionReady()) {
+		DrawTextEx(gameManager->ArialBold, "Place the bowl in the box", { 340, 500 }, 35, 1, SKYBLUE);
+	}
 	if (gameManager->IsButtonClicked("BOWL"))
 	{
 		this->holdingBowl = true;
