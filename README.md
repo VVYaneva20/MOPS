@@ -84,10 +84,8 @@ If you want to clone our repo locally you can paste the following command in you
 <hr>
  
 <br>
-<h3>🖥 Application (.exe)</h3>
-Link
-<br>
- 
+<h3>🖥 Application (.exe) can be downloaded from the release</h3>
+
 <br>
 <h3>🖥 Application (VS)</h3>
 You can also build our project by using Visual Studio 2022
@@ -99,7 +97,7 @@ You can also build our project by using Visual Studio 2022
  
 <b>2.</b> Open the .sln file by typing:
  
-<pre>main.sln</pre>
+<pre>mops.sln</pre>
  
 ## 🧒 Our Team
  
