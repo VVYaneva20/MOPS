@@ -27,32 +27,28 @@ void Settings::DrawSettings() {
 			else if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
 				gameManager->currentTheme = gameManager->THEME_LIGHT;
 			}
+			orders->Reinitialize();
 			Settings* settings = new Settings();
-			delete Orders::GetInstance();
 			delete this;
 			break;
 		}
 
 		if (gameManager->IsButtonClicked("CURSOR"))
 		{
-			//gameManager->SetCursor(gameManager->CURSORS::FLASK);
 			//set the cursor to the next in the enum
 			if (gameManager->currentCursor == gameManager->CURSOR::MOPS || (gameManager->currentCursor + 1 == gameManager->CURSOR::MOPS && !gameManager->CursorUpgrade))
 			{
 				gameManager->SetCursor(gameManager->CURSOR::DEFAULT);
 				continue;
 			}
-			//std::cout << 11111111111;
 			GameManager::CURSOR cursor = GameManager::CURSOR(gameManager->currentCursor + 1);
-			std::cout << gameManager->currentCursor << "  ";
-			std::cout << cursor << std::endl;
 			gameManager->SetCursor(cursor);
 			
 		}
 
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {
-			std::cout << "Exit" << std::endl;
-			delete gameManager;
+			Menu* menu = new Menu();
+			delete this;
 			break;
 		}
 	}

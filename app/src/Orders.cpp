@@ -10,24 +10,30 @@ Orders* Orders::GetInstance() {
 Orders::Orders() {}
 
 Orders::~Orders() {
-	UnloadTexture(this->background);
-	UnloadTexture(this->OrderRect);
-	UnloadTexture(this->ViewButton);
-	UnloadTexture(this->ViewButtonHover);
-	UnloadTexture(this->AcceptButton);
-	UnloadTexture(this->AcceptButtonHover);
-	UnloadTexture(this->AcceptButtonLocked);
-	UnloadTexture(this->DeclineButton);
-	UnloadTexture(this->DeclineButtonHover);
-	UnloadTexture(this->Buyer);
-	UnloadTexture(this->DiscardButton);
-	UnloadTexture(this->DiscardButtonHover);
+	UnloadTextures();
 }
 
 void Orders::Update() {
 	DrawTexture(this->background, 0, 0, WHITE);
 	DrawOrders();
 	DisplayInfo();
+}
+
+void Orders::Reinitialize()
+{
+	UnloadTextures();
+	this->background = LoadTexture((gameManager->GetAssetPath(true) + "Orders/Orders.png").c_str());
+	this->OrderRect = LoadTexture((gameManager->GetAssetPath(true) + "Orders/OrderRect.png").c_str());
+	this->ViewButton = LoadTexture((gameManager->GetAssetPath() + "Orders/View.png").c_str());
+	this->ViewButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/ViewHover.png").c_str());
+	this->AcceptButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Accept.png").c_str());
+	this->AcceptButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/AcceptHover.png").c_str());
+	this->AcceptButtonLocked = LoadTexture((gameManager->GetAssetPath() + "Orders/AcceptLocked.png").c_str());
+	this->DeclineButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Decline.png").c_str());
+	this->DeclineButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/DeclineHover.png").c_str());
+	this->DiscardButton = LoadTexture((gameManager->GetAssetPath() + "Orders/Discard.png").c_str());
+	this->DiscardButtonHover = LoadTexture((gameManager->GetAssetPath() + "Orders/DiscardHover.png").c_str());
+	this->Buyer = LoadTexture((gameManager->GetAssetPath(true) + "Orders/Buyer.png").c_str());
 }
 
 void Orders::GenerateOrder() {
@@ -153,4 +159,20 @@ void Orders::FinishOrder()
 	}
 	this->m_Accepted = false;
 	this->m_currentOrder = {};
+}
+
+void Orders::UnloadTextures()
+{
+	UnloadTexture(this->background);
+	UnloadTexture(this->OrderRect);
+	UnloadTexture(this->ViewButton);
+	UnloadTexture(this->ViewButtonHover);
+	UnloadTexture(this->AcceptButton);
+	UnloadTexture(this->AcceptButtonHover);
+	UnloadTexture(this->AcceptButtonLocked);
+	UnloadTexture(this->DeclineButton);
+	UnloadTexture(this->DeclineButtonHover);
+	UnloadTexture(this->DiscardButton);
+	UnloadTexture(this->DiscardButtonHover);
+	UnloadTexture(this->Buyer);
 }

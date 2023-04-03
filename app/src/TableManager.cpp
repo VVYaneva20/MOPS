@@ -44,7 +44,6 @@ void TableManager::DrawPeriodicTable(std::vector<TableManager::PeriodicElement> 
 			SetMouseCursor(MOUSE_CURSOR_POINTING_HAND);
 			DrawRectangleLinesEx({ (float)elements[i].posX, (float)elements[i].posY, 65, 65 }, 4, ORANGE);
 			if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				std::cout << elements[i].name;
 				UnloadModel(this->m_SelectedElement.model);
 				elements[i].model = LoadModel((gameManager->GetAssetPath() + "Models/" + elements[i].name + ".glb").c_str());
 				this->m_SelectedElement = elements[i];

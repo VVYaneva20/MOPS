@@ -1,6 +1,7 @@
 #pragma once
 #include <GameManager.hpp>
 #include <Game.hpp>
+#include <Orders.hpp>
 
 class Settings {
 public:
@@ -8,6 +9,7 @@ public:
 	~Settings();
 private:
 	GameManager* gameManager = GameManager::GetInstance();
+	Orders* orders = Orders::GetInstance();
 	void DrawSettings();
 	std::vector<std::string> m_Buttons = { "Settings/Back.png", "Settings/ToggleTheme.png", "Settings/CursorButton.png" };
 	std::vector<std::string> m_ButtonsHover = { "Settings/BackHover.png", "Settings/ToggleThemeHover.png", "Settings/CursorButtonHover.png" };
