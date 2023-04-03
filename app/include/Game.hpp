@@ -34,6 +34,7 @@ private:
 	std::vector<InventorySlot> inventory;
 	std::vector<InventorySlot> tableElements;
 	std::vector<InventorySlot> BowlElements;
+	Orders::Order order;
 	void Update();
 	void SetInventory();
 	void DrawInventory();
@@ -42,7 +43,6 @@ private:
 	void MixReactions(InventorySlot &el);
 	void ProcessOrder();
 	bool IsReactionReady();
-	Orders::Order order;
 	bool isInventoryOpen = false;
 	bool holding = false;
 	bool holdingBowl = false;
