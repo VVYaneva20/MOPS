@@ -10,8 +10,9 @@ void Settings::DrawSettings() {
 	while ((gameManager->CurrentScene == gameManager->SCENE::SETTINGS_LIGHT || gameManager->CurrentScene == gameManager->SCENE::SETTINGS_DARK) && !gameManager->GetShouldClose()) {
 		BeginDrawing();
 		ClearBackground(BLUE);
-		EndDrawing();
 		gameManager->Update();
+		gameManager->DrawCursor();
+		EndDrawing();
 
 		if (gameManager->IsButtonClicked("BACK")) {
 			delete this;
@@ -29,6 +30,23 @@ void Settings::DrawSettings() {
 			Settings* settings = new Settings();
 			delete this;
 			break;
+		}
+
+		if (gameManager->IsButtonClicked("CURSOR"))
+		{
+			//gameManager->SetCursor(gameManager->CURSORS::FLASK);
+			//set the cursor to the next in the enum
+			if (gameManager->currentCursor == gameManager->CURSOR::MOPS || (gameManager->currentCursor + 1 == gameManager->CURSOR::MOPS && !gameManager->CursorUpgrade))
+			{
+				gameManager->SetCursor(gameManager->CURSOR::DEFAULT);
+				continue;
+			}
+			//std::cout << 11111111111;
+			GameManager::CURSOR cursor = GameManager::CURSOR(gameManager->currentCursor + 1);
+			std::cout << gameManager->currentCursor << "  ";
+			std::cout << cursor << std::endl;
+			gameManager->SetCursor(cursor);
+			
 		}
 
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("EXIT")) {

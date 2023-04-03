@@ -14,6 +14,7 @@ void Menu::DrawMenu() {
         BeginDrawing();
         ClearBackground(BLUE);
         gameManager->Update();
+        gameManager->DrawCursor();
         EndDrawing();
 
         if (gameManager->IsButtonClicked("START")) {
@@ -37,6 +38,5 @@ void Menu::DrawMenu() {
             delete gameManager;
             break;
         }
-
     }
 }

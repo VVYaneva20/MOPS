@@ -1,5 +1,6 @@
 {
-	"balance" : 500,
+	"balance" : 503,
+	"currentCursor" : 0,
 	"cursor" : false,
 	"frequency" : false,
 	"income" : false,
@@ -20,5 +21,6 @@
 			"quantity" : 0,
 			"symbol" : "O"
 		}
-	]
+	],
+	"theme" : 0
 }

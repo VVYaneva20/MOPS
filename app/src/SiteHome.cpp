@@ -31,6 +31,7 @@ void SiteHome::Update()
 		}
 		gameManager->Update();
 		DrawTextEx(gameManager->ArialBold, (std::to_string(gameManager->GetBalance()) + "$").c_str(), { 70, 30 }, 60, 1, WHITE);
+		gameManager->DrawCursor();
 		EndDrawing();
 
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))
