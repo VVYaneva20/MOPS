@@ -146,6 +146,7 @@
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SiteHome.cpp" />
     <ClCompile Include="src\TableManager.cpp" />
+    <ClCompile Include="src\Upgrades.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Game.hpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="include\Settings.hpp" />
     <ClInclude Include="include\SiteHome.hpp" />
     <ClInclude Include="include\TableManager.hpp" />
+    <ClInclude Include="include\Upgrades.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -42,6 +42,9 @@
     <ClCompile Include="src\Settings.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Upgrades.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\GameManager.hpp">
@@ -66,6 +69,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="include\Settings.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Upgrades.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
