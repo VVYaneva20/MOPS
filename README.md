@@ -85,16 +85,8 @@ If you want to clone our repo locally you can paste the following command in you
  
 <br>
 <h3>🖥 Application (.exe)</h3>
-Then, you can start our game by running the following commands:
+Link
 <br>
- 
-<b>1.</b> Navigate to our debug folder using:
- 
-<pre>cd debug</pre>
- 
-<b>2.</b> Open the .exe file using:
- 
-<pre>main.exe</pre>
  
 <br>
 <h3>🖥 Application (VS)</h3>
@@ -103,7 +95,7 @@ You can also build our project by using Visual Studio 2022
  
 <b>1.</b> Navigate to the main folder:
  
-<pre>cd mops</pre>
+<pre>cd mops/app</pre>
  
 <b>2.</b> Open the .sln file by typing:
  
@@ -115,7 +107,7 @@ You can also build our project by using Visual Studio 2022
 - <a href = "https://github.com/MMMarinov20"> Maxim Marinov </a> (Backend Developer)
 - <a href = "https://github.com/SHHristov20"> Stefan Hristov </a> (Backend Developer)
 - <a href = "https://github.com/PDMatsaliev20"> Petar Matsaliev </a> (Backend Developer)
-- <a href = "https://github.com/DSGramatikov20"> Dani Gramatikov </a> (QA Engineer)
+- <a href = "https://github.com/DSGramatikov20"> Dani Gramatikov </a> (Designer)
  
 <hr>
  
