@@ -76,6 +76,8 @@ void TableManager::DisplayInfo(TableManager::PeriodicElement element) {
 	DrawTextEx(gameManager->ArialBold, ("Phase: " + element.phase).c_str(), { 1500, 440 }, 30, 0.2, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Appearance: " + element.appearance).c_str(), { 1500, 480 }, 30, 0.2, WHITE);
 	DrawTextEx(gameManager->ArialBold, ("Atomic mass: " + std::to_string(element.atomicMass)).c_str(), { 1500, 520 }, 30, 0.2, WHITE);
+	if (!element.unlocked) DrawTextEx(gameManager->ArialBold, ("Price: " + std::to_string(element.unlockPrice) + "$").c_str(), {1610, 890}, 30, 0.2, WHITE);
+	else DrawTextEx(gameManager->ArialBold, ("Price: " + std::to_string(element.unitPrice) + "$").c_str(), { 1610, 890 }, 30, 0.2, WHITE);
 	std::string summary = element.summary;
 	for (size_t i = 0, j = 0; i < summary.length(); i++, j++) {
 		if (i > 300) {
@@ -251,4 +253,5 @@ void TableManager::UnlockElement() {
 			break;
 		}
 	}
+	file2.close();
 }

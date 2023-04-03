@@ -1,0 +1,160 @@
+{
+    "reactions": [
+        {
+            "reactants": [
+                {"name": "Fe", "quantity": 2},
+                {"name": "O", "quantity": 3}
+            ],
+			"product": "Fe2O3",
+            "product_name": "Iron(III) oxide"
+        },
+        {
+            "reactants": [
+                {"name": "H", "quantity": 2},
+                {"name": "O", "quantity": 1}
+            ],
+			"product": "H2O",
+            "product_name": "Water"
+        },
+        {
+            "reactants": [
+                {"name": "Na", "quantity": 1},
+                {"name": "Cl", "quantity": 1}
+            ],
+			"product": "NaCl",
+            "product_name": "Sodium chloride"
+        },
+        {
+            "reactants": [
+                {"name": "Cu", "quantity": 1},
+                {"name": "O", "quantity": 1}
+            ],
+			"product": "CuO",
+            "product_name": "Copper(II) oxide"
+        },
+        {
+            "reactants": [
+                {"name": "Mg", "quantity": 1},
+                {"name": "Cl", "quantity": 2}
+            ],
+			"product": "MgCl2",
+            "product_name": "Magnesium chloride"
+        },
+        {
+            "reactants": [
+                {"name": "K", "quantity": 1},
+                {"name": "O", "quantity": 1},
+				{"name": "H", "quantity": 1}
+            ],
+			"product": "KOH",
+            "product_name": "Potassium hydroxide"
+        },
+        {
+            "reactants": [
+                {"name": "Ca", "quantity": 1},
+                {"name": "S", "quantity": 1},
+				{"name": "O", "quantity": 4}
+            ],
+			"product": "CaSO4",
+            "product_name": "Calcium sulfate"
+        },
+        {
+			"reactants": [
+				{"name": "C", "quantity": 1},
+				{"name": "O", "quantity": 2}
+			],
+			"product": "CO2",
+			"product_name": "Carbon dioxide"
+		},
+		{
+			"reactants": [
+				{"name": "Na", "quantity": 2},
+				{"name": "S", "quantity": 1},
+				{"name" : "O", "quantity": 4}
+
+			],
+			"product": "Na2SO4",
+			"product_name": "Sodium sulfate"
+		},
+		{
+			"reactants": [
+				{"name": "Na", "quantity": 1},
+				{"name" : "H", "quantity": 1},
+				{"name": "S", "quantity": 1},
+				{"name": "O", "quantity": 4}
+			],
+			"product": "NaHSO4",
+			"product_name": "Sodium bisulfate"
+		},
+		{
+			"reactants": [
+				{"name": "Mg", "quantity": 1},
+				{"name": "N", "quantity": 2},
+				{"name": "O", "quantity": 6}
+			],
+			"product": "Mg(NO3)2",
+			"product_name": "Magnesium nitrate"
+		},
+    	{
+    	    "reactants": [
+    	        {"name": "Al", "quantity": 2},
+    	        {"name": "O", "quantity": 3}
+    	    ],
+			"product": "Al2O3",
+    	    "product_name": "Aluminum oxide"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "N", "quantity": 1},
+    	        {"name": "O", "quantity": 1}
+    	    ],
+			"product": "NO",
+    	    "product_name": "Nitric oxide"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "Mn", "quantity": 2},
+		        {"name": "O", "quantity": 3}
+    	    ],
+			"product": "Mn2O3",
+    	    "product_name": "Manganese oxide"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "Ba", "quantity": 1},
+				{"name": "S", "quantity": 1},
+				{"name": "O", "quantity": 4}
+    	    ],
+			"product": "BaSO4",
+    	    "product_name": "Barium sulfate"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "Mg", "quantity": 1},
+				{"name": "O", "quantity": 2},
+				{"name": "H", "quantity": 2}
+    	    ],
+			"product": "Mg(OH)2",
+    	    "product_name": "Magnesium hydroxide"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "K", "quantity": 1},
+    	        {"name": "Cl", "quantity": 1}
+    	    ],
+			"product": "KCl",
+    	    "product_name": "Potassium chloride"
+    	},
+    	{
+    	    "reactants": [
+    	        {"name": "Zn", "quantity": 1},
+    	        {"name": "Cl", "quantity": 2}
+    	    ],
+			"product": "ZnCl2",
+			"product_name": "Zinc chloride"
+		}
+	]
+}
+
+
+           

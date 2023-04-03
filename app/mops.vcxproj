@@ -143,6 +143,7 @@
     <ClCompile Include="src\Menu.cpp" />
     <ClCompile Include="src\Orders.cpp" />
     <ClCompile Include="src\Rules.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SiteHome.cpp" />
     <ClCompile Include="src\TableManager.cpp" />
   </ItemGroup>
@@ -152,6 +153,7 @@
     <ClInclude Include="include\Menu.hpp" />
     <ClInclude Include="include\Orders.hpp" />
     <ClInclude Include="include\Rules.hpp" />
+    <ClInclude Include="include\Settings.hpp" />
     <ClInclude Include="include\SiteHome.hpp" />
     <ClInclude Include="include\TableManager.hpp" />
   </ItemGroup>

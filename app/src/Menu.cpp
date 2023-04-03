@@ -1,17 +1,26 @@
 #include <Menu.hpp>
 
 Menu::Menu() {
-    gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Images, { { 0, 0 }, this->m_LogoPos });
-    gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
+    if (gameManager->currentTheme == gameManager->THEME::THEME_LIGHT) {
+        gameManager->LoadScene(gameManager->SCENE::MENU_LIGHT, this->m_ImagesLight, { { 0, 0 }, this->m_LogoPos });
+        gameManager->LoadButtons(this->m_ButtonsLight, this->m_ButtonsHoverLight, this->m_ButtonPositions, this->m_ButtonNames);
+    }
+    if (gameManager->currentTheme == gameManager->THEME::THEME_DARK) {
+        gameManager->LoadScene(gameManager->SCENE::MENU_DARK, this->m_ImagesDark, { { 0, 0 }, this->m_LogoPos});
+        gameManager->LoadButtons(this->m_ButtonsDark, this->m_ButtonsHoverDark, this->m_ButtonPositions, this->m_ButtonNames);
+    }
     this->DrawMenu();
 }
+
+//gameManager->LoadScene(gameManager->SCENE::MENU, this->m_Images, { { 0, 0 }, this->m_LogoPos });
+//gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
 
 Menu::~Menu() {
 }
 
 
 void Menu::DrawMenu() {
-    while (gameManager->CurrentScene == gameManager->SCENE::MENU && !gameManager->GetShouldClose()) {
+    while ((gameManager->CurrentScene == gameManager->SCENE::MENU_LIGHT || gameManager->CurrentScene == gameManager->SCENE::MENU_DARK) && !gameManager->GetShouldClose()) {
         BeginDrawing();
         ClearBackground(BLUE);
         gameManager->Update();
@@ -22,7 +31,11 @@ void Menu::DrawMenu() {
             Game* game = new Game();
             break;
         }
-
+        if (gameManager->IsButtonClicked("SETTINGS")) {
+			delete this;
+			Settings* settings = new Settings();
+			break;
+		}
         if (gameManager->IsButtonClicked("RULES")) {
 			delete this;
 			Rules* rules = new Rules();

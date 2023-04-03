@@ -16,7 +16,7 @@ public:
 private:
 	GameManager* gameManager = GameManager::GetInstance();
 	TableManager* tableManager;
-	Orders* orders;
+	Orders* orders = Orders::GetInstance();
 	SiteHome::TABS currTab;
 	std::vector<std::string> m_Buttons = { "Site/Elements.png", "Site/Orders.png", "Site/Buy.png", "Site/Close.png"};
 	std::vector<std::string> m_ButtonsHover = { "Site/ElementsHover.png", "Site/OrdersHover.png", "Site/BuyHover.png", "Site/CloseHover.png"};

@@ -13,6 +13,7 @@ GameManager::GameManager() {
 	std::ifstream file(this->GetAssetPath() + "savedata.json");
 	Json::Value root;
 	file >> root;
+	file.close();
 	this->m_Balance = root["balance"].asInt();
 	//ToggleFullscreen();
 };
@@ -24,6 +25,8 @@ GameManager::~GameManager() {
 	root["balance"] = this->m_Balance;
 	std::ofstream file2(this->GetAssetPath() + "savedata.json");
 	file2 << root;
+	file.close();
+	file2.close();
 	CloseWindow();
 };
 
@@ -61,7 +64,7 @@ void GameManager::LoadButtons(std::vector<std::string> textureFiles, std::vector
 }
 
 void GameManager::DrawMousePos() {
-	DrawText(TextFormat("Mouse Position: %g, %g", this->m_MousePos.x, this->m_MousePos.y), 10, 10, 20, BLACK);
+	DrawText(TextFormat("Mouse Position: %g, %g", this->m_MousePos.x, this->m_MousePos.y), 10, 100, 20, BLACK);
 }
 
 void GameManager::DrawTextures() {

@@ -6,7 +6,6 @@ SiteHome::SiteHome() {
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames);
 	
 	this->tableManager = new TableManager();
-	this->orders = new Orders();
 	
 	while (gameManager->CurrentScene == gameManager->SCENE::SITEHOME && !gameManager->GetShouldClose())
 	{
@@ -27,7 +26,6 @@ SiteHome::SiteHome() {
 		if (IsKeyPressed(KEY_ESCAPE) || gameManager->IsButtonClicked("CLOSE"))
 		{
 			delete this->tableManager;
-			delete this->orders;
 			delete this;
 			Game* menu = new Game();
 			break;
