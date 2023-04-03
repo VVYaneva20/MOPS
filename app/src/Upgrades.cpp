@@ -7,8 +7,8 @@ Upgrades::Upgrades() {
 	for (size_t i = 0; i < 3; i++)
 	{
 		UPGRADES upgrade;
-		upgrade.button = LoadTexture((gameManager->GetAssetPath() + "Upgrades/Unlock" + std::to_string(i + 1) + ".png").c_str());
-		upgrade.buttonHover = LoadTexture((gameManager->GetAssetPath() + "Upgrades/Unlock" + std::to_string(i + 1) + "Hover.png").c_str());
+		upgrade.button = LoadTexture((gameManager->GetAssetPath(true) + "Upgrades/Unlock" + std::to_string(i + 1) + ".png").c_str());
+		upgrade.buttonHover = LoadTexture((gameManager->GetAssetPath(true) + "Upgrades/Unlock" + std::to_string(i + 1) + "Hover.png").c_str());
 		m_Upgrades.push_back(upgrade);
 	}
 	this->m_Upgrades[0].unlocked = root["income"].asBool();

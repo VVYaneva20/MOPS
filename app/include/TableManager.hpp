@@ -41,7 +41,7 @@ private:
 	};
 	
 	bool drawModel = true;
-	Texture2D background = LoadTexture((gameManager->GetAssetPath() + "Table/TableBackground.png").c_str());
+	Texture2D background = LoadTexture((gameManager->GetAssetPath(true) + "Table/TableBackground.png").c_str());
 	Texture2D tableOutline = LoadTexture((gameManager->GetAssetPath() + "Table/TableOutline.png").c_str());
 	Texture2D padlock = LoadTexture((gameManager->GetAssetPath() + "Elements/Padlock.png").c_str());
 	Texture2D UnlockButton = LoadTexture((gameManager->GetAssetPath() + "Table/Unlock.png").c_str());
