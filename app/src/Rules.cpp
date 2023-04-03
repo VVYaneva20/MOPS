@@ -2,7 +2,7 @@
 
 
 Rules::Rules() {
-	gameManager->LoadScene(gameManager->SCENE::RULES, { "Rules/Rules.png" }, { { 0, 0 } }, { 1 });
+	gameManager->LoadScene(gameManager->SCENE::RULES, { "Rules/Rules.png" }, { { 0, 0 } }, { true });
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames, this->m_hasTheme);
 
     while (gameManager->CurrentScene == gameManager->SCENE::RULES && !gameManager->GetShouldClose()) {
@@ -34,7 +34,7 @@ Rules::Rules() {
 Rules::~Rules() {}
 
 SecondPage::SecondPage() {
-    gameManager->LoadScene(gameManager->SCENE::SECONDRULES, { "Rules/RulesSecond.png" }, { {0, 0} }, { 1 });
+    gameManager->LoadScene(gameManager->SCENE::SECONDRULES, { "Rules/RulesSecond.png" }, { {0, 0} }, { true });
 	gameManager->LoadButtons(this->m_Buttons, this->m_ButtonsHover, this->m_ButtonPositions, this->m_ButtonNames, this->m_hasTheme);
 
     while (gameManager->CurrentScene == gameManager->SCENE::SECONDRULES && !gameManager->GetShouldClose()) {
