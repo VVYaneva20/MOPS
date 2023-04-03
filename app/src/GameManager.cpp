@@ -15,6 +15,8 @@ GameManager::GameManager() {
 	file >> root;
 	file.close();
 	this->m_Balance = root["balance"].asInt();
+	this->IncomeUpgrade = root["income"].asBool();
+	this->OrderFrequencyUpgrade = root["frequency"].asBool();
 	//ToggleFullscreen();
 };
 
@@ -32,9 +34,10 @@ GameManager::~GameManager() {
 
 void GameManager::Update() {
 	this->m_MousePos = GetMousePosition();
-	DrawTextures();
-	DrawButtons();
-	DrawMousePos();
+	this->DrawTextures();
+	this->DrawButtons();
+	this->DrawMousePos();
+	this->PassiveIncome();
 };
 
 void GameManager::LoadScene(SCENE sceneID, std::vector<std::string> textures, std::vector<Vector2> positions, std::vector<bool> hasTheme) {
@@ -209,4 +212,15 @@ int GameManager::GetBalance()
 void GameManager::SetBalance(int balance)
 {
 	this->m_Balance = balance;
+}
+
+void GameManager::PassiveIncome() {
+	std::chrono::seconds duration(1);
+	std::chrono::steady_clock::time_point endTime = this->startTime + duration;
+
+	if (std::chrono::steady_clock::now() >= endTime) {
+		this->startTime = std::chrono::steady_clock::now();
+		if (this->IncomeUpgrade) this->SetBalance(this->GetBalance() + 3);
+		else this->SetBalance(this->GetBalance() + 1);
+	}
 }
