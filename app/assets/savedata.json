@@ -1,7 +1,7 @@
 {
-	"balance" : 500,
-	"currentCursor" : 0,
-	"cursor" : false,
+	"balance" : 652,
+	"currentCursor" : 2,
+	"cursor" : true,
 	"frequency" : false,
 	"income" : false,
 	"inventory" : 
@@ -41,7 +41,83 @@
 				}
 			],
 			"status" : "Pending"
+		},
+		{
+			"buyer" : "Maria Ivanova",
+			"formula" : "BaSO4",
+			"price" : 1511,
+			"product" : "Barium sulfate",
+			"reactants" : 
+			[
+				{
+					"name" : "Ba",
+					"quantity" : 1
+				},
+				{
+					"name" : "S",
+					"quantity" : 1
+				},
+				{
+					"name" : "O",
+					"quantity" : 4
+				}
+			],
+			"status" : "Pending"
+		},
+		{
+			"buyer" : "Petar Petrov",
+			"formula" : "Mn2O3",
+			"price" : 1112,
+			"product" : "Manganese oxide",
+			"reactants" : 
+			[
+				{
+					"name" : "Mn",
+					"quantity" : 2
+				},
+				{
+					"name" : "O",
+					"quantity" : 3
+				}
+			],
+			"status" : "Pending"
+		},
+		{
+			"buyer" : "Krasimir Petrov",
+			"formula" : "MgCl2",
+			"price" : 1490,
+			"product" : "Magnesium chloride",
+			"reactants" : 
+			[
+				{
+					"name" : "Mg",
+					"quantity" : 1
+				},
+				{
+					"name" : "Cl",
+					"quantity" : 2
+				}
+			],
+			"status" : "Pending"
+		},
+		{
+			"buyer" : "Zdravko Petrov",
+			"formula" : "ZnCl2",
+			"price" : 1327,
+			"product" : "Zinc chloride",
+			"reactants" : 
+			[
+				{
+					"name" : "Zn",
+					"quantity" : 1
+				},
+				{
+					"name" : "Cl",
+					"quantity" : 2
+				}
+			],
+			"status" : "Pending"
 		}
 	],
-	"theme" : 0
+	"theme" : 1
 }

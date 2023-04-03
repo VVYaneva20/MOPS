@@ -101,7 +101,7 @@ void Orders::GenerateOrder() {
 	Json::Value Reactions;
 	std::ifstream fileReactions(gameManager->GetAssetPath() + "reactions.json");
 	fileReactions >> Reactions;
-	std::chrono::seconds duration(gameManager->OrderFrequencyUpgrade ? 50 : 90);
+	std::chrono::seconds duration(gameManager->OrderFrequencyUpgrade ? 30 : 1);
 	std::chrono::steady_clock::time_point endTime = this->startTime + duration;
 
 	if (std::chrono::steady_clock::now() >= endTime) {
@@ -193,7 +193,12 @@ void Orders::DisplayInfo()
 				this->m_currentOrder = selectedOrder;
 			}
 		}
-
+		std::string ProductName = selectedOrder.product;
+		for (size_t i = 0; i < ProductName.length(); i++) if (ProductName[i] == ' ') ProductName[i] = '\n';
+		DrawTextEx(gameManager->ArialBold, ("Product: " + ProductName).c_str(), {1500, 300}, 40, 2, WHITE);
+		DrawTextEx(gameManager->ArialBold, ("Formula: " + selectedOrder.formula).c_str(), {1500, 450}, 40, 2, WHITE);
+		DrawTextEx(gameManager->ArialBold, ("Total: " + std::to_string(selectedOrder.price) + "$").c_str(), { 1500, 600 }, 40, 2, WHITE);
+		DrawTextEx(gameManager->ArialBold, ("Status: " + selectedOrder.status).c_str(), { 1500, 750 }, 40, 2, WHITE);
 	}
 }
 
